@@ -31,6 +31,7 @@ class DeviceId:
     def __repr__(self):
         return f"DeviceId={self.id} (data_type = {self.data_type.name} [{self.data_type.value}], sub_id={self.sub_id})"
 
+DEVICE_BROADCAST = DeviceId(DeviceId.DataType._, 7)
 
 @dataclass
 class MsgId:
