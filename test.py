@@ -3,7 +3,10 @@ import random
 
 import can
 
+import datetime;
+
 from cancontroller.can import initialize_can_if, generate_random_data
+from cancontroller import MsgId, DeviceId
 
 BITRATE = 500000
 
@@ -21,9 +24,19 @@ if __name__ == "__main__":
 
     while True:
 
-        send_msg = can.Message(arbitration_id=0xA0FFEE,
-                      data=generate_random_data(8),
-                      is_extended_id=True)
+        msgid = MsgId(
+            frame_type=MsgId.FrameType.WriteAttribute,
+            query_type=MsgId.QueryType.Query,
+            controller=MsgId.Controller.Controller1,
+            device_id=DeviceId(DeviceId.DataType.CRTAAA, 0)
+        )
+
+        send_msg = can.Message(
+            arbitration_id=int(msgid),
+            data=generate_random_data(8),
+            is_extended_id=False, 
+            timestamp=datetime.datetime.now().timestamp()
+            )
 
         try:
             canb.send(send_msg)
