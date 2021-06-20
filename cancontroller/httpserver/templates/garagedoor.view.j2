@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Porte de garage</title>
+    <link rel="stylesheet" href="/garage/static/style.css">
+</head>
+<body>
+{{ command }}
+{% if error %}
+<div class="error">
+    <p>
+        {{ error }}
+    </p>
+</div>
+{% endif %}
+<div class="door-form">
+    <form action="" method="post">
+        <div>
+            <input type="submit" name="command" value="{{ commands_list[0] }}">
+        </div>
+        <div>
+            <input type="submit" name="command" value="{{ commands_list[1] }}">
+        </div>
+    </form>
+</div>
+<div class="door-form">
+    <form action="" method="post">
+        <div>
+            <input type="submit" name="command" value="{{ commands_list[2] }}">
+        </div>
+        <div>
+            <input type="submit" name="command" value="{{ commands_list[3] }}">
+        </div>
+    </form>
+</div>
+</body>
+</html>

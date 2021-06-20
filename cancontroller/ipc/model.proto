@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+// Not necessary for Python, should still be declared to avoid name collisions
+// in the Protocol Buffers namespace and non-Python languages
+package cancontroller.ipc;
+
+service CanController {
+    rpc SendGarage(GarageCommand) returns (GarageResponse) {} // stream
+}
+
+enum Command {
+    COMMAND_UNSPECIFIED = 0;
+    COMMAND_OPENLEFT = 1;
+    COMMAND_CLOSELEFT = 2;
+    COMMAND_OPENRIGHT = 3;
+    COMMAND_CLOSERIGHT = 4;
+    COMMAND_OPENALL = 5;
+    COMMAND_CLOSEALL = 6;
+}
+
+message GarageCommand {
+    string datetime = 1;
+
+    Command command = 2;
+}
+
+message GarageResponse {
+    string datetime = 1;
+//    GarageCommand command = 2;
+//    GarageCommand.Command command2 = 3;
+
+    enum Status {
+        OK = 0;
+        PENDING = 1;
+        NOK = 2;
+    }
+
+    Status status = 4;
+}
