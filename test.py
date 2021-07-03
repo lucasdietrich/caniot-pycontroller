@@ -8,7 +8,7 @@ import can
 import datetime
 
 from cancontroller.controller import initialize_can_if, generate_random_data
-from cancontroller import MsgId, DEVICE_BROADCAST
+from cancontroller.can.models import MsgId, DEVICE_BROADCAST
 
 BITRATE = 500000
 
@@ -59,9 +59,10 @@ if __name__ == "__main__":
     canb = can.interface.Bus(channel=can_ifs[1], bustype='socketcan')
 
     send(write_datetime())
-
     while True:
-        msg: can.Message = canb.recv(timeout=1.0)
-
-        if msg:
-            print(f"CAN recv [{hex(msg.arbitration_id)[2:]}] : {MsgId.from_raw(msg.arbitration_id)} : {msg.data}")
+        try:
+            msg: can.Message = canb.recv(timeout=1.0)
+            if msg:
+                print(f"CAN recv [{hex(msg.arbitration_id)[2:]}] : {MsgId.from_raw(msg.arbitration_id)} : {msg.data}")
+        except KeyboardInterrupt:
+            break

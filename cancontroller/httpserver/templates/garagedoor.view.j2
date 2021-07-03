@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/garage/static/style.css">
 </head>
 <body>
-{{ command }}
+<!-- {{ command }} -->
 {% if error %}
 <div class="error">
     <p>
@@ -19,9 +19,19 @@
         <div>
             <input type="submit" name="command" value="{{ commands_list[0] }}">
         </div>
+{#        <div>#}
+{#            <input type="submit" name="command" value="{{ commands_list[1] }}">#}
+{#        </div>#}
+    </form>
+</div>
+<div class="door-form">
+    <form action="" method="post">
         <div>
             <input type="submit" name="command" value="{{ commands_list[1] }}">
         </div>
+{#        <div>#}
+{#            <input type="submit" name="command" value="{{ commands_list[3] }}">#}
+{#        </div>#}
     </form>
 </div>
 <div class="door-form">
@@ -29,9 +39,9 @@
         <div>
             <input type="submit" name="command" value="{{ commands_list[2] }}">
         </div>
-        <div>
-            <input type="submit" name="command" value="{{ commands_list[3] }}">
-        </div>
+{#        <div>#}
+{#            <input type="submit" name="command" value="{{ commands_list[3] }}">#}
+{#        </div>#}
     </form>
 </div>
 </body>

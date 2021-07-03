@@ -13,51 +13,54 @@ from cancontroller.ipc import model_pb2_grpc
 #            location = request.app.router['index'].url_for()
 #            raise web.HTTPFound(location=location)
 
-@aiohttp_jinja2.template("garagedoor.view.j2")
-async def handle(request: web.Request):
-    commands_list = [
-        "open-left",
-        "close-left",
-        "open-right",
-        "close-right"
-    ]
-    context = request.query.get("context", "")
-    error = ""
-    command = ""
+class HTTPServer(web.Application):
+    def __init__(self, grpc_target: str):
+        self.grpc_target = grpc_target
+        super(HTTPServer, self).__init__()
+        aiohttp_jinja2.setup(self, loader=jinja2.FileSystemLoader('templates'))
+        self.add_routes([web.get('/garage', self.handle),
+                        web.post('/garage', self.handle),
+                        web.static("/garage/static", "./static"),
+                        web.get('/debug/{debug}', self.handle_debug)])
 
-    if request.method == 'POST':
-        form = await request.post()
-        command = form.get("command", "")
-        if command in commands_list:
-            with grpc.insecure_channel('localhost:50051') as channel:
-                stub = model_pb2_grpc.CanControllerStub(channel)
-                response = stub.SendGarage(model_pb2.GarageCommand(command=commands_list.index(command)))
-            print(command)
-            print(f"CanController GarageResponse datetime={response.datetime} status={response.status}")
-        else:
-            print("No command")
-    return {
-        "context": context,
-        "error": error,
-        "command": command,
-        "commands_list": commands_list
-    }
+    @aiohttp_jinja2.template("garagedoor.view.j2")
+    async def handle(self, request: web.Request):
+        commands_list = [
+            "left",
+            "right",
+            "all",
+        ]
+        context = request.query.get("context", "")
+        error = ""
+        command = ""
 
+        if request.method == 'POST':
+            form = await request.post()
+            command = form.get("command", "")
+            if command in commands_list:
+                with grpc.insecure_channel(self.grpc_target) as channel:
+                    stub = model_pb2_grpc.CanControllerStub(channel)  # TODO stub initialized elsewhere
+                    response = stub.SendGarage(model_pb2.GarageCommand(command=commands_list.index(command) + 1))
 
-async def debug(request: web.Request):
-    debug = request.match_info.get('debug', "")
-    return web.Response(text=f"{debug}")
+                print(f"CanController "
+                      f"GarageCommand command={command} "
+                      f"GarageResponse status={model_pb2._STATUS.values_by_number[response.status].name}")
+            else:
+                print("No command")
+        return {
+            "context": context,
+            "error": error,
+            "command": command,
+            "commands_list": commands_list
+        }
 
-
-app = web.Application()
-aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader('templates'))
-app.add_routes([web.get('/garage', handle),
-                web.post('/garage', handle),
-                web.static("/garage/static", "./static"),
-                web.get('/debug/{debug}', debug)])
+    async def handle_debug(self, request: web.Request):
+        debug = request.match_info.get('debug', "")
+        return web.Response(text=f"{debug}")
 
 
 if __name__ == '__main__':
+    app = HTTPServer(grpc_target='localhost:50051')
     web.run_app(app, host="0.0.0.0", port=8080)
 
 

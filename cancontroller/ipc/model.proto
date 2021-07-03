@@ -1,21 +1,43 @@
 syntax = "proto3";
 
-// Not necessary for Python, should still be declared to avoid name collisions
-// in the Protocol Buffers namespace and non-Python languages
+//
+// python -m grpc_tools.protoc -Icancontroller/ipc --python_out=cancontroller/ipc --grpc_python_out=cancontroller/ipc model.proto
+//
+
+// Change in "ipc/model_pb2_grpc.py"
+//   import model_pb2 as model__pb2
+// to
+//   from . import model_pb2 as model__pb2
+
 package cancontroller.ipc;
 
 service CanController {
-    rpc SendGarage(GarageCommand) returns (GarageResponse) {} // stream
+    rpc SendGarage(GarageCommand) returns (GarageResponse) {}
+
+    rpc ReadAttribute(AttributeRequest) returns (AttributeResponse) {}
+    rpc WriteAttribute(AttributeRequest) returns (AttributeResponse) {}
 }
+
+/*____________________________________________________________________________________________________________________*/
+
+message Device
+{
+    uint32 id = 1;
+}
+
+enum Status {
+    OK = 0;
+    NOK = 1;
+    TIMEOUT = 2;
+}
+
+/*____________________________________________________________________________________________________________________*/
 
 enum Command {
     COMMAND_UNSPECIFIED = 0;
-    COMMAND_OPENLEFT = 1;
-    COMMAND_CLOSELEFT = 2;
-    COMMAND_OPENRIGHT = 3;
-    COMMAND_CLOSERIGHT = 4;
-    COMMAND_OPENALL = 5;
-    COMMAND_CLOSEALL = 6;
+    COMMAND_LEFT = 1;
+    COMMAND_RIGHT = 2;
+    COMMAND_ALL = 3;
 }
 
 message GarageCommand {
@@ -29,11 +51,32 @@ message GarageResponse {
 //    GarageCommand command = 2;
 //    GarageCommand.Command command2 = 3;
 
-    enum Status {
-        OK = 0;
-        PENDING = 1;
-        NOK = 2;
-    }
-
     Status status = 4;
 }
+
+/*____________________________________________________________________________________________________________________*/
+
+
+message AttributeRequest
+{
+    Device device = 2;
+    uint32 key = 3;
+    uint32 value = 4;
+
+    float timeout = 5;  // if timeout == 0.0 then return immediately with status OK
+                        // if timeout != 0.0 return status TIMEOUT if timeout value exceeded
+                        // return pending ok if value == write value with WriteAttribute and check key anywhere
+}
+
+message AttributeResponse
+{
+    Device device = 1;
+    uint32 key = 2;
+    uint32 value = 3;
+
+    Status status = 4;
+
+    float response_time = 5;
+}
+
+/*____________________________________________________________________________________________________________________*/
