@@ -321,7 +321,7 @@ def gen_garage_can_command(relay: int, proddev = 0) -> can.Message:
     )
     return can.Message(arbitration_id=int(arbitration_id),
                        is_extended_id=False,
-                       data=[relay, 0, 0, 0]
+                       data=[0, relay, 0, 0]
                        )
 
 
