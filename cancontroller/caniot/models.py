@@ -312,12 +312,12 @@ class ControllerMessageParser:
 # ____________________________________________________________________________________________________________________ #
 
 
-def gen_garage_can_command(relay: int, proddev = 0) -> can.Message:
+def gen_garage_can_command(relay: int, proddev = 0, prodtype = DeviceId.DataType.CRT) -> can.Message:
     arbitration_id = MsgId(
         frame_type=MsgId.FrameType.Command,
         query_type=MsgId.QueryType.Query,
         controller=MsgId.Controller.BROADCAST,
-        device_id=DeviceId(data_type=DeviceId.DataType.CRT, sub_id=proddev)
+        device_id=DeviceId(data_type=prodtype, sub_id=proddev)
     )
     return can.Message(arbitration_id=int(arbitration_id),
                        is_extended_id=False,
