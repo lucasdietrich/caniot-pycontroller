@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a9d1f84-73ec-4c5a-a9ba-861aab64a374" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/device.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/devices/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/devices/garage_door_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/canasync.py" beforeDir="false" afterPath="$PROJECT_DIR$/canasync.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/can/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/can/interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/interface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/can/misc.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/misc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/can/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/cli/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/cli/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/controller/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/controller/devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/devices.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements-minimum.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +115,7 @@
       <updated>1631659541494</updated>
       <workItem from="1631659543646" duration="1040000" />
       <workItem from="1631660619547" duration="433000" />
-      <workItem from="1631690142801" duration="848000" />
+      <workItem from="1631690142801" duration="1180000" />
     </task>
     <servers />
   </component>
