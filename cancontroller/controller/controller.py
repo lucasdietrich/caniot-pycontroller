@@ -78,6 +78,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         self.query_builder = ControllerMessageBuilder(self.controller_id, controller_policy=MsgId.Controller.BROADCAST)
         self.pending_queries_manager = PendingQueriesManager()
 
+        # can1 is actually can0 on the board
         self.can0 = can.Bus(channel='can1', bustype='socketcan')  # , receive_own_messages=True
         self.reader = can.AsyncBufferedReader()
         logger = can.Logger('logfile.asc')

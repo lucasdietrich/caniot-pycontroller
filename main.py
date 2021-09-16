@@ -1,12 +1,11 @@
 import struct
 
-from cancontroller.caniot.interface import initialize_can_if
+from cancontroller.controller.interface import initialize_can_if
 import can
 
 import datetime
 
-from cancontroller.caniot.models import MsgId, DeviceId, ControllerMessageBuilder, ControllerMessageParser, \
-    DEVICE_BROADCAST, gen_garage_can_command
+from cancontroller.caniot.models import MsgId, DeviceId, ControllerMessageBuilder
 
 initialize_can_if("can1")
 

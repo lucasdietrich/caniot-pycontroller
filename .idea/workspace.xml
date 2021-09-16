@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a9d1f84-73ec-4c5a-a9ba-861aab64a374" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements-minimum.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/device.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/device.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/devices/garage_door_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/devices/garage_door_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/interface.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/controller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/controller/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/controller/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/controller/logfile.asc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/controller/misc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model_pb2_grpc.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model_pb2_grpc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,14 +65,34 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="settings.editor.selected.configurable" value="web.server" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Home\ProjetsRecherche\Embedded\CAN\dev\raspberry-pi-2-py-can-controller\cancontroller\controller" />
       <recent name="D:\Home\ProjetsRecherche\Embedded\CAN\dev\raspberry-pi-2-py-can-controller\cancontroller\caniot" />
     </key>
   </component>
   <component name="RunManager" selected="Python.server">
+    <configuration name="configure" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="raspberry-pi-2-py-can-controller" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cancontroller" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cancontroller/configure.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="controller" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="raspberry-pi-2-py-can-controller" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -102,6 +135,7 @@
       <list>
         <item itemvalue="Python.server" />
         <item itemvalue="Python.controller" />
+        <item itemvalue="Python.configure" />
       </list>
     </recent_temporary>
   </component>
@@ -115,7 +149,8 @@
       <updated>1631659541494</updated>
       <workItem from="1631659543646" duration="1040000" />
       <workItem from="1631660619547" duration="433000" />
-      <workItem from="1631690142801" duration="1180000" />
+      <workItem from="1631690142801" duration="1912000" />
+      <workItem from="1631793573648" duration="5938000" />
     </task>
     <servers />
   </component>

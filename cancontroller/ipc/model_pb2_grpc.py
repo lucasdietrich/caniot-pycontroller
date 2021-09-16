@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from . import model_pb2 as model__pb2
+import model_pb2 as model__pb2
 
 
 class CanControllerStub(object):

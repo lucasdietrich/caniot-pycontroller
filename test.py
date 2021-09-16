@@ -7,7 +7,6 @@ import can
 
 import datetime
 
-from cancontroller.controller import initialize_can_if, generate_random_data
 from cancontroller.caniot.models import MsgId, DEVICE_BROADCAST
 
 BITRATE = 500000
