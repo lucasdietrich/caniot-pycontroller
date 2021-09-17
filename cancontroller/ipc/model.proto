@@ -1,13 +1,8 @@
 syntax = "proto3";
 
 //
-// python -m grpc_tools.protoc -Icancontroller/ipc --python_out=cancontroller/ipc --grpc_python_out=cancontroller/ipc model.proto
+// python3 -m grpc_tools.protoc -Icancontroller/ipc --python_out=cancontroller/ipc --grpc_python_out=cancontroller/ipc model.proto
 //
-
-// Change in "ipc/model_pb2_grpc.py"
-//   import model_pb2 as model__pb2
-// to
-//   from . import model_pb2 as model__pb2
 
 package cancontroller.ipc;
 
@@ -16,13 +11,16 @@ service CanController {
 
     rpc ReadAttribute(AttributeRequest) returns (AttributeResponse) {}
     rpc WriteAttribute(AttributeRequest) returns (AttributeResponse) {}
+
+    rpc GetDevices(Empty) returns (Devices) { }
 }
 
 /*____________________________________________________________________________________________________________________*/
 
-message Device
+message DeviceId
 {
-    uint32 id = 1;
+    uint32 type = 1;
+    uint32 id = 2;
 }
 
 enum Status {
@@ -48,8 +46,6 @@ message GarageCommand {
 
 message GarageResponse {
     string datetime = 1;
-//    GarageCommand command = 2;
-//    GarageCommand.Command command2 = 3;
 
     Status status = 4;
 }
@@ -59,7 +55,7 @@ message GarageResponse {
 
 message AttributeRequest
 {
-    Device device = 2;
+    DeviceId device = 2;
     uint32 key = 3;
     uint32 value = 4;
 
@@ -70,7 +66,7 @@ message AttributeRequest
 
 message AttributeResponse
 {
-    Device device = 1;
+    DeviceId device = 1;
     uint32 key = 2;
     uint32 value = 3;
 
@@ -80,3 +76,13 @@ message AttributeResponse
 }
 
 /*____________________________________________________________________________________________________________________*/
+
+message Empty
+{
+
+}
+
+message Devices
+{
+    repeated DeviceId device = 1;
+}

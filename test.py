@@ -7,7 +7,7 @@ import can
 
 import datetime
 
-from cancontroller.caniot.models import MsgId, DEVICE_BROADCAST
+from cancontroller.caniot.models import MsgId
 
 BITRATE = 500000
 

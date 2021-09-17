@@ -1,7 +1,6 @@
-import can
-
-from cancontroller.caniot import DeviceId, MsgId
-from can import Message
+from cancontroller.caniot.models import DeviceId, MsgId
+from cancontroller.caniot.message import *
+from cancontroller.controller.pending import PendingQuery
 
 
 class Device:
@@ -9,7 +8,16 @@ class Device:
     Represent a caniot device on the can bus.
 
     Gather all device specific methods
+
+    A device can only have one pending request
     """
+
+    pending_query: PendingQuery = None
+    status = {
+        "last_seen": None,
+        "received": 0,
+        "sent": 0,
+    }
 
     def __init__(self, deviceid: DeviceId):
         self.deviceid = deviceid
@@ -17,21 +25,17 @@ class Device:
     def __repr__(self):
         return f"Device {self.deviceid}"
 
-    def query(self, buffer: list) -> Message:
+    # def address(self, from_controller: MsgId.Controller):
+    #     pass
 
-        MsgId.Command(self.deviceid, )
-        arbitration_id = MsgId(
-            frame_type=MsgId.FrameType.Command,
-            query_type=MsgId.QueryType.Query,
-            controller=MsgId.Controller.BROADCAST,
-            device_id=DeviceId(data_type=prodtype, sub_id=proddev)
-        )
+    def query(self, buffer: list) -> QueryTelemetry:
+        return QueryTelemetry(self)
 
-        return can.Message(arbitration_id=int(arbitration_id),
-                           is_extended_id=False,
-                           data=buffer
-                           )
+    def read_attribute(self, key: int) -> ReadAttributeQuery:
+        return ReadAttributeQuery(self, key)
 
-    def read_attribute(self, attr) -> Message:
-        pass
+    def query_telemetry(self) -> QueryTelemetry:
+        return QueryTelemetry(self)
 
+    def set_time(self, utc: int) -> WriteAttributeQuery:
+        return WriteAttributeQuery(self, 0x1010, utc)

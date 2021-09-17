@@ -1,5 +1,0 @@
-aiohttp
-python-can
-requests
-grpcio-tools
-grpcio

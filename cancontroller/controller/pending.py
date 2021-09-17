@@ -7,24 +7,26 @@ import can
 
 from cancontroller.caniot.models import MsgId
 
+from cancontroller.caniot.message.query import Query
+from cancontroller.caniot.message.response import Response
+
 
 class PendingQuery:
-    def __init__(self, query: MsgId):
+    def __init__(self, query: Query):
         self.event = asyncio.Event()
-        self.query = query
-        self.response_id = None
-        self.response = None
+
+        self.query: Query = query
+        self.response: Response = None
 
     def is_set(self) -> bool:
         if self.event.is_set():
-            if self.response_id is None:
+            if self.response is None:
                 raise Exception("event is set but response is not set")
             return True
         return False
 
     def check(self, response_id: MsgId, response: can.Message) -> bool:
         if response_id.is_response_of(self.query):
-            self.response_id = response_id
             self.response = response
             self.event.set()
             return True

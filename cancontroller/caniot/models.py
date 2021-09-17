@@ -1,16 +1,12 @@
 from __future__ import annotations
 
-import struct
 from enum import Enum, IntEnum
 from dataclasses import dataclass
 
-import random
-
 from typing import Union, List, Dict, Tuple
 
-import can
+BufferType = Union[List[int], bytearray, bytes]
 
-# ____________________________________________________________________________________________________________________ #
 
 @dataclass
 class DeviceId:
@@ -36,7 +32,7 @@ class DeviceId:
                 0
             ]
             assert 0 < self < len(data_type_size)
-            return self.data_type_size[self]
+            return data_type_size[self]
 
     data_type: Union[int, DataType]
     sub_id: int
@@ -72,12 +68,6 @@ class DeviceId:
     @classmethod
     def Broadcast(cls) -> DeviceId:
         return DeviceId(data_type=DeviceId.DataType._, sub_id=0b111)
-
-
-DEVICE_BROADCAST = DeviceId.Broadcast()
-
-
-# ____________________________________________________________________________________________________________________ #
 
 
 @dataclass
@@ -211,119 +201,6 @@ class MsgId:
 
     def is_extended(self) -> bool:
         return self.id_type is MsgId.IdType.Extended
-
-    @classmethod
-    def Query(cls, device: DeviceId, controller: Controller = Controller.BROADCAST, extended_id: int = 0) -> MsgId:
-        return MsgId(
-            frame_type=MsgId.FrameType.Telemetry,
-            query_type=MsgId.QueryType.Query,
-            controller=MsgId.Controller(controller),
-            device_id=device,
-            extended_id=extended_id,
-            id_type=MsgId.IdType.Extended if extended_id else MsgId.IdType.Standard
-        )
-
-    @classmethod
-    def ReadAttribute(cls, device: DeviceId, controller: Controller = Controller.BROADCAST, extended_id: int = 0) -> MsgId:
-        msgid = MsgId.Query(device, controller, extended_id)
-        msgid.frame_type = MsgId.FrameType.ReadAttribute
-        return msgid
-
-    @classmethod
-    def WriteAttribute(cls, device: DeviceId, controller: Controller = Controller.BROADCAST, extended_id: int = 0) -> MsgId:
-        msgid = MsgId.Query(device, controller, extended_id)
-        msgid.frame_type = MsgId.FrameType.WriteAttribute
-        return msgid
-
-    @classmethod
-    def QueryTelemetry(cls, device: DeviceId, controller: Controller = Controller.BROADCAST, extended_id: int = 0) -> MsgId:
-        msgid = MsgId.Query(device, controller, extended_id)
-        msgid.frame_type = MsgId.FrameType.Telemetry
-        return msgid
-
-    @classmethod
-    def Command(cls, device: DeviceId, controller: Controller = Controller.BROADCAST, extended_id: int = 0) -> MsgId:
-        msgid = MsgId.Query(device, controller, extended_id)
-        msgid.frame_type = MsgId.FrameType.Command
-        return msgid
-
-# ____________________________________________________________________________________________________________________ #
-
-
-class ControllerMessageBuilder:
-    def __init__(
-            self,
-            controller: MsgId.Controller = MsgId.Controller.Main,
-            controller_policy: MsgId.Controller = MsgId.Controller.BROADCAST
-    ):
-        self.controller = controller
-        self.controller_policy: MsgId.Controller = MsgId.Controller(controller_policy)
-        self.extended_id = 0
-        self.extended_id_policy = False
-
-    def gen_extended_id(self) -> int:
-        return random.randint(0, 0xFF)
-
-    def build_can_message(self, device: DeviceId, frame_type: MsgId.FrameType, data: Union[List[int], bytearray, bytes] = b"") -> Tuple[MsgId, can.Message]:
-        msgid = MsgId(
-            frame_type=frame_type,
-            query_type=MsgId.QueryType.Query,
-            controller=self.controller.join(self.controller_policy),
-            device_id=device,
-            extended_id=self.gen_extended_id() if self.extended_id_policy else 0,
-            id_type=MsgId.IdType.Extended if self.extended_id_policy else MsgId.IdType.Standard
-        )
-
-        if msgid.is_query():
-            return msgid, can.Message(
-                arbitration_id=int(msgid),
-                data=data,
-                is_extended_id=msgid.is_extended()
-            )
-        else:
-            raise Exception(f"built can message isn't a valid query {msgid}")
-
-    # https://docs.python.org/3/library/struct.html#format-characters
-    def ReadAttribute(self, device: DeviceId, key: int) -> Tuple[MsgId, can.Message]:
-        data = struct.pack("<H", key & 0xFFFF)
-        return self.build_can_message(device, MsgId.FrameType.ReadAttribute, data)
-
-    def WriteAttribute(self, device: DeviceId, key: int, value: int) -> Tuple[MsgId, can.Message]:
-        data = struct.pack("<HL", key & 0xFFFF, value & 0xFFFFFFFF)
-        return self.build_can_message(device, MsgId.FrameType.WriteAttribute, data)
-
-    def Command(self, device: DeviceId, data: Union[List[int], bytearray, bytes]) -> Tuple[MsgId, can.Message]:
-        data_len = len(data)
-        expected_data_len = device.data_type.get_size()
-        if data_len != expected_data_len:
-            raise Exception(f"invalid data size ({data_len}) for the DataType {device.data_type.name} ({expected_data_len})")
-
-        return self.build_can_message(device, MsgId.FrameType.Command, data)
-
-    def QueryTelemetry(self, device: DeviceId) -> Tuple[MsgId, can.Message]:
-        return self.build_can_message(device, MsgId.FrameType.Telemetry)
-
-
-class ControllerMessageParser:
-    @staticmethod
-    def ParseAttributeResponse(data) -> [int, int]:
-        return struct.unpack("<HL", data)
-
-# ____________________________________________________________________________________________________________________ #
-
-
-def gen_garage_can_command(relay: int, proddev = 0, prodtype = DeviceId.DataType.CRT) -> can.Message:
-    arbitration_id = MsgId(
-        frame_type=MsgId.FrameType.Command,
-        query_type=MsgId.QueryType.Query,
-        controller=MsgId.Controller.BROADCAST,
-        device_id=DeviceId(data_type=prodtype, sub_id=proddev)
-    )
-    return can.Message(arbitration_id=int(arbitration_id),
-                       is_extended_id=False,
-                       data=[0, relay, 0, 0]
-                       )
-
 
 # ____________________________________________________________________________________________________________________ #
 
