@@ -6,7 +6,7 @@
     font-weight: bold;
 }
 
-body, input
+input
 {
     font-family: "Helvetica Neue", sans-serif;
     font-size: 100px;
@@ -40,4 +40,9 @@ input[type="submit"]
 input[type="submit"]:hover
 {
     background-color: rgba(203, 222, 255, 0.17);
+}
+
+p
+{
+    font-size: 32px;
 }

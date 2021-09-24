@@ -5,10 +5,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/caniot/device.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/device.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/caniot/nodes/garage_door_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/nodes/garage_door_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/cli/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/cli/client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/controller/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/controller/logfile.asc" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/logfile.asc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/static/garage.css" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/static/garage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/templates/garagedoor.view.j2" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/templates/garagedoor.view.j2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model.proto" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model_pb2.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model_pb2.py" afterDir="false" />
     </list>
@@ -207,7 +208,7 @@
       <workItem from="1631973010488" duration="10130000" />
       <workItem from="1631984217036" duration="5183000" />
       <workItem from="1632059713170" duration="994000" />
-      <workItem from="1632488560798" duration="3872000" />
+      <workItem from="1632488560798" duration="5379000" />
     </task>
     <servers />
   </component>

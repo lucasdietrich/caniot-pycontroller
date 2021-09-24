@@ -36,9 +36,14 @@ class HTTPServer(web.Application):
             ]
         )
 
+        # context = request.query.get("context", "")
+        #
+        # print(context)
+
     @aiohttp_jinja2.template("home.view.j2")
     async def handle_home(self, request: web.Request):
         response = self.api.get_device_data(node_garage_door.deviceid)
+
         return {"model": response}
 
     @aiohttp_jinja2.template("garagedoor.view.j2")
@@ -47,10 +52,7 @@ class HTTPServer(web.Application):
             "Gauche",
             "Droite",
         ]
-        context = request.query.get("context", "")
-        error = ""
         command = ""
-
         if request.method == 'POST':
             form = await request.post()
             command = form.get("command", "")
@@ -65,8 +67,7 @@ class HTTPServer(web.Application):
             else:
                 print("No command")
         return {
-            "context": context,
-            "error": error,
+            "device": self.api.get_device_data(node_garage_door.deviceid),
             "command": command,
             "commands_list": commands_list
         }

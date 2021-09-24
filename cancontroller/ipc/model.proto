@@ -111,6 +111,10 @@ message GarageDoorModel {
   bool in1 = 2;
   bool in2 = 3;
   bool in3 = 4;
+  float temp0 = 5;
+  uint32 analog0 = 6;
+  uint32 analog1 = 7;
+  uint32 analog2 = 8;
 }
 
 message GarageDoor {

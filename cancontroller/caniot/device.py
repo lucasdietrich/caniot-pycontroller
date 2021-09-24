@@ -21,9 +21,8 @@ class Device:
         "sent": 0,
     }
 
-    telemetry = {
-        "raw": []
-    }
+    telemetry_raw = []
+    telemetry = {}
 
     def __init__(self, deviceid: DeviceId, name: str = None):
         self.deviceid = deviceid
@@ -52,7 +51,7 @@ class Device:
         return WriteAttributeQuery(self.deviceid, 0x1010, utc)
 
     def interpret(self, msg: CaniotMessage) -> bool:
-        self.telemetry["raw"] = msg.buffer
+        self.telemetry_raw = msg.buffer
         return True
 
     def model(self) -> dict:

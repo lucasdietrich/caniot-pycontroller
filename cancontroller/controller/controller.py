@@ -147,7 +147,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                     received=dev.status["received"],
                     sent=dev.status["sent"],
                 ),
-                raw=dev.telemetry["raw"],
+                raw=dev.telemetry_raw,
                 **dev.model()
             )
         else:
