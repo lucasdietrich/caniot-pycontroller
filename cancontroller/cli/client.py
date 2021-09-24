@@ -50,11 +50,10 @@ class CLIClient:
     def GetDevice(self, deviceid: DeviceId):
         with grpc.insecure_channel(self.grpc_target) as  channel:
             stub = model_pb2_grpc.CanControllerStub(channel)
-            response = stub.GetDevice(model_pb2.DeviceId(
+            return stub.GetDevice(model_pb2.DeviceId(
                 type=deviceid.data_type,
                 id=deviceid.sub_id
             ))
-            return response
 
     def GetDevices(self):
         with grpc.insecure_channel(self.grpc_target) as channel:
@@ -68,6 +67,7 @@ class CLIClient:
 if __name__ == "__main__":
     client = CLIClient('localhost:50051')
     did = DeviceId(DeviceId.DataType.CRTAAA, 0)
-    response = client.ReadAttribute(did, 0x1010)
+    response_read_attr = client.ReadAttribute(did, 0x1010)
+    response_get_device = client.GetDevice(DeviceId(5, 0))
 
-    print(response)
+    print(response_read_attr, response_get_device)

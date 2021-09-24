@@ -92,7 +92,30 @@ message Device {
   }
   Status status = 4;
 
-  string model = 5;
+  repeated int32 raw = 5 [packed=true];
+
+  oneof model {
+    GarageDoorModel garage = 6;
+  }
+}
+
+message DeviceResponse {
+  oneof dev {
+    Device device = 1;
+    Empty empty = 2;
+  }
+}
+
+message GarageDoorModel {
+  bool in0 = 1;
+  bool in1 = 2;
+  bool in2 = 3;
+  bool in3 = 4;
+}
+
+message GarageDoor {
+  Device device = 1;
+  GarageDoorModel model = 2;
 }
 
 message Devices {

@@ -56,9 +56,7 @@ class Device:
         return True
 
     def model(self) -> dict:
-        return {
-            "telemetry": self.telemetry,
-        }
+        return {}
 
     def json(self) -> str:
         return json.dumps(self.model())

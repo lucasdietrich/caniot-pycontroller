@@ -136,7 +136,6 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         ])
 
     async def GetDevice(self, request: model_pb2.Devices, context):
-        print(self.devices.devices)
         dev: Device = self.devices.select(DeviceId(request.type, request.id))
         if dev:
             return model_pb2.Device(
@@ -148,20 +147,11 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                     received=dev.status["received"],
                     sent=dev.status["sent"],
                 ),
-                model=dev.json()
+                raw=dev.telemetry["raw"],
+                **dev.model()
             )
         else:
-            return model_pb2.Device(
-                deviceid=request,
-                name="",
-                version=1,
-                status=model_pb2.Device.Status(
-                    last_seen = "",
-                    received = 0,
-                    sent = 0,
-                ),
-                model = "{}"
-            )
+            return model_pb2.Empty()
 
 
 async def serve():
