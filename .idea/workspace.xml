@@ -2,32 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a9d1f84-73ec-4c5a-a9ba-861aab64a374" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/remote-mappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/attributes/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/attributes/list.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/message/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/message/message.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/message/query.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/message/response.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/nodes/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/nodes/garage_door_controller.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cancontroller/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cancontroller/controller/api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cancontroller/httpserver/static/home.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cancontroller/httpserver/static/img.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cancontroller/httpserver/templates/home.view.j2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/raspberry-pi-2-py-can-controller.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/raspberry-pi-2-py-can-controller.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/canasync.py" beforeDir="false" afterPath="$PROJECT_DIR$/spikes/canasync.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/caniot/device.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/device.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/devices/garage_door_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/devices/garage_door_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/devices/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/message/interpret.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/devices/garage_door_controller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/message/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/message/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/message/query.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/message/query.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/message/response.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/message/response.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/caniot/misc.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/misc.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/caniot/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/cli/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/cli/client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/controller/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/controller/devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/devices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/controller/devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/devices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/controller/logfile.asc" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/logfile.asc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/controller/pending.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/pending.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/static/garage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/templates/garagedoor.view.j2" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/templates/garagedoor.view.j2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model.proto" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model_pb2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model_pb2_grpc.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements-minimum.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements-minimum.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model_pb2.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model_pb2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model_pb2_grpc.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model_pb2_grpc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/spikes/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/spikes/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +71,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
+  </component>
   <component name="ProjectId" id="1y9MqFYZPcmRGtsOMjqVBsaPMvD" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -80,16 +91,39 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="credentialsType com.jetbrains.python.remote.PyCreateRemoteInterpreterDialog$PyCreateRemoteSdkForm" value="Web Deployment" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Home\ProjetsRecherche\Embedded\CAN\dev\raspberry-pi-2-py-can-controller\spikes" />
+      <recent name="D:\Home\ProjetsRecherche\Embedded\CAN\dev\raspberry-pi-2-py-can-controller\cancontroller\caniot" />
       <recent name="D:\Home\ProjetsRecherche\Embedded\CAN\dev\raspberry-pi-2-py-can-controller\cancontroller\caniot\message" />
       <recent name="D:\Home\ProjetsRecherche\Embedded\CAN\dev\raspberry-pi-2-py-can-controller\cancontroller\controller" />
-      <recent name="D:\Home\ProjetsRecherche\Embedded\CAN\dev\raspberry-pi-2-py-can-controller\cancontroller\caniot" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.server">
+  <component name="RunManager" selected="Python.controller">
+    <configuration name="async_event" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="raspberry-pi-2-py-can-controller" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/spikes" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/spikes/async_event.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="raspberry-pi-2-py-can-controller" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -153,28 +187,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="misc" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="raspberry-pi-2-py-can-controller" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cancontroller/caniot" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cancontroller/caniot/misc.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="server" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="raspberry-pi-2-py-can-controller" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -196,11 +208,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.server" />
         <item itemvalue="Python.controller" />
+        <item itemvalue="Python.server" />
         <item itemvalue="Python.client" />
+        <item itemvalue="Python.async_event" />
         <item itemvalue="Python.device" />
-        <item itemvalue="Python.misc" />
       </list>
     </recent_temporary>
   </component>
@@ -218,11 +230,20 @@
       <workItem from="1631793573648" duration="29353000" />
       <workItem from="1631863828710" duration="1982000" />
       <workItem from="1631865853373" duration="258000" />
+      <workItem from="1631867265116" duration="1500000" />
+      <workItem from="1631873616260" duration="4135000" />
+      <workItem from="1631973010488" duration="10130000" />
+      <workItem from="1631984217036" duration="5183000" />
+      <workItem from="1632059713170" duration="994000" />
+      <workItem from="1632488560798" duration="607000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.j2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -235,5 +256,8 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/raspberry_pi_2_py_can_controller$client.coverage" NAME="client Coverage Results" MODIFIED="1631999920815" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cancontroller/cli" />
   </component>
 </project>

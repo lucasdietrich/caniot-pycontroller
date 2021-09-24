@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0bmodel.proto\x12\x11\x63\x61ncontroller.ipc\"$\n\x08\x44\x65viceId\x12\x0c\n\x04type\x18\x01 \x01(\r\x12\n\n\x02id\x18\x02 \x01(\r\"N\n\rGarageCommand\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12+\n\x07\x63ommand\x18\x02 \x01(\x0e\x32\x1a.cancontroller.ipc.Command\"M\n\x0eGarageResponse\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\"l\n\x10\x41ttributeRequest\x12+\n\x06\x64\x65vice\x18\x02 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x03 \x01(\r\x12\r\n\x05value\x18\x04 \x01(\r\x12\x0f\n\x07timeout\x18\x05 \x01(\x02\"\x9e\x01\n\x11\x41ttributeResponse\x12+\n\x06\x64\x65vice\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x02 \x01(\r\x12\r\n\x05value\x18\x03 \x01(\r\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\x12\x15\n\rresponse_time\x18\x05 \x01(\x02\"\x07\n\x05\x45mpty\"6\n\x07\x44\x65vices\x12+\n\x06\x64\x65vice\x18\x01 \x03(\x0b\x32\x1b.cancontroller.ipc.DeviceId*&\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\x12\x0b\n\x07TIMEOUT\x10\x02*X\n\x07\x43ommand\x12\x17\n\x13\x43OMMAND_UNSPECIFIED\x10\x00\x12\x10\n\x0c\x43OMMAND_LEFT\x10\x01\x12\x11\n\rCOMMAND_RIGHT\x10\x02\x12\x0f\n\x0b\x43OMMAND_ALL\x10\x03\x32\xe7\x02\n\rCanController\x12S\n\nSendGarage\x12 .cancontroller.ipc.GarageCommand\x1a!.cancontroller.ipc.GarageResponse\"\x00\x12\\\n\rReadAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12]\n\x0eWriteAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12\x44\n\nGetDevices\x12\x18.cancontroller.ipc.Empty\x1a\x1a.cancontroller.ipc.Devices\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x0bmodel.proto\x12\x11\x63\x61ncontroller.ipc\"$\n\x08\x44\x65viceId\x12\x0c\n\x04type\x18\x01 \x01(\r\x12\n\n\x02id\x18\x02 \x01(\r\"N\n\rGarageCommand\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12+\n\x07\x63ommand\x18\x02 \x01(\x0e\x32\x1a.cancontroller.ipc.Command\"M\n\x0eGarageResponse\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\"l\n\x10\x41ttributeRequest\x12+\n\x06\x64\x65vice\x18\x02 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x03 \x01(\r\x12\r\n\x05value\x18\x04 \x01(\r\x12\x0f\n\x07timeout\x18\x05 \x01(\x02\"\x9e\x01\n\x11\x41ttributeResponse\x12+\n\x06\x64\x65vice\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x02 \x01(\r\x12\r\n\x05value\x18\x03 \x01(\r\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\x12\x15\n\rresponse_time\x18\x05 \x01(\x02\"\x07\n\x05\x45mpty\"\xd4\x01\n\x06\x44\x65vice\x12-\n\x08\x64\x65viceid\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\r\x12\x30\n\x06status\x18\x04 \x01(\x0b\x32 .cancontroller.ipc.Device.Status\x12\r\n\x05model\x18\x05 \x01(\t\x1a;\n\x06Status\x12\x11\n\tlast_seen\x18\x01 \x01(\t\x12\x10\n\x08received\x18\x02 \x01(\r\x12\x0c\n\x04sent\x18\x03 \x01(\r\"4\n\x07\x44\x65vices\x12)\n\x06\x64\x65vice\x18\x01 \x03(\x0b\x32\x19.cancontroller.ipc.Device*&\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\x12\x0b\n\x07TIMEOUT\x10\x02*X\n\x07\x43ommand\x12\x17\n\x13\x43OMMAND_UNSPECIFIED\x10\x00\x12\x10\n\x0c\x43OMMAND_LEFT\x10\x01\x12\x11\n\rCOMMAND_RIGHT\x10\x02\x12\x0f\n\x0b\x43OMMAND_ALL\x10\x03\x32\xae\x03\n\rCanController\x12S\n\nSendGarage\x12 .cancontroller.ipc.GarageCommand\x1a!.cancontroller.ipc.GarageResponse\"\x00\x12\\\n\rReadAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12]\n\x0eWriteAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12\x44\n\nGetDevices\x12\x18.cancontroller.ipc.Empty\x1a\x1a.cancontroller.ipc.Devices\"\x00\x12\x45\n\tGetDevice\x12\x1b.cancontroller.ipc.DeviceId\x1a\x19.cancontroller.ipc.Device\"\x00\x62\x06proto3'
 )
 
 _STATUS = _descriptor.EnumDescriptor(
@@ -48,8 +48,8 @@ _STATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=567,
-  serialized_end=605,
+  serialized_start=780,
+  serialized_end=818,
 )
 _sym_db.RegisterEnumDescriptor(_STATUS)
 
@@ -84,8 +84,8 @@ _COMMAND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=607,
-  serialized_end=695,
+  serialized_start=820,
+  serialized_end=908,
 )
 _sym_db.RegisterEnumDescriptor(_COMMAND)
 
@@ -355,6 +355,111 @@ _EMPTY = _descriptor.Descriptor(
 )
 
 
+_DEVICE_STATUS = _descriptor.Descriptor(
+  name='Status',
+  full_name='cancontroller.ipc.Device.Status',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='last_seen', full_name='cancontroller.ipc.Device.Status.last_seen', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='received', full_name='cancontroller.ipc.Device.Status.received', index=1,
+      number=2, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='sent', full_name='cancontroller.ipc.Device.Status.sent', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=665,
+  serialized_end=724,
+)
+
+_DEVICE = _descriptor.Descriptor(
+  name='Device',
+  full_name='cancontroller.ipc.Device',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='deviceid', full_name='cancontroller.ipc.Device.deviceid', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='cancontroller.ipc.Device.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='version', full_name='cancontroller.ipc.Device.version', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='status', full_name='cancontroller.ipc.Device.status', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='model', full_name='cancontroller.ipc.Device.model', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_DEVICE_STATUS, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=512,
+  serialized_end=724,
+)
+
+
 _DEVICES = _descriptor.Descriptor(
   name='Devices',
   full_name='cancontroller.ipc.Devices',
@@ -382,8 +487,8 @@ _DEVICES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=511,
-  serialized_end=565,
+  serialized_start=726,
+  serialized_end=778,
 )
 
 _GARAGECOMMAND.fields_by_name['command'].enum_type = _COMMAND
@@ -391,13 +496,17 @@ _GARAGERESPONSE.fields_by_name['status'].enum_type = _STATUS
 _ATTRIBUTEREQUEST.fields_by_name['device'].message_type = _DEVICEID
 _ATTRIBUTERESPONSE.fields_by_name['device'].message_type = _DEVICEID
 _ATTRIBUTERESPONSE.fields_by_name['status'].enum_type = _STATUS
-_DEVICES.fields_by_name['device'].message_type = _DEVICEID
+_DEVICE_STATUS.containing_type = _DEVICE
+_DEVICE.fields_by_name['deviceid'].message_type = _DEVICEID
+_DEVICE.fields_by_name['status'].message_type = _DEVICE_STATUS
+_DEVICES.fields_by_name['device'].message_type = _DEVICE
 DESCRIPTOR.message_types_by_name['DeviceId'] = _DEVICEID
 DESCRIPTOR.message_types_by_name['GarageCommand'] = _GARAGECOMMAND
 DESCRIPTOR.message_types_by_name['GarageResponse'] = _GARAGERESPONSE
 DESCRIPTOR.message_types_by_name['AttributeRequest'] = _ATTRIBUTEREQUEST
 DESCRIPTOR.message_types_by_name['AttributeResponse'] = _ATTRIBUTERESPONSE
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
+DESCRIPTOR.message_types_by_name['Device'] = _DEVICE
 DESCRIPTOR.message_types_by_name['Devices'] = _DEVICES
 DESCRIPTOR.enum_types_by_name['Status'] = _STATUS
 DESCRIPTOR.enum_types_by_name['Command'] = _COMMAND
@@ -445,6 +554,21 @@ Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
   })
 _sym_db.RegisterMessage(Empty)
 
+Device = _reflection.GeneratedProtocolMessageType('Device', (_message.Message,), {
+
+  'Status' : _reflection.GeneratedProtocolMessageType('Status', (_message.Message,), {
+    'DESCRIPTOR' : _DEVICE_STATUS,
+    '__module__' : 'model_pb2'
+    # @@protoc_insertion_point(class_scope:cancontroller.ipc.Device.Status)
+    })
+  ,
+  'DESCRIPTOR' : _DEVICE,
+  '__module__' : 'model_pb2'
+  # @@protoc_insertion_point(class_scope:cancontroller.ipc.Device)
+  })
+_sym_db.RegisterMessage(Device)
+_sym_db.RegisterMessage(Device.Status)
+
 Devices = _reflection.GeneratedProtocolMessageType('Devices', (_message.Message,), {
   'DESCRIPTOR' : _DEVICES,
   '__module__' : 'model_pb2'
@@ -461,8 +585,8 @@ _CANCONTROLLER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=698,
-  serialized_end=1057,
+  serialized_start=911,
+  serialized_end=1341,
   methods=[
   _descriptor.MethodDescriptor(
     name='SendGarage',
@@ -501,6 +625,16 @@ _CANCONTROLLER = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_EMPTY,
     output_type=_DEVICES,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetDevice',
+    full_name='cancontroller.ipc.CanController.GetDevice',
+    index=4,
+    containing_service=None,
+    input_type=_DEVICEID,
+    output_type=_DEVICE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

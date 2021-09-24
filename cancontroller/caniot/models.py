@@ -50,7 +50,7 @@ class DeviceId:
     id = property(get_id)
 
     def __eq__(self, other: Union[int, DeviceId]):
-        return other == int(self)
+        return int(other) == int(self)
 
     def __int__(self):
         return self.get_id()
@@ -59,7 +59,8 @@ class DeviceId:
         if self.get_id() == 0:
             return "Undefined DeviceId=0"
         else:
-            return f"DeviceId={self.get_id()} (data_type = {self.data_type.name} [{self.data_type.value}], sub_id={self.sub_id})"
+            dt = DeviceId.DataType(self.data_type)
+            return f"DeviceId={self.get_id()} (data_type = {dt.name} [{dt.value}], sub_id={self.sub_id})"
 
     @classmethod
     def Undefined(cls) -> DeviceId:
@@ -123,7 +124,7 @@ class MsgId:
         elif self.is_error():
             return f"[{hex(self)}] ERROR message from {self.device_id} to {MsgId.Controller(self.controller).name}"
         else:
-            raise NotImplemented
+            raise NotImplementedError()
 
     def __int__(self) -> int:
         return self.get()
@@ -160,10 +161,17 @@ class MsgId:
         return self.frame_type == MsgId.FrameType.Command and self.query_type == MsgId.QueryType.Response
 
     def is_valid(self) -> bool:
-        return self.device_id != 0 and not self.is_error()
+        return self.device_id != 0 and not self.is_error() and \
+               (self.query_type == MsgId.QueryType.Query or not self.is_broadcast_device()) # cannot be a response from all nodes
 
     def is_query(self) -> bool:
         return self.is_valid() and self.query_type is MsgId.QueryType.Query
+
+    def is_broadcast_device(self) -> bool:
+        return self.device_id == DeviceId.Broadcast()
+
+    def is_broadcast_controller(self) -> bool:
+        return self.controller == MsgId.Controller.BROADCAST
 
     def is_response(self) -> bool:
         return self.is_valid() and self.query_type is MsgId.QueryType.Response

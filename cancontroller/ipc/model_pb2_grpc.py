@@ -34,6 +34,11 @@ class CanControllerStub(object):
                 request_serializer=model__pb2.Empty.SerializeToString,
                 response_deserializer=model__pb2.Devices.FromString,
                 )
+        self.GetDevice = channel.unary_unary(
+                '/cancontroller.ipc.CanController/GetDevice',
+                request_serializer=model__pb2.DeviceId.SerializeToString,
+                response_deserializer=model__pb2.Device.FromString,
+                )
 
 
 class CanControllerServicer(object):
@@ -63,6 +68,12 @@ class CanControllerServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetDevice(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_CanControllerServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -85,6 +96,11 @@ def add_CanControllerServicer_to_server(servicer, server):
                     servicer.GetDevices,
                     request_deserializer=model__pb2.Empty.FromString,
                     response_serializer=model__pb2.Devices.SerializeToString,
+            ),
+            'GetDevice': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetDevice,
+                    request_deserializer=model__pb2.DeviceId.FromString,
+                    response_serializer=model__pb2.Device.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -161,5 +177,22 @@ class CanController(object):
         return grpc.experimental.unary_unary(request, target, '/cancontroller.ipc.CanController/GetDevices',
             model__pb2.Empty.SerializeToString,
             model__pb2.Devices.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetDevice(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/cancontroller.ipc.CanController/GetDevice',
+            model__pb2.DeviceId.SerializeToString,
+            model__pb2.Device.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

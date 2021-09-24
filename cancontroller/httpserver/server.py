@@ -8,6 +8,9 @@ from aiohttp import web
 from cancontroller.ipc import model_pb2
 from cancontroller.ipc import model_pb2_grpc
 
+from cancontroller.controller.api import API
+from cancontroller.caniot.devices import node_garage_door
+
 
 # redirection
 #            location = request.app.router['index'].url_for()
@@ -16,19 +19,33 @@ from cancontroller.ipc import model_pb2_grpc
 class HTTPServer(web.Application):
     def __init__(self, grpc_target: str):
         self.grpc_target = grpc_target
+
+        self.api = API(grpc_target)
+
         super(HTTPServer, self).__init__()
         aiohttp_jinja2.setup(self, loader=jinja2.FileSystemLoader('templates'))
-        self.add_routes([web.get('/garage', self.handle),
-                        web.post('/garage', self.handle),
-                        web.static("/garage/static", "./static"),
-                        web.get('/debug/{debug}', self.handle_debug)])
+        self.add_routes(
+            [
+                web.get('/garage', self.handle),
+                web.post('/garage', self.handle),
+                web.static("/static/", "./static"),
+
+                web.get('/debug/{debug}', self.handle_debug),
+
+                web.get("/", self.handle_home),
+            ]
+        )
+
+    @aiohttp_jinja2.template("home.view.j2")
+    async def handle_home(self, request: web.Request):
+        response = self.api.get_device_data(node_garage_door.deviceid)
+        return {"model": response}
 
     @aiohttp_jinja2.template("garagedoor.view.j2")
     async def handle(self, request: web.Request):
         commands_list = [
-            "left",
-            "right",
-            "all",
+            "Gauche",
+            "Droite",
         ]
         context = request.query.get("context", "")
         error = ""

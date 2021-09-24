@@ -15,13 +15,19 @@ class Response(CaniotMessage, ABC):
 
 
 class AttributeResponse(CaniotMessage):
+    def get_key(self) -> int:
+        return self.parse()[0]
+
+    def get_value(self) -> int:
+        return self.parse()[1]
+
     def parse(self) -> (int, int):
         """
         Return ReadAttribute/WriteAttribute response
 
         Returns: key, attribute value
         """
-        return struct.unpack("<HL", self.buffer)
+        return struct.unpack("<HL", bytearray(self.buffer))
 
 
 class TelemetryMessage(CaniotMessage):

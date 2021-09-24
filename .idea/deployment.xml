@@ -2,21 +2,14 @@
 <project version="4">
   <component name="PublishConfigData" autoUpload="Always" serverName="raspberry-dev" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="192.168.10.155">
+      <paths name="raspberry-dev">
         <serverdata>
           <mappings>
-            <mapping deploy="/Controller" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/Controller" local="$PROJECT_DIR$" />
           </mappings>
           <excludedPaths>
             <excludedPath path="/Controller/venv" />
           </excludedPaths>
-        </serverdata>
-      </paths>
-      <paths name="raspberry-dev">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/home/pi/Controller" local="$PROJECT_DIR$" />
-          </mappings>
         </serverdata>
       </paths>
     </serverData>

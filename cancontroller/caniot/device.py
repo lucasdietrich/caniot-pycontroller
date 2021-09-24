@@ -1,6 +1,10 @@
+import abc
+
 from cancontroller.caniot.models import DeviceId, MsgId
 from cancontroller.caniot.message import *
 from cancontroller.controller.pending import PendingQuery
+
+import json
 
 
 class Device:
@@ -11,31 +15,50 @@ class Device:
 
     A device can only have one pending request
     """
-
-    pending_query: PendingQuery = None
     status = {
         "last_seen": None,
         "received": 0,
         "sent": 0,
     }
 
-    def __init__(self, deviceid: DeviceId):
+    telemetry = {
+        "raw": []
+    }
+
+    def __init__(self, deviceid: DeviceId, name: str = None):
         self.deviceid = deviceid
+        self.name = name
+        self.version = 0
 
     def __repr__(self):
-        return f"Device {self.deviceid}"
+        return f"Device {self.name} {self.deviceid}\n" + self.__dict__.__repr__()
 
     # def address(self, from_controller: MsgId.Controller):
     #     pass
 
     def query(self, buffer: list) -> QueryTelemetry:
-        return QueryTelemetry(self)
+        return QueryTelemetry(self.deviceid)
 
     def read_attribute(self, key: int) -> ReadAttributeQuery:
-        return ReadAttributeQuery(self, key)
+        return ReadAttributeQuery(self.deviceid, key)
+
+    def write_attribute(self, key: int, value: int) -> WriteAttributeQuery:
+        return WriteAttributeQuery(self.deviceid, key, value)
 
     def query_telemetry(self) -> QueryTelemetry:
-        return QueryTelemetry(self)
+        return QueryTelemetry(self.deviceid)
 
     def set_time(self, utc: int) -> WriteAttributeQuery:
-        return WriteAttributeQuery(self, 0x1010, utc)
+        return WriteAttributeQuery(self.deviceid, 0x1010, utc)
+
+    def interpret(self, msg: CaniotMessage) -> bool:
+        self.telemetry["raw"] = msg.buffer
+        return True
+
+    def model(self) -> dict:
+        return {
+            "telemetry": self.telemetry,
+        }
+
+    def json(self) -> str:
+        return json.dumps(self.model())

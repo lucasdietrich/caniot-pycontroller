@@ -5,17 +5,19 @@ import logging
 import can
 from grpc import aio
 
-from cancontroller.caniot.message import CaniotMessage, Query, ReadAttributeQuery, WriteAttributeQuery, AttributeResponse
+from cancontroller.caniot.message import CaniotMessage, Query, AttributeResponse
+from cancontroller.caniot.message.interpret import interpret_response
 from cancontroller.caniot.models import MsgId, DeviceId
 from cancontroller.caniot.device import Device
 from cancontroller.controller import initialize_can_if
-from cancontroller.ipc import model_pb2_grpc, model_pb2
-from pending import PendingQuery, PendingQueriesManager
-from cancontroller.controller.devices import Devices
+
+from typing import List
+
+import model_pb2_grpc, model_pb2
+from pending import PendingQuery
+from cancontroller.caniot.devices import Devices
 import contextlib
 import time
-
-from cancontroller.ipc.model_pb2 import DeviceId as Did
 
 logging.basicConfig()
 logging.getLogger("caniot.interfaces.socketcan.socketcan").setLevel(logging.WARNING)
@@ -31,8 +33,6 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         self.controller_id = controller_id
         for can_if in ["can0", "can1"]:
             initialize_can_if(can_if, bitrate=bitrate)
-
-        self.pending_queries_manager = PendingQueriesManager()
 
         # can1 is actually can0 on the board
         self.can0 = can.Bus(channel='can1', bustype='socketcan')  # , receive_own_messages=True
@@ -53,6 +53,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         self.notifier = can.Notifier(self.can0, listeners, loop=loop)
 
         self.devices = Devices()
+        self.pending: List[PendingQuery] = []
 
         self.rx_count = 0
         self.tx_count = 0
@@ -64,7 +65,6 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
         device: Device = self.devices.select(msg.msgid.device_id)
         if device:
-            device.pending_query = PendingQuery(msg)
             device.status["sent"] += 1
         else:
             can_logger.warning(f"Sending to an unkown device : {msg.msgid}")
@@ -74,59 +74,94 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         return device
 
     def recv(self, can_msg: can.Message):
-        msg = CaniotMessage(MsgId.from_int(can_msg.arbitration_id, False), can_msg.data)
+        # interpret as caniot message
+        msg = interpret_response(MsgId.from_int(can_msg.arbitration_id, False), can_msg.data)
 
         can_logger.debug(f"[{self.rx_count}] RX {msg.msgid} payload[{len(msg.buffer)}] : {msg.buffer}")
 
+        # update device table
         device: Device = self.devices.select(msg.msgid.device_id)
         if device:
             device.status["last_seen"] = datetime.datetime.now().isoformat()
             device.status["received"] += 1
+            device.interpret(msg)
 
-            if device.pending_query:
-                device.pending_query.response = msg
-                device.pending_query.event.set()
+        for query in self.pending:
+            if query.eval(msg):
+                break
 
         self.rx_count += 1
 
-    async def query(self, msg: Query, timeout: float):
-        device: Device = self.send(msg)
+    async def query(self, msg: Query, timeout: float) -> [CaniotMessage, float]:
+        pending_query = PendingQuery(query=msg)
+        self.pending.append(pending_query)
+
+        self.send(msg)
 
         start = time.time()
         with contextlib.suppress(asyncio.TimeoutError):
-            await asyncio.wait_for(device.pending_query.event.wait(), timeout=timeout)
+            await asyncio.wait_for(pending_query.event.wait(), timeout=timeout)
         duration = time.time() - start
 
-        return device.pending_query.response, duration
+        responses = pending_query.responses
+        self.pending.remove(pending_query)
+
+        return responses, duration
 
     async def SendGarage(self, request: model_pb2.GarageCommand, context) -> model_pb2.GarageResponse:
-        self.send(self.devices["GarageDoorControllerProdPCB"].open_door(request.command))
+        query = self.devices["GarageDoorControllerProdPCB"].open_door(request.command)
+        self.send(query)
         return model_pb2.GarageResponse(datetime=request.datetime, status="OK")
 
+    async def QueryAttribute(self, query: Query, timeout: float):
+        response, duration = await self.query(query, timeout)
+        attr_response: AttributeResponse = response[0]
+        return model_pb2.AttributeResponse(device=model_pb2.DeviceId(
+            type=attr_response.msgid.device_id.data_type,
+            id=attr_response.msgid.device_id.sub_id
+        ), key=attr_response.get_key(), value=attr_response.get_value(), status="OK" if response else "TIMEOUT",
+            response_time=duration)
 
     async def ReadAttribute(self, request: model_pb2.AttributeRequest, context) -> model_pb2.AttributeResponse:
-        print(id(request.device.__class__))
-        print(id(model_pb2.DeviceId(type=12, id=23).__class__))
-        return model_pb2.AttributeResponse(device=request.device, key=1, value=2, status="OK", response_time=0.2)
-
-        # model_pb2.Device(
-        #     type=request.device.type,
-        #     id=request.device.id
-        # )
+        query = Device(DeviceId(data_type=request.device.type, sub_id=request.device.id)).read_attribute(request.key)
+        return await self.QueryAttribute(query, request.timeout)
 
     async def WriteAttribute(self, request: model_pb2.AttributeRequest, context) -> model_pb2.AttributeResponse:
-        print(request, request.device, request.device.type)
-        # return model_pb2.AttributeResponse(
-        #     device=request.device,
-        #     key=request.key,
-        #     value=0,
-        #     status="OK" if 0 else "NOK",
-        #     response_time=0
-        # )
+        query = Device(DeviceId(data_type=request.device.type, sub_id=request.device.id)).write_attribute(request.key, request.value)
+        return await self.QueryAttribute(query, request.timeout)
 
     async def GetDevices(self, request: model_pb2.Empty, context):
-        for i in range(10):
-            yield model_pb2.Device(type=1, id=2)
+        return model_pb2.Devices(device=[
+            model_pb2.Device() for dev in self.devices.devices
+        ])
+
+    async def GetDevice(self, request: model_pb2.Devices, context):
+        print(self.devices.devices)
+        dev: Device = self.devices.select(DeviceId(request.type, request.id))
+        if dev:
+            return model_pb2.Device(
+                deviceid=request,
+                name=dev.name,
+                version=dev.version,
+                status=model_pb2.Device.Status(
+                    last_seen=dev.status["last_seen"],
+                    received=dev.status["received"],
+                    sent=dev.status["sent"],
+                ),
+                model=dev.json()
+            )
+        else:
+            return model_pb2.Device(
+                deviceid=request,
+                name="",
+                version=1,
+                status=model_pb2.Device.Status(
+                    last_seen = "",
+                    received = 0,
+                    sent = 0,
+                ),
+                model = "{}"
+            )
 
 
 async def serve():

@@ -7,82 +7,94 @@ syntax = "proto3";
 package cancontroller.ipc;
 
 service CanController {
-    rpc SendGarage(GarageCommand) returns (GarageResponse) {}
+  rpc SendGarage(GarageCommand) returns (GarageResponse) {}
 
-    rpc ReadAttribute(AttributeRequest) returns (AttributeResponse) {}
-    rpc WriteAttribute(AttributeRequest) returns (AttributeResponse) {}
+  rpc ReadAttribute(AttributeRequest) returns (AttributeResponse) {}
+  rpc WriteAttribute(AttributeRequest) returns (AttributeResponse) {}
 
-    rpc GetDevices(Empty) returns (Devices) { }
+  rpc GetDevices(Empty) returns (Devices) {}
+  rpc GetDevice(DeviceId) returns (Device) {}
 }
 
 /*____________________________________________________________________________________________________________________*/
 
 message DeviceId
 {
-    uint32 type = 1;
-    uint32 id = 2;
+  uint32 type = 1;
+  uint32 id = 2;
 }
 
 enum Status {
-    OK = 0;
-    NOK = 1;
-    TIMEOUT = 2;
+  OK = 0;
+  NOK = 1;
+  TIMEOUT = 2;
 }
 
 /*____________________________________________________________________________________________________________________*/
 
 enum Command {
-    COMMAND_UNSPECIFIED = 0;
-    COMMAND_LEFT = 1;
-    COMMAND_RIGHT = 2;
-    COMMAND_ALL = 3;
+  COMMAND_UNSPECIFIED = 0;
+  COMMAND_LEFT = 1;
+  COMMAND_RIGHT = 2;
+  COMMAND_ALL = 3;
 }
 
 message GarageCommand {
-    string datetime = 1;
+  string datetime = 1;
 
-    Command command = 2;
+  Command command = 2;
 }
 
 message GarageResponse {
-    string datetime = 1;
+  string datetime = 1;
 
-    Status status = 4;
+  Status status = 4;
 }
 
 /*____________________________________________________________________________________________________________________*/
 
 
-message AttributeRequest
-{
-    DeviceId device = 2;
-    uint32 key = 3;
-    uint32 value = 4;
+message AttributeRequest {
+  DeviceId device = 2;
+  uint32 key = 3;
+  uint32 value = 4;
 
-    float timeout = 5;  // if timeout == 0.0 then return immediately with status OK
-                        // if timeout != 0.0 return status TIMEOUT if timeout value exceeded
-                        // return pending ok if value == write value with WriteAttribute and check key anywhere
+  float timeout = 5;  // if timeout == 0.0 then return immediately with status OK
+  // if timeout != 0.0 return status TIMEOUT if timeout value exceeded
+  // return pending ok if value == write value with WriteAttribute and check key anywhere
 }
 
-message AttributeResponse
-{
-    DeviceId device = 1;
-    uint32 key = 2;
-    uint32 value = 3;
+message AttributeResponse {
+  DeviceId device = 1;
+  uint32 key = 2;
+  uint32 value = 3;
 
-    Status status = 4;
+  Status status = 4;
 
-    float response_time = 5;
+  float response_time = 5;
 }
 
 /*____________________________________________________________________________________________________________________*/
 
-message Empty
-{
+message Empty {
 
 }
 
-message Devices
-{
-    repeated DeviceId device = 1;
+message Device {
+  DeviceId deviceid = 1;
+  string name = 2;
+  uint32 version = 3;
+
+  message Status {
+    string last_seen = 1;
+    uint32 received = 2;
+    uint32 sent = 3;
+  }
+  Status status = 4;
+
+  string model = 5;
+}
+
+message Devices {
+  repeated Device device = 1;
 }
