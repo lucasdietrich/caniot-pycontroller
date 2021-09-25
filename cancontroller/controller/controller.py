@@ -4,8 +4,9 @@ import logging
 
 import can
 from grpc import aio
+import os.path
 
-from cancontroller import configuration
+from cancontroller import configuration, ROOT_DIR
 from cancontroller.caniot.message import CaniotMessage, Query, AttributeResponse
 from cancontroller.caniot.message.interpret import interpret_response
 from cancontroller.caniot.models import MsgId, DeviceId
@@ -24,8 +25,8 @@ logging.basicConfig()
 logging.getLogger("caniot.interfaces.socketcan.socketcan").setLevel(logging.WARNING)
 can_logger = logging.getLogger("caniot")
 can_logger.setLevel(logging.DEBUG)
-grpc_logger = logging.getLogger("grpc")
-grpc_logger.setLevel(logging.DEBUG)
+fileHandler = logging.FileHandler(os.path.join(ROOT_DIR, configuration.controller_log_file))
+can_logger.addHandler(fileHandler)
 
 
 class CanController(model_pb2_grpc.CanControllerServicer):
@@ -36,22 +37,21 @@ class CanController(model_pb2_grpc.CanControllerServicer):
             initialize_can_if(can_if, bitrate=bitrate)
 
         # can1 is actually can0 on the board
-        self.can0 = can.Bus(channel=configuration.can_bus, bustype='socketcan')  # , receive_own_messages=True
+        self.can0 = can.Bus(channel=configuration.can_bus, bustype='socketcan')
+
         # self.reader = can.AsyncBufferedReader()
-        logger = can.Logger(configuration.log_file)
+        logger = can.Logger(os.path.join(ROOT_DIR, configuration.can_log_file))
 
         # reader = can.AsyncBufferedReader()
         # can.AsyncBufferedReader.get_message()
 
-        listeners = [
-            self.recv,
-            # self.reader,
-
-            # logger  # Regular Listener object
-        ]
+        # self.can0.set_filters()
 
         loop = asyncio.get_event_loop()
-        self.notifier = can.Notifier(self.can0, listeners, loop=loop)
+        self.notifier = can.Notifier(self.can0, [
+            self.recv,
+            logger
+        ], loop=loop)
 
         self.devices = Devices()
         self.pending: List[PendingQuery] = []

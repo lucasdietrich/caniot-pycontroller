@@ -1,3 +1,6 @@
+import os
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 import json
 import dataclasses
 
@@ -8,7 +11,8 @@ class Configuration:
     http_server_port: int = 8080
     can_bus_speed: int = 500000
     can_bus: str = "can1"
-    log_file: str = "logfile.asc"
+    can_log_file: str = "can_log_file.asc"
+    controller_log_file: str = "controller_log_file.log"
 
 try:
     with open("/home/pi/Controller/config.json", "r+") as fp:

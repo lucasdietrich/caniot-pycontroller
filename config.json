@@ -3,5 +3,6 @@
   "http_server_port": 80,
   "can_bus": "can1",
   "can_bus_speed": 500000,
-  "log_file": "logfile.asc"
+  "can_log_file": "can_log_file.asc",
+  "controller_log_file": "controller_log_file.log"
 }
