@@ -1,0 +1,13 @@
+[Unit]
+Description=PythonCanHTTPServer
+After=network.target cancontroller.service
+
+[Service]
+WorkingDirectory=/home/pi/Controller/cancontroller/httpserver
+Type=simple
+ExecStart=/bin/bash -c 'cd /home/pi/Controller && source venv/bin/activate && cd cancontroller/httpserver && sudo PYTHONPATH="/home/pi/Controller:/home/pi/Controller/cancontroller/ipc" python3 server.py'
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

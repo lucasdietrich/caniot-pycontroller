@@ -105,10 +105,3 @@ class HTTPServer(web.Application):
 if __name__ == '__main__':
     app = HTTPServer(grpc_target=f'localhost:{configuration.grpc_port}')
     web.run_app(app, host="0.0.0.0", port=configuration.http_server_port)
-
-
-# def run():
-#     with grpc.insecure_channel('localhost:50051') as channel:
-#         stub = model_pb2_grpc.CanControllerStub(channel)
-#         response = stub.SendGarage(model_pb2.GarageCommand(datetime="128612936", command="OPENALL"))
-#     print(f"CanController GarageResponse datetime={response.datetime} status={response.status}")

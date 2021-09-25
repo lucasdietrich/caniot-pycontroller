@@ -49,3 +49,36 @@ You must include the model_pb2 class from the same location, otherwise same clas
 You have to add the path to the interpreter path like this :
 
 ![](./pics/add_proto_path.png)
+
+# Deployment
+
+## Add controller and http server to systemd
+
+`sudo ln -s ~/Controller/cancontroller.service /etc/systemd/system/`
+`sudo ln -s ~/Controller/canhttpserver.service /etc/systemd/system/`
+
+Check
+
+`ls -l /etc/systemd/system`
+
+Restart services
+
+`sudo systemctl restart cancontroller.service`
+`sudo systemctl restart canhttpserver.service`
+
+Check
+
+`systemctl status cancontroller.service`
+`systemctl status canhttpserver.service`
+
+Reload systemctl daemon : `systemctl daemon-reload`
+
+ && sudo PYTHONPATH="/home/pi/Controller:/home/pi/Controller/cancontroller/ipc" python3 cancontroller/controller/controller.py
+ && sudo PYTHONPATH="/home/pi/Controller:/home/pi/Controller/cancontroller/ipc" python3 cancontroller/httpserver/server.py
+ 
+
+Scripts :
+
+`sudo bash scripts/start-services.sh`
+`sudo bash scripts/stop-services.sh`
+`sudo bash scripts/status-services.sh`

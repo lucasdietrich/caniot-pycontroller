@@ -1,0 +1,13 @@
+[Unit]
+Description=PythonCanController
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/Controller
+Type=simple
+ExecStart=/bin/bash -c 'cd /home/pi/Controller && source venv/bin/activate && cd cancontroller/controller && sudo PYTHONPATH="/home/pi/Controller:/home/pi/Controller/cancontroller/ipc" python3 controller.py'
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
