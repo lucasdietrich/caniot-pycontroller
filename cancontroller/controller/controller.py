@@ -5,6 +5,7 @@ import logging
 import can
 from grpc import aio
 
+from cancontroller import configuration
 from cancontroller.caniot.message import CaniotMessage, Query, AttributeResponse
 from cancontroller.caniot.message.interpret import interpret_response
 from cancontroller.caniot.models import MsgId, DeviceId
@@ -28,16 +29,16 @@ grpc_logger.setLevel(logging.DEBUG)
 
 
 class CanController(model_pb2_grpc.CanControllerServicer):
-    def __init__(self, bitrate: int = 500000, controller_id: MsgId.Controller = MsgId.Controller.Main):
+    def __init__(self, bitrate: int = configuration.can_bus_speed, controller_id: MsgId.Controller = MsgId.Controller.Main):
         self.bitrate = bitrate
         self.controller_id = controller_id
         for can_if in ["can0", "can1"]:
             initialize_can_if(can_if, bitrate=bitrate)
 
         # can1 is actually can0 on the board
-        self.can0 = can.Bus(channel='can1', bustype='socketcan')  # , receive_own_messages=True
+        self.can0 = can.Bus(channel=configuration.can_bus, bustype='socketcan')  # , receive_own_messages=True
         # self.reader = can.AsyncBufferedReader()
-        logger = can.Logger('logfile.asc')
+        logger = can.Logger(configuration.log_file)
 
         # reader = can.AsyncBufferedReader()
         # can.AsyncBufferedReader.get_message()
@@ -172,7 +173,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 async def serve():
     server = aio.server()
     model_pb2_grpc.add_CanControllerServicer_to_server(CanController(), server)
-    listen_addr = '[::]:50051'
+    listen_addr = f'[::]:{configuration.grpc_port}'
     server.add_insecure_port(listen_addr)
     # TODO server.add_secure_port()
     logging.info("Starting server on %s", listen_addr)

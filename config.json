@@ -1,0 +1,7 @@
+{
+  "grpc_port": 50051,
+  "http_server_port": 80,
+  "can_bus": "can1",
+  "can_bus_speed": 500000,
+  "log_file": "logfile.asc"
+}

@@ -8,6 +8,7 @@ from aiohttp import web
 from cancontroller.ipc import model_pb2
 from cancontroller.ipc import model_pb2_grpc
 
+from cancontroller import configuration
 from cancontroller.controller.api import API
 from cancontroller.caniot.devices import node_garage_door
 
@@ -80,8 +81,8 @@ class HTTPServer(web.Application):
 
 
 if __name__ == '__main__':
-    app = HTTPServer(grpc_target='localhost:50051')
-    web.run_app(app, host="0.0.0.0", port=8080)
+    app = HTTPServer(grpc_target=f'localhost:{configuration.grpc_port}')
+    web.run_app(app, host="0.0.0.0", port=configuration.http_server_port)
 
 
 # def run():
