@@ -6,43 +6,51 @@
     font-weight: bold;
 }
 
-input
+#form
 {
-    font-family: "Helvetica Neue", sans-serif;
-    font-size: 100px;
+    height: 440px;
 }
 
-.door-form
+.door
+{
+    float: left;
+    width: 20%;
+}
+
+.door:first-child, .door:last-child
+{
+    width: 40%;
+}
+
+#gate img
 {
     width: 100%;
-    background-color: rgba(255, 127, 127, 0.17);
-}
-
-.door-form > form > div
-{
     height: 400px;
-    width:45%;
-    float:left;
-
-    padding: 2.5%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-input[type="submit"]
+.command
 {
+    font-size: 0px;
+    height: 440px;
     width: 100%;
-    height: 100%;
     border: solid 1px black;
-    background:url(img.png) no-repeat;
+    background:url(door-orange.png) no-repeat;
     background-size: 100% 100%;
     cursor:pointer;
+    font-weight: bold;
+    font-style: italic;
+    color: #222222;
 }
 
-input[type="submit"]:hover
+.close
 {
-    background-color: rgba(203, 222, 255, 0.17);
+    border-bottom:solid 40px #00ff00;
 }
 
-p
+.open
 {
-    font-size: 32px;
+    border-bottom:solid 40px #ff0000;
 }

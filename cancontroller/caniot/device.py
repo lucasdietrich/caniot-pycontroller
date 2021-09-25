@@ -1,4 +1,5 @@
 import abc
+import datetime
 
 from cancontroller.caniot.models import DeviceId, MsgId
 from cancontroller.caniot.message import *
@@ -15,11 +16,10 @@ class Device:
 
     A device can only have one pending request
     """
-    status = {
-        "last_seen": None,
-        "received": 0,
-        "sent": 0,
-    }
+
+    last_seen: datetime.datetime = None
+    received = 0
+    sent = 0
 
     telemetry_raw = []
     telemetry = {}

@@ -66,10 +66,12 @@ class HTTPServer(web.Application):
                       f"GarageResponse status={model_pb2._STATUS.values_by_number[response.status].name}")
             else:
                 print("No command")
+
         return {
             "device": self.api.get_device_data(node_garage_door.deviceid),
             "command": command,
-            "commands_list": commands_list
+            "commands_list": commands_list,
+            "debug": bool(request.query.get("debug", ""))
         }
 
     async def handle_debug(self, request: web.Request):

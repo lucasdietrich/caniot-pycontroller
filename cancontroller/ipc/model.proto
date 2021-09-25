@@ -80,13 +80,27 @@ message Empty {
 
 }
 
+message DateTime
+{
+  uint32 year = 1;
+  uint32 month = 2;
+  uint32 day = 3;
+
+  uint32 hour = 4;
+  uint32 minute = 5;
+  uint32 second = 6;
+
+  string iso = 7;
+  string formatted = 9;
+}
+
 message Device {
   DeviceId deviceid = 1;
   string name = 2;
   uint32 version = 3;
 
   message Status {
-    string last_seen = 1;
+    DateTime last_seen = 1;
     uint32 received = 2;
     uint32 sent = 3;
   }
@@ -107,19 +121,14 @@ message DeviceResponse {
 }
 
 message GarageDoorModel {
-  bool in0 = 1;
-  bool in1 = 2;
-  bool in2 = 3;
-  bool in3 = 4;
+  bool left = 1;
+  bool right = 2;
+  bool gate = 3;
+  bool in0 = 4;
   float temp0 = 5;
   uint32 analog0 = 6;
   uint32 analog1 = 7;
   uint32 analog2 = 8;
-}
-
-message GarageDoor {
-  Device device = 1;
-  GarageDoorModel model = 2;
 }
 
 message Devices {

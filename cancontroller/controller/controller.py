@@ -65,7 +65,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
         device: Device = self.devices.select(msg.msgid.device_id)
         if device:
-            device.status["sent"] += 1
+            device.sent += 1
         else:
             can_logger.warning(f"Sending to an unkown device : {msg.msgid}")
 
@@ -82,8 +82,8 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         # update device table
         device: Device = self.devices.select(msg.msgid.device_id)
         if device:
-            device.status["last_seen"] = datetime.datetime.now().isoformat()
-            device.status["received"] += 1
+            device.last_seen = datetime.datetime.now()
+            device.received += 1
             device.interpret(msg)
 
         for query in self.pending:
@@ -143,9 +143,18 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                 name=dev.name,
                 version=dev.version,
                 status=model_pb2.Device.Status(
-                    last_seen=dev.status["last_seen"],
-                    received=dev.status["received"],
-                    sent=dev.status["sent"],
+                    last_seen=model_pb2.DateTime(
+                        iso=dev.last_seen.isoformat(),
+                        formatted=dev.last_seen.strftime("%Y-%m-%d %H:%M:%S"),
+                        year=dev.last_seen.year,
+                        month=dev.last_seen.month,
+                        day=dev.last_seen.day,
+                        hour=dev.last_seen.hour,
+                        minute=dev.last_seen.minute,
+                        second=dev.last_seen.second
+                    ) if dev.last_seen else None,
+                    received=dev.received,
+                    sent=dev.sent,
                 ),
                 raw=dev.telemetry_raw,
                 **dev.model()

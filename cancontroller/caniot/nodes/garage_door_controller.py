@@ -14,10 +14,10 @@ import model_pb2
 
 class GarageDoorController(Device):
     telemetry = {
-        "in0": None,
-        "in1": None,
-        "in2": None,
-        "in3": None,
+        "left": 1,
+        "right": 1,
+        "gate": 1,
+        "in0": 1,
         "temp0": 0.0,
         "analog0": 0,
         "analog1": 0,
@@ -40,8 +40,9 @@ class GarageDoorController(Device):
     def interpret(self, msg: CaniotMessage) -> bool:
         super(GarageDoorController, self).interpret(msg)
 
-        for bit in range(4):
-            self.telemetry[f"in{bit}"] = read_bit(msg.buffer[0], bit)
+        self.telemetry["left"] = read_bit(msg.buffer[0], 0)
+        self.telemetry["right"] = read_bit(msg.buffer[0], 1)
+        self.telemetry["gate"] = read_bit(msg.buffer[0], 2)
 
         self.telemetry["temp0"] = self.tcn75_raw2float(bytearray(msg.buffer[2:4]))
 

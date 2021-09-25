@@ -1,0 +1,35 @@
+body
+{
+    font-family: "Helvetica Neue", sans-serif;
+
+    padding: 20px;
+}
+
+p
+{
+    font-size: 32px;
+    margin-left: 40px;
+}
+
+h1, h2
+{
+    font-size: 32px;
+    border-bottom: solid 1px #222222;
+}
+
+.date
+{
+    font-style: italic;
+    color: #333333;
+}
+
+.measurement
+{
+    font-weight: bold;
+    font-style: italic;
+}
+
+.temperature
+{
+    font-style: italic;
+}
