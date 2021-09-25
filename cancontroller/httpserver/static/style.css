@@ -5,6 +5,17 @@ body
     padding: 20px;
 }
 
+.disabled
+{
+    opacity: 30%;
+}
+
+.big-button
+{
+    font-size: 48px;
+
+}
+
 p
 {
     font-size: 32px;

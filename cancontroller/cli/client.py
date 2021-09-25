@@ -62,10 +62,16 @@ class CLIClient:
             print(response)
             return response
 
-
+    def RequestTelemetry(self, deviceid: DeviceId):
+        with grpc.insecure_channel(self.grpc_target) as  channel:
+            stub = model_pb2_grpc.CanControllerStub(channel)
+            return stub.RequestTelemetry(model_pb2.DeviceId(
+                type=deviceid.data_type,
+                id=deviceid.sub_id
+            ))
 
 if __name__ == "__main__":
-    client = CLIClient('localhost:50051')
+    client = CLIClient('192.168.10.155:50051')
     did = DeviceId(DeviceId.DataType.CRTAAA, 0)
     response_read_attr = client.ReadAttribute(did, 0x1010)
     response_get_device = client.GetDevice(DeviceId(5, 0))

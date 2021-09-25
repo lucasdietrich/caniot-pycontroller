@@ -9,8 +9,10 @@ package cancontroller.ipc;
 service CanController {
   rpc SendGarage(GarageCommand) returns (GarageResponse) {}
 
+  rpc RequestTelemetry(DeviceId) returns (Empty) {}
   rpc ReadAttribute(AttributeRequest) returns (AttributeResponse) {}
   rpc WriteAttribute(AttributeRequest) returns (AttributeResponse) {}
+
 
   rpc GetDevices(Empty) returns (Devices) {}
   rpc GetDevice(DeviceId) returns (Device) {}
@@ -103,6 +105,7 @@ message Device {
     DateTime last_seen = 1;
     uint32 received = 2;
     uint32 sent = 3;
+    bool online = 4;
   }
   Status status = 4;
 

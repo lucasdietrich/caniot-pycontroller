@@ -18,7 +18,7 @@
 {% endif %}
 <div>
     <h1>Portes de garage</h1>
-    <div id="form">
+    <div id="form" class="{{ "" if device.status.online else "disabled"}}">
         <form action="" method="post">
             <div id="doors">
                 <div id="left-door" class="door">
@@ -50,6 +50,10 @@
     <p>
         {{ device }}
     </p>
+
+    <form action="" method="post">
+        <input class="big-button" type="submit" name="debug" value="RequestTelemetry">
+    </form>
 </div>
 {% endif %}
 </body>

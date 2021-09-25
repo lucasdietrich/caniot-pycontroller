@@ -64,8 +64,8 @@ class HTTPServer(web.Application):
                 print(f"CanController "
                       f"GarageCommand command={command} "
                       f"GarageResponse status={model_pb2._STATUS.values_by_number[response.status].name}")
-            else:
-                print("No command")
+            if form.get("debug", "") == "RequestTelemetry":
+                self.api.RequestTelemetry(node_garage_door.deviceid)
 
         return {
             "device": self.api.get_device_data(node_garage_door.deviceid),

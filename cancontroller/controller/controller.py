@@ -135,6 +135,11 @@ class CanController(model_pb2_grpc.CanControllerServicer):
             model_pb2.Device() for dev in self.devices.devices
         ])
 
+    # allow this method to be blocking until timeout
+    async def RequestTelemetry(self, request: model_pb2.DeviceId, context):
+        self.send(Device(DeviceId(data_type=request.type, sub_id=request.id)).query_telemetry())
+        return model_pb2.Empty()
+
     async def GetDevice(self, request: model_pb2.Devices, context):
         dev: Device = self.devices.select(DeviceId(request.type, request.id))
         if dev:
@@ -155,6 +160,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                     ) if dev.last_seen else None,
                     received=dev.received,
                     sent=dev.sent,
+                    online=bool(dev.last_seen)
                 ),
                 raw=dev.telemetry_raw,
                 **dev.model()
@@ -168,6 +174,7 @@ async def serve():
     model_pb2_grpc.add_CanControllerServicer_to_server(CanController(), server)
     listen_addr = '[::]:50051'
     server.add_insecure_port(listen_addr)
+    # TODO server.add_secure_port()
     logging.info("Starting server on %s", listen_addr)
     await server.start()
     await server.wait_for_termination()

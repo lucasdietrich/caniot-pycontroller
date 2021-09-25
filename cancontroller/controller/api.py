@@ -15,3 +15,11 @@ class API:
         with grpc.insecure_channel(self.grpc_target) as channel:
             stub = model_pb2_grpc.CanControllerStub(channel)  # TODO stub initialized elsewhere
             return stub.GetDevice(model_pb2.DeviceId(type=did.data_type, id=did.sub_id))
+
+    def RequestTelemetry(self, deviceid: DeviceId):
+        with grpc.insecure_channel(self.grpc_target) as  channel:
+            stub = model_pb2_grpc.CanControllerStub(channel)
+            return stub.RequestTelemetry(model_pb2.DeviceId(
+                type=deviceid.data_type,
+                id=deviceid.sub_id
+            ))

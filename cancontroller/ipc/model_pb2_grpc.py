@@ -19,6 +19,11 @@ class CanControllerStub(object):
                 request_serializer=model__pb2.GarageCommand.SerializeToString,
                 response_deserializer=model__pb2.GarageResponse.FromString,
                 )
+        self.RequestTelemetry = channel.unary_unary(
+                '/cancontroller.ipc.CanController/RequestTelemetry',
+                request_serializer=model__pb2.DeviceId.SerializeToString,
+                response_deserializer=model__pb2.Empty.FromString,
+                )
         self.ReadAttribute = channel.unary_unary(
                 '/cancontroller.ipc.CanController/ReadAttribute',
                 request_serializer=model__pb2.AttributeRequest.SerializeToString,
@@ -45,6 +50,12 @@ class CanControllerServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def SendGarage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RequestTelemetry(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -81,6 +92,11 @@ def add_CanControllerServicer_to_server(servicer, server):
                     servicer.SendGarage,
                     request_deserializer=model__pb2.GarageCommand.FromString,
                     response_serializer=model__pb2.GarageResponse.SerializeToString,
+            ),
+            'RequestTelemetry': grpc.unary_unary_rpc_method_handler(
+                    servicer.RequestTelemetry,
+                    request_deserializer=model__pb2.DeviceId.FromString,
+                    response_serializer=model__pb2.Empty.SerializeToString,
             ),
             'ReadAttribute': grpc.unary_unary_rpc_method_handler(
                     servicer.ReadAttribute,
@@ -126,6 +142,23 @@ class CanController(object):
         return grpc.experimental.unary_unary(request, target, '/cancontroller.ipc.CanController/SendGarage',
             model__pb2.GarageCommand.SerializeToString,
             model__pb2.GarageResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def RequestTelemetry(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/cancontroller.ipc.CanController/RequestTelemetry',
+            model__pb2.DeviceId.SerializeToString,
+            model__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
