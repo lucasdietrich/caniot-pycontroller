@@ -22,10 +22,13 @@ import contextlib
 import time
 
 logging.basicConfig()
-logging.getLogger("caniot.interfaces.socketcan.socketcan").setLevel(logging.WARNING)
+logging.getLogger("caniot.interfaces.socketcan.socketcan").setLevel(logging.DEBUG)
+
 can_logger = logging.getLogger("caniot")
 can_logger.setLevel(logging.DEBUG)
-fileHandler = logging.FileHandler(os.path.join(ROOT_DIR, configuration.controller_log_file))
+fileHandler = logging.FileHandler(configuration.get_controller_log_file())
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+fileHandler.setFormatter(formatter)
 can_logger.addHandler(fileHandler)
 
 
@@ -40,7 +43,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         self.can0 = can.Bus(channel=configuration.can_bus, bustype='socketcan')
 
         # self.reader = can.AsyncBufferedReader()
-        logger = can.Logger(os.path.join(ROOT_DIR, configuration.can_log_file))
+        logger = can.Logger(os.path.join(ROOT_DIR, configuration.get_can_log_file()))
 
         # reader = can.AsyncBufferedReader()
         # can.AsyncBufferedReader.get_message()

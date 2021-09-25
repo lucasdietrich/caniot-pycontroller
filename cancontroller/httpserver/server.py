@@ -3,7 +3,11 @@ from __future__ import print_function
 import jinja2
 import aiohttp_jinja2
 import grpc
+import os.path
+
 from aiohttp import web
+
+from cancontroller import ROOT_DIR
 
 from cancontroller.ipc import model_pb2
 from cancontroller.ipc import model_pb2_grpc
@@ -32,8 +36,8 @@ class HTTPServer(web.Application):
                 web.static("/static/", "./static"),
 
                 web.get('/debug/{debug}', self.handle_debug),
-
                 web.get("/", self.handle_home),
+                web.get("/logs", self.handle_logs)
             ]
         )
 
@@ -75,9 +79,27 @@ class HTTPServer(web.Application):
             "debug": bool(request.query.get("debug", ""))
         }
 
+
     async def handle_debug(self, request: web.Request):
         debug = request.match_info.get('debug', "")
         return web.Response(text=f"{debug}")
+
+    # https://docs.aiohttp.org/en/stable/multipart.html
+    async def handle_logs(self, request: web.Request):
+        log_file = os.path.join(ROOT_DIR, configuration.get_controller_log_file())
+
+        if os.path.exists(log_file):
+            # if request.query.get("clear", "") == "1":
+            #     os.lseek()
+            #     return web.Response(status=200)
+
+            return web.FileResponse(log_file, headers={
+                "Content-Disposition": 'attachment; filename="logs.txt"'
+            })
+        else:
+            return web.Response(
+                status=404
+            )
 
 
 if __name__ == '__main__':

@@ -4,14 +4,24 @@
     <meta charset="utf-8">
     <title>CANIOT Index</title>
     <link rel="stylesheet" href="/static/home.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
-<h1>Caniot INDEX</h1>
+<div>
+    <h1>Caniot INDEX</h1>
+    <ul>
+        <li><a href="/garage">Garage</a></li>
+        <li><a href="/logs">Télécharger les logs</a></li>
+{#        <li><a href="/logs?clear=1">Supprimer les logs</a></li>#}
+    </ul>
+</div>
 
-<a href="/garage">Garage</a>
 
-{{ model }}
+<h1>Models</h1>
+<p>
+    {{ model }}
+</p>
 
 </body>
 </html>

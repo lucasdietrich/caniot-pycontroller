@@ -1,7 +1,7 @@
 body
 {
     font-family: "Helvetica Neue", sans-serif;
-
+    font-size: 32px;
     padding: 20px;
 }
 
@@ -13,12 +13,10 @@ body
 .big-button
 {
     font-size: 48px;
-
 }
 
 p
 {
-    font-size: 32px;
     margin-left: 40px;
 }
 
