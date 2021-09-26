@@ -1,6 +1,21 @@
 # Python CANIOT Controller
 
+Python `CANIOT` controller :
+- grpc 
+- aiohttp
+- cli
+- can
+
+IHM to control garage doors :
+![](./pics/app_garage.png)
+
+Related projects :
+- `caniot_common` implementation for AVR ATmega328p : https://github.com/Adecy/caniot-common
+- `caniot_garagedoorcontroller` Garage door controller : https://github.com/Adecy/caniot-garagedoorcontroller
+
 I hope there no bugs because I will never review this python garbage again.
+
+---
 
 # Remote Developpement of Python CAN Controller for Raspberry Pi 2
 
@@ -72,10 +87,6 @@ Check
 `systemctl status canhttpserver.service`
 
 Reload systemctl daemon : `systemctl daemon-reload`
-
- && sudo PYTHONPATH="/home/pi/Controller:/home/pi/Controller/cancontroller/ipc" python3 cancontroller/controller/controller.py
- && sudo PYTHONPATH="/home/pi/Controller:/home/pi/Controller/cancontroller/ipc" python3 cancontroller/httpserver/server.py
- 
 
 Scripts :
 

@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a9d1f84-73ec-4c5a-a9ba-861aab64a374" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/canhttpserver.service" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/start-services.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/status-services.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/stop-services.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.service" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pics/app_garage.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -180,7 +175,9 @@
       <workItem from="1632577644911" duration="170000" />
       <workItem from="1632577824324" duration="8000" />
       <workItem from="1632577913527" duration="3887000" />
-      <workItem from="1632581819757" duration="3953000" />
+      <workItem from="1632581819757" duration="4580000" />
+      <workItem from="1632659656792" duration="3623000" />
+      <workItem from="1632668950640" duration="336000" />
     </task>
     <servers />
   </component>
@@ -205,7 +202,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/raspberry_pi_2_py_can_controller$cli.coverage" NAME="cli Coverage Results" MODIFIED="1632574729964" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cancontroller/cli" />
     <SUITE FILE_PATH="coverage/raspberry_pi_2_py_can_controller$client.coverage" NAME="client Coverage Results" MODIFIED="1631999920815" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cancontroller/cli" />
-    <SUITE FILE_PATH="coverage/raspberry_pi_2_py_can_controller$httpserver.coverage" NAME="httpserver Coverage Results" MODIFIED="1632581338767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cancontroller/httpserver" />
-    <SUITE FILE_PATH="coverage/raspberry_pi_2_py_can_controller$controller.coverage" NAME="controller Coverage Results" MODIFIED="1632581337458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cancontroller/controller" />
+    <SUITE FILE_PATH="coverage/raspberry_pi_2_py_can_controller$httpserver.coverage" NAME="httpserver Coverage Results" MODIFIED="1632661453163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cancontroller/httpserver" />
+    <SUITE FILE_PATH="coverage/raspberry_pi_2_py_can_controller$controller.coverage" NAME="controller Coverage Results" MODIFIED="1632661451891" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cancontroller/controller" />
   </component>
 </project>
