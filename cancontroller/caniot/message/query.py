@@ -6,19 +6,12 @@ from cancontroller.caniot.misc import fit_buffer
 
 import struct
 
-
-class Query(CaniotMessage, ABC):
-    def set_controller(self, controller: MsgId.Controller = MsgId.Controller.Main):
-        self.msgid.controller = controller
-
-
-class ReadAttributeQuery(Query):
-    def __init__(self, deviceid: DeviceId, key: int, controller: MsgId.Controller = MsgId.Controller.Main):
+class ReadAttributeQuery(CaniotMessage):
+    def __init__(self, deviceid: DeviceId, key: int):
         super(ReadAttributeQuery, self).__init__(
             msgid=MsgId(
                 frame_type=MsgId.FrameType.ReadAttribute,
                 query_type=MsgId.QueryType.Query,
-                controller=controller,
                 device_id=deviceid,
                 extended_id=0,
                 id_type=MsgId.IdType.Standard
@@ -27,13 +20,12 @@ class ReadAttributeQuery(Query):
         )
 
 
-class WriteAttributeQuery(Query):
-    def __init__(self, deviceid: DeviceId, key: int, value: int, controller: MsgId.Controller = MsgId.Controller.Main):
+class WriteAttributeQuery(CaniotMessage):
+    def __init__(self, deviceid: DeviceId, key: int, value: int):
         super(WriteAttributeQuery, self).__init__(
             msgid=MsgId(
                 frame_type=MsgId.FrameType.WriteAttribute,
                 query_type=MsgId.QueryType.Query,
-                controller=controller,
                 device_id=deviceid,
                 extended_id=0,
                 id_type=MsgId.IdType.Standard
@@ -42,24 +34,24 @@ class WriteAttributeQuery(Query):
         )
 
 
-class Command(Query):
-    def __init__(self, deviceid: DeviceId, command: BufferType, controller: MsgId.Controller = MsgId.Controller.Main, fit_buf: bool = False):
+class Command(CaniotMessage):
+    def __init__(self, deviceid: DeviceId, command: BufferType, endpoint: MsgId.Endpoint = MsgId.Endpoint.Default, fit_buf: bool = False):
         if fit_buf:
-            command = fit_buffer(command, deviceid.data_type.get_size(), 0x00)
+            command = fit_buffer(command, deviceid.cls.get_size(), 0x00)
         else:
             command_len = len(command)
-            expected_command_len = deviceid.data_type.get_size()
+            expected_command_len = deviceid.cls.get_size()
 
             if command_len != expected_command_len:
                 raise Exception(f"invalid data size ({command_len}) for "
-                                f"the DataType {deviceid.data_type.name} ({expected_command_len})")
+                                f"the DataType {deviceid.cls.name} ({expected_command_len})")
 
         super(Command, self).__init__(
             msgid=MsgId(
                 frame_type=MsgId.FrameType.Command,
                 query_type=MsgId.QueryType.Query,
-                controller=controller,
                 device_id=deviceid,
+                endpoint=endpoint,
                 extended_id=0,
                 id_type=MsgId.IdType.Standard
             ),
@@ -67,13 +59,13 @@ class Command(Query):
         )
 
 
-class QueryTelemetry(Query):
-    def __init__(self, deviceid: DeviceId, controller: MsgId.Controller = MsgId.Controller.Main):
+class QueryTelemetry(CaniotMessage):
+    def __init__(self, deviceid: DeviceId, endpoint: MsgId.Endpoint = MsgId.Endpoint.Default):
         super(QueryTelemetry, self).__init__(
             msgid=MsgId(
                 frame_type=MsgId.FrameType.Telemetry,
                 query_type=MsgId.QueryType.Query,
-                controller=controller,
+                endpoint=endpoint,
                 device_id=deviceid,
                 extended_id=0,
                 id_type=MsgId.IdType.Standard

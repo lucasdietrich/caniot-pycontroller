@@ -22,8 +22,8 @@ class CLIClient:
             stub = model_pb2_grpc.CanControllerStub(channel)
             response = stub.ReadAttribute(model_pb2.AttributeRequest(
                 device=model_pb2.DeviceId(
-                    type=deviceid.data_type,
-                    id=deviceid.sub_id
+                    type=deviceid.cls,
+                    id=deviceid.sid
                 ),
                 key=key,
                 timeout=timeout
@@ -37,8 +37,8 @@ class CLIClient:
             stub = model_pb2_grpc.CanControllerStub(channel)
             response = stub.WriteAttribute(model_pb2.AttributeRequest(
                 device=model_pb2.DeviceId(
-                    type=deviceid.data_type,
-                    id=deviceid.sub_id
+                    type=deviceid.cls,
+                    id=deviceid.sid
                 ),
                 key=key,
                 value=value,
@@ -51,8 +51,8 @@ class CLIClient:
         with grpc.insecure_channel(self.grpc_target) as  channel:
             stub = model_pb2_grpc.CanControllerStub(channel)
             return stub.GetDevice(model_pb2.DeviceId(
-                type=deviceid.data_type,
-                id=deviceid.sub_id
+                type=deviceid.cls,
+                id=deviceid.sid
             ))
 
     def GetDevices(self):
@@ -66,13 +66,13 @@ class CLIClient:
         with grpc.insecure_channel(self.grpc_target) as  channel:
             stub = model_pb2_grpc.CanControllerStub(channel)
             return stub.RequestTelemetry(model_pb2.DeviceId(
-                type=deviceid.data_type,
-                id=deviceid.sub_id
+                type=deviceid.cls,
+                id=deviceid.sid
             ))
 
 if __name__ == "__main__":
     client = CLIClient('192.168.10.155:50051')
-    did = DeviceId(DeviceId.DataType.CRTAAA, 0)
+    did = DeviceId(DeviceId.cls.CRTHPT, 0x02)
     response_read_attr = client.ReadAttribute(did, 0x1010)
     response_get_device = client.GetDevice(DeviceId(5, 0))
 

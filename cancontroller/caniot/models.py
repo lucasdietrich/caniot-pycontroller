@@ -10,42 +10,44 @@ BufferType = Union[List[int], bytearray, bytes]
 
 @dataclass
 class DeviceId:
-    class DataType(IntEnum):
-        U: int = 0
-        CR: int = 1
-        CRA: int = 2
-        CRT: int = 3
-        CRTTA: int = 4
-        CRTAAA: int = 5
-        TTTT: int = 6
-        _: int = 7
+    class Class(IntEnum):
+        CRTHPT: int = 0
+        # U: int = 0
+        # CR: int = 1
+        # CRA: int = 2
+        # CRT: int = 3
+        # CRTTA: int = 4
+        # CRTAAA: int = 5
+        # TTTT: int = 6
+        # _: int = 7
+        CLSBROADCAST: int = 0b111 # shadow class name for broadcast
 
         def get_size(self) -> int:
             data_type_size = [
                 8,
-                1,
-                4,
-                4,
-                8,
-                8,
-                8,
-                0
+                # 1,
+                # 4,
+                # 4,
+                # 8,
+                # 8,
+                # 8,
+                # 0
             ]
-            assert 0 < self < len(data_type_size)
+            assert 0 <= self < len(data_type_size)
             return data_type_size[self]
 
-    data_type: Union[int, DataType]
-    sub_id: int
+    cls: Union[int, Class]
+    sid: int
 
     @classmethod
     def from_int(cls, deviceid: int) -> DeviceId:
         return DeviceId(
-            data_type=DeviceId.DataType(deviceid & 7),
-            sub_id=(deviceid >> 3) & 7
+            cls=DeviceId.Class(deviceid & 7),
+            sid=(deviceid >> 3) & 7
         )
 
     def get_id(self) -> int:
-        return (self.sub_id << 3) | self.data_type
+        return (self.sid << 3) | self.cls
 
     id = property(get_id)
 
@@ -55,20 +57,19 @@ class DeviceId:
     def __int__(self):
         return self.get_id()
 
-    def __repr__(self):
-        if self.get_id() == 0:
-            return "Undefined DeviceId=0"
-        else:
-            dt = DeviceId.DataType(self.data_type)
-            return f"DeviceId={self.get_id()} (data_type = {dt.name} [{dt.value}], sub_id={self.sub_id})"
+    def is_broadcast(self) -> bool:
+        return self.sid == 0x7 and self.cls == 0x7
 
-    @classmethod
-    def Undefined(cls) -> DeviceId:
-        return DeviceId(data_type=DeviceId.DataType.U, sub_id=0)
+    def __repr__(self):
+        if self.is_broadcast():
+            return "Broadcast (sid=0x7, cls = 0x7)"
+        else:
+            cls = DeviceId.Class(self.cls)
+            return f"DeviceId={self.get_id()} (cls = {cls.name} [{cls.value}], sid={self.sid})"
 
     @classmethod
     def Broadcast(cls) -> DeviceId:
-        return DeviceId(data_type=DeviceId.DataType._, sub_id=0b111)
+        return DeviceId(cls=DeviceId.Class.CLSBROADCAST, sid=0b111)
 
 
 @dataclass
@@ -91,18 +92,18 @@ class MsgId:
 
     query_type: QueryType
 
-    class Controller(IntEnum):
-        Main = 0           # Main controller also get all CAN messages
-        Controller1 = 1    # Mean Controller1 + Main controller
-        Controller2 = 2    # Mean Controller2 + Main controller
-        BROADCAST = 3      # Mean All Controllers, main controller + controllers 1 & 2
+    device_id: DeviceId
 
-        def join(self, controller: MsgId.Controller):
+    class Endpoint(IntEnum):
+        Default = 0
+        Endpoint1 = 1
+        Endpoint2 = 2
+        AllEndpoints = 3
+
+        def join(self, controller: MsgId.Endpoint):
             return self | controller
 
-    controller: Controller
-
-    device_id: DeviceId
+    endpoint: Endpoint = Endpoint.Default
 
     extended_id: int = 0
 
@@ -119,10 +120,10 @@ class MsgId:
             return f"[{hex(self)}] " \
                    f"{MsgId.QueryType(self.query_type).name} " \
                    f"{MsgId.FrameType(self.frame_type).name} " \
-                   f"between {MsgId.Controller(self.controller).name} " \
-                   f"and {self.device_id}"
+                   f"endpoint {MsgId.Endpoint(self.endpoint).name} " \
+                   f"device {self.device_id}"
         elif self.is_error():
-            return f"[{hex(self)}] ERROR message from {self.device_id} to {MsgId.Controller(self.controller).name}"
+            return f"[{hex(self)}] ERROR message from {self.device_id}"
         else:
             raise NotImplementedError()
 
@@ -136,7 +137,7 @@ class MsgId:
         return int(self) & int(other)
 
     def get(self) -> int:
-        std_id = self.frame_type | self.query_type << 2 | self.controller << 3 | self.device_id.get_id() << 5
+        std_id = self.frame_type | self.query_type << 2 | self.device_id.get_id() << 3 | self.endpoint << 9
 
         if self.id_type is MsgId.IdType.Extended:
             return std_id | self.extended_id << 11
@@ -146,10 +147,10 @@ class MsgId:
     @staticmethod
     def from_int(value: int, extended: bool = None) -> MsgId:
         return MsgId(
-            MsgId.FrameType(value & 0b11),
-            MsgId.QueryType((value >> 2) & 1),
-            MsgId.Controller((value >> 3) & 0b11),
-            device_id=DeviceId.from_int(value >> 5),
+            frame_type=MsgId.FrameType(value & 0b11),
+            query_type=MsgId.QueryType((value >> 2) & 1),
+            device_id=DeviceId.from_int((value >> 3) & 0b111111),
+            endpoint=MsgId.Endpoint((value >> 9) & 0b11),
             extended_id=value >> 11 if extended is None or extended is True else 0,
             id_type=MsgId.IdType.Extended if value >> 11 and extended is not False else MsgId.IdType.Standard
         )
@@ -170,13 +171,10 @@ class MsgId:
     def is_broadcast_device(self) -> bool:
         return self.device_id == DeviceId.Broadcast()
 
-    def is_broadcast_controller(self) -> bool:
-        return self.controller == MsgId.Controller.BROADCAST
-
     def is_response(self) -> bool:
         return self.is_valid() and self.query_type is MsgId.QueryType.Response
 
-    def prepare_response(self, controllers: int = None) -> MsgId:
+    def prepare_response(self) -> MsgId:
         if self.is_query():
             if self.frame_type == MsgId.FrameType.Command:
                 raise Exception(f"cannot build a response for a QueryCommand : {self}")
@@ -184,7 +182,7 @@ class MsgId:
                 return MsgId(
                     frame_type=self.frame_type,
                     query_type=MsgId.QueryType.Response,
-                    controller=MsgId.Controller(self.controller if controllers is None else (controllers | self.controller)),
+                    endpoint=self.endpoint,
                     device_id=self.device_id,
                     id_type=self.id_type,
                     extended_id=self.extended_id if self.id_type is MsgId.IdType.Extended else 0
@@ -194,13 +192,7 @@ class MsgId:
 
     def is_response_of(self, query: MsgId) -> bool:
         if self.is_valid():
-            virtual_response = query.prepare_response(None)
-            virtual_response.controller = self.controller
-
-            return all([
-                self.controller & query.controller == query.controller,
-                self == virtual_response
-            ])
+            return query.prepare_response() == self
         else:
             raise Exception(f"{query} is not a valid Query")
 
@@ -217,8 +209,8 @@ if __name__ == "__main__":
     msgid = MsgId(
         frame_type=MsgId.FrameType.Telemetry,
         query_type=MsgId.QueryType.Query,
-        controller=MsgId.Controller.Controller2,
-        device_id=DeviceId(DeviceId.DataType.CRT, 1)
+        endpoint=MsgId.Endpoint.Default,
+        device_id=DeviceId(DeviceId.Class.CRTHPT, 1)
     )
 
     print(msgid, ":", msgid.bin_repr())

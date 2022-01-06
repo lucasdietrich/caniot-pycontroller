@@ -5,7 +5,7 @@ from cancontroller.caniot.nodes.garage_door_controller import GarageDoorControll
 
 from typing import Dict, List, Union, Optional
 
-node_garage_door = GarageDoorController(DeviceId(DeviceId.DataType.CRTAAA, 0), "GarageDoorControllerProdPCB")
+node_garage_door = GarageDoorController(DeviceId(DeviceId.Class.CRTHPT, 0x02), "GarageDoorControllerProdPCB")
 
 class Devices:
     """

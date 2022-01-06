@@ -4,15 +4,7 @@ from .message import CaniotMessage
 from cancontroller.caniot.models import MsgId
 from cancontroller.caniot.models import BufferType
 
-from .query import Query
-
 import struct
-
-
-class Response(CaniotMessage, ABC):
-    def is_response_of(self,  query: Query):
-        return self.msgid.is_response_of(query.msgid)
-
 
 class AttributeResponse(CaniotMessage):
     def get_key(self) -> int:

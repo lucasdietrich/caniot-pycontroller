@@ -1,4 +1,4 @@
-from cancontroller.caniot.message import TelemetryMessage, AttributeResponse, Response, AttributeResponse
+from cancontroller.caniot.message import TelemetryMessage, AttributeResponse, AttributeResponse, CaniotMessage
 
 from cancontroller.caniot.models import MsgId, BufferType
 
@@ -10,6 +10,6 @@ def interpret_response(msgid: MsgId, buffer: BufferType):
         elif msgid.frame_type == MsgId.FrameType.Telemetry:
             return TelemetryMessage(msgid, buffer)
         else:
-            return Response(msgid, buffer)
+            return CaniotMessage(msgid, buffer)
     else:
         print(f"Msg isn't response : {int(msgid)} !")

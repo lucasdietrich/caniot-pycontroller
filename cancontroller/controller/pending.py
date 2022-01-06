@@ -7,13 +7,11 @@ import can
 
 from cancontroller.caniot.models import MsgId
 
-from cancontroller.caniot.message.query import Query
-from cancontroller.caniot.message.response import Response
 from cancontroller.caniot.message.message import CaniotMessage
 
 
 class PendingQuery:
-    def __init__(self, query: Query, expect_count: int = None):
+    def __init__(self, query: CaniotMessage, expect_count: int = None):
 
         if query.msgid.is_broadcast_device():
             self.expect_count = int(expect_count) if expect_count else -1
@@ -21,8 +19,8 @@ class PendingQuery:
             self.expect_count = 1
 
         self.event = asyncio.Event()
-        self.query: Query = query
-        self.responses: List[Response] = []
+        self.query: CaniotMessage = query
+        self.responses: List[CaniotMessage] = []
         self.count = 0
 
     def is_set(self) -> bool:

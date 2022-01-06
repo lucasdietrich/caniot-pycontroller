@@ -43,6 +43,9 @@ class CaniotMessage(ABC):
                            is_extended_id=False,
                            data=self.buffer)
 
+    def is_response_of(self,  query: CaniotMessage):
+        return self.msgid.is_response_of(query.msgid)
+
 
 class ErrorMessage(CaniotMessage):
     pass

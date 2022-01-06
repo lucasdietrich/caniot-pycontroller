@@ -53,6 +53,9 @@ http://192.168.10.155:8080/garage
 - Default values are not showed in proto : https://stackoverflow.com/questions/47373976/why-is-my-protobuf-message-in-python-ignoring-zero-values
 - id = 0 will not appear
 
+# Configure remote VENV
+
+![remote_interpreter_cfg.png](./pics/remote_interpreter_cfg.png)
 # Known issues
 
 ## Import of model_pb2

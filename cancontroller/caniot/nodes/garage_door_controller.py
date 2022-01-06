@@ -24,7 +24,6 @@ class GarageDoorController(Device):
         "analog2": 0,
     }
 
-
     class Door(IntEnum):
         NONE = 0
         LEFT = 1
@@ -35,7 +34,8 @@ class GarageDoorController(Device):
         return Command(self.deviceid, [0, door], fit_buf=True)
 
     def tcn75_raw2float(self, raw: bytes) -> float:
-        return struct.unpack("h", raw)[0] / 100.0
+        T = struct.unpack("h", raw)[0]
+        return T/10.0 - 28.0
 
     def interpret(self, msg: CaniotMessage) -> bool:
         super(GarageDoorController, self).interpret(msg)
