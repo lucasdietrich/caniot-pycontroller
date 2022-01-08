@@ -11,5 +11,7 @@ def interpret_response(msgid: MsgId, buffer: BufferType):
             return TelemetryMessage(msgid, buffer)
         else:
             return CaniotMessage(msgid, buffer)
+    elif msgid.is_error():
+        return CaniotMessage(msgid, buffer)
     else:
         print(f"Msg isn't response : {int(msgid)} !")

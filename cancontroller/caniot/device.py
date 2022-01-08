@@ -22,7 +22,7 @@ class Device:
     sent = 0
 
     telemetry_raw = []
-    telemetry = {}
+    model = {}
 
     def __init__(self, deviceid: DeviceId, name: str = None):
         self.deviceid = deviceid
@@ -54,8 +54,8 @@ class Device:
         self.telemetry_raw = msg.buffer
         return True
 
-    def model(self) -> dict:
+    def get_model(self) -> dict:
         return {}
 
     def json(self) -> str:
-        return json.dumps(self.model())
+        return json.dumps(self.get_model())

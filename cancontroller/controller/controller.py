@@ -17,7 +17,7 @@ from typing import List
 
 import model_pb2_grpc, model_pb2
 from pending import PendingQuery
-from cancontroller.caniot.devices import Devices
+from cancontroller.caniot.devices import Devices, node_alarm, node_garage_door
 import contextlib
 import time
 
@@ -70,7 +70,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         if device:
             device.sent += 1
         else:
-            can_logger.warning(f"Sending to an unkown device : {msg.msgid}")
+            can_logger.warning(f"Sending to an unknown device : {msg.msgid}")
 
         self.tx_count += 1
 
@@ -80,7 +80,11 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         # interpret as caniot message
         msg = interpret_response(MsgId.from_int(can_msg.arbitration_id, False), can_msg.data)
 
-        can_logger.debug(f"[{self.rx_count}] RX {msg.msgid} payload[{len(msg.buffer)}] : {msg.buffer}")
+        log_msg = f"[{self.rx_count}] RX {msg.msgid} payload[{len(msg.buffer)}] : {msg.buffer}"
+        if msg.msgid.is_error():
+            can_logger.error(log_msg)
+        else:
+            can_logger.debug(log_msg)
 
         # update device table
         device: Device = self.devices.select(msg.msgid.device_id)
@@ -111,10 +115,14 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
         return responses, duration
 
-    async def SendGarage(self, request: model_pb2.GarageCommand, context) -> model_pb2.GarageResponse:
+    async def SendGarage(self, request: model_pb2.GarageCommand, context) -> model_pb2.CommandResponse:
         query = self.devices["GarageDoorControllerProdPCB"].open_door(request.command)
         self.send(query)
-        return model_pb2.GarageResponse(datetime=request.datetime, status="OK")
+        return model_pb2.CommandResponse(datetime=request.datetime, status="OK")
+
+    async def SendAlarm(self, request: model_pb2.AlarmControllerCommand, context) -> model_pb2.CommandResponse:
+        self.send(node_alarm.command(request.light1, request.light2, request.alarm))
+        return model_pb2.CommandResponse(datetime=request.datetime, status="OK")
 
     async def QueryAttribute(self, query: CaniotMessage, timeout: float):
         response, duration = await self.query(query, timeout)
@@ -166,7 +174,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                     online=bool(dev.last_seen)
                 ),
                 raw=dev.telemetry_raw,
-                **dev.model()
+                **dev.get_model()
             )
         else:
             return model_pb2.Empty()

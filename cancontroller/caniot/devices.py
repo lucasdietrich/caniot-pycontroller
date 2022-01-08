@@ -2,10 +2,13 @@ from cancontroller.caniot.models import MsgId, DeviceId
 from cancontroller.caniot.device import Device
 
 from cancontroller.caniot.nodes.garage_door_controller import GarageDoorController
+from cancontroller.caniot.nodes.alarm_controller import AlarmController
 
 from typing import Dict, List, Union, Optional
 
 node_garage_door = GarageDoorController(DeviceId(DeviceId.Class.CRTHPT, 0x02), "GarageDoorControllerProdPCB")
+node_alarm = AlarmController(DeviceId(DeviceId.Class.CRTHPT, 0x03), "AlarmController")
+
 
 class Devices:
     """
@@ -13,7 +16,8 @@ class Devices:
     """
     def __init__(self):
         self.devices = [
-            node_garage_door
+            node_garage_door,
+            node_alarm
         ]
 
     def get(self, name: str):

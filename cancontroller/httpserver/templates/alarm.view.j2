@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Alarme et éclairage</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/alarm.css">
+    <meta http-equiv="refresh" content="10">
+</head>
+<body>
+<!-- {{ command }} -->
+{% if error %}
+    <div class="error">
+        <p>
+            {{ error }}
+        </p>
+    </div>
+{% endif %}
+<div>
+    <h1>Alarme</h1>
+    <div id="form" class="{{ "" if device.status.online else "disabled" }}">
+        <form action="" method="post">
+            <div id="lights">
+                <div id="light1" class="light">
+                    <input type="submit" name="light1" class="command" value="on">
+                    <input type="submit" name="light1" class="command" value="toggle">
+                    <input type="submit" name="light1" class="command" value="off">
+                </div>
+                <div id="light2" class="light">
+                    <input type="submit" name="light2" class="command" value="on">
+                    <input type="submit" name="light2" class="command" value="toggle">
+                    <input type="submit" name="light2" class="command" value="off">
+                </div>
+                <div id="alarm" class="alarm">
+                    <input type="submit" name="alarm" class="command" value="enable">
+                    <input type="submit" name="alarm" class="command" value="disable">
+                    <input type="submit" name="alarm" class="command" value="reset">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{ device }}
+
+<div>
+    <h1>Mesures</h1>
+    <p>Timestamp : <span class="date">{{ device.status.last_seen.formatted }}</span></p>
+{#    <p>Température : <span class="measurement temperature">{{ device.alarmcontroller.temp0 }} °C</span></p>#}
+</div>
+
+{% if debug %}
+    <div id="debug">
+        <h1>Debug</h1>
+        <p>
+            {{ device }}
+        </p>
+
+        <form action="" method="post">
+            <input class="big-button" type="submit" name="debug" value="RequestTelemetry">
+        </form>
+    </div>
+{% else %}
+    <hr/>
+    <div id="debug">
+        <p><a href="?debug=1">Activer le mode debug</a></p>
+    </div>
+{% endif %}
+
+</body>
+</html>

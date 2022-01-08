@@ -2,6 +2,7 @@ import struct
 
 from cancontroller.caniot.device import Device
 from cancontroller.caniot.message import *
+from cancontroller.caniot.nodetypes import CRTHPT_Node
 
 from enum import IntEnum, auto
 
@@ -12,17 +13,12 @@ import model_pb2
 # inherit grpc proto per Device type
 
 
-class GarageDoorController(Device):
-    telemetry = {
+class GarageDoorController(CRTHPT_Node):
+    model = {**CRTHPT_Node.model, **{
         "left": 1,
         "right": 1,
         "gate": 1,
-        "in0": 1,
-        "temp0": 0.0,
-        "analog0": 0,
-        "analog1": 0,
-        "analog2": 0,
-    }
+    }}
 
     class Door(IntEnum):
         NONE = 0
@@ -33,22 +29,16 @@ class GarageDoorController(Device):
     def open_door(self, door: Door.BOTH) -> Command:
         return Command(self.deviceid, [0, door], fit_buf=True)
 
-    def tcn75_raw2float(self, raw: bytes) -> float:
-        T = struct.unpack("h", raw)[0]
-        return T/10.0 - 28.0
-
     def interpret(self, msg: CaniotMessage) -> bool:
         super(GarageDoorController, self).interpret(msg)
 
-        self.telemetry["left"] = read_bit(msg.buffer[0], 0)
-        self.telemetry["right"] = read_bit(msg.buffer[0], 1)
-        self.telemetry["gate"] = read_bit(msg.buffer[0], 2)
-
-        self.telemetry["temp0"] = self.tcn75_raw2float(bytearray(msg.buffer[2:4]))
+        self.model["left"] = read_bit(msg.buffer[0], 0)
+        self.model["right"] = read_bit(msg.buffer[0], 1)
+        self.model["gate"] = read_bit(msg.buffer[0], 2)
 
         return True
 
-    def model(self) -> dict:
+    def get_model(self):
         return {
-            "garage": model_pb2.GarageDoorModel(**self.telemetry)
+            "garage": model_pb2.GarageDoorModel(**self.model)
         }

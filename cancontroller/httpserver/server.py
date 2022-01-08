@@ -14,7 +14,7 @@ from cancontroller.ipc import model_pb2_grpc
 
 from cancontroller import configuration
 from cancontroller.controller.api import API
-from cancontroller.caniot.devices import node_garage_door
+from cancontroller.caniot.devices import node_garage_door, node_alarm
 
 
 # redirection
@@ -31,8 +31,12 @@ class HTTPServer(web.Application):
         aiohttp_jinja2.setup(self, loader=jinja2.FileSystemLoader('templates'))
         self.add_routes(
             [
-                web.get('/garage', self.handle),
-                web.post('/garage', self.handle),
+                web.get('/garage', self.handle_garagedoors),
+                web.post('/garage', self.handle_garagedoors),
+
+                web.get('/alarmcontroller', self.handle_alarm),
+                web.post('/alarmcontroller', self.handle_alarm),
+
                 web.static("/static/", "./static"),
 
                 web.get('/debug/{debug}', self.handle_debug),
@@ -51,11 +55,56 @@ class HTTPServer(web.Application):
 
         return {"model": response}
 
+    @aiohttp_jinja2.template("alarm.view.j2")
+    async def handle_alarm(self, request: web.Request):
+        if request.method == 'POST':
+            form = await request.post()
+
+            light_cmd_list = ["", "on", "off", "toggle"]
+            alarm_cmd_list = ["", "enable", "disable", "reset"]
+
+            light1 = form.get("light1", "")
+            if light1 in light_cmd_list:
+                light1 = light_cmd_list.index(light1)
+            else:
+                light1 = model_pb2.LIGHT_CMD_NONE
+
+            light2 = form.get("light2", "")
+            if light2 in light_cmd_list:
+                light2 = light_cmd_list.index(light2)
+            else:
+                light2 = model_pb2.LIGHT_CMD_NONE
+
+            alarm = form.get("alarm", "")
+            if alarm in alarm_cmd_list:
+                alarm = alarm_cmd_list.index(alarm)
+            else:
+                alarm = model_pb2.ALARM_CMD_NONE
+
+            command = model_pb2.AlarmControllerCommand(
+                light1=light1,
+                light2=light2,
+                alarm=alarm
+            )
+
+            with grpc.insecure_channel(self.grpc_target) as channel:
+                stub = model_pb2_grpc.CanControllerStub(channel)  # TODO stub initialized elsewhere
+                response = stub.SendAlarm(command)
+
+            print(f"CanController "
+                  f"AlarmCommand command={command} "
+                  f"CommandResponse status={model_pb2._STATUS.values_by_number[response.status].name} : {response}")
+
+        return {
+            "device": self.api.get_device_data(node_alarm.deviceid),
+        }
+
     @aiohttp_jinja2.template("garagedoor.view.j2")
-    async def handle(self, request: web.Request):
+    async def handle_garagedoors(self, request: web.Request):
         commands_list = [
             "Gauche",
             "Droite",
+            "<both>"
         ]
         command = ""
         if request.method == 'POST':
@@ -68,7 +117,7 @@ class HTTPServer(web.Application):
 
                 print(f"CanController "
                       f"GarageCommand command={command} "
-                      f"GarageResponse status={model_pb2._STATUS.values_by_number[response.status].name}")
+                      f"CommandResponse status={model_pb2._STATUS.values_by_number[response.status].name}")
             if form.get("debug", "") == "RequestTelemetry":
                 self.api.RequestTelemetry(node_garage_door.deviceid)
 
@@ -78,7 +127,6 @@ class HTTPServer(web.Application):
             "commands_list": commands_list,
             "debug": bool(request.query.get("debug", ""))
         }
-
 
     async def handle_debug(self, request: web.Request):
         debug = request.match_info.get('debug', "")
