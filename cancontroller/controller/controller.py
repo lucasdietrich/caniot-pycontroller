@@ -116,13 +116,12 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         return responses, duration
 
     async def SendGarage(self, request: model_pb2.GarageCommand, context) -> model_pb2.CommandResponse:
-        query = self.devices["GarageDoorControllerProdPCB"].open_door(request.command)
-        self.send(query)
-        return model_pb2.CommandResponse(datetime=request.datetime, status="OK")
+        resp, duration = await self.query(self.devices["GarageDoorControllerProdPCB"].open_door(request.command), timeout=1.0)
+        return model_pb2.CommandResponse(datetime=request.datetime, status="OK" if resp else "TIMEOUT")
 
     async def SendAlarm(self, request: model_pb2.AlarmControllerCommand, context) -> model_pb2.CommandResponse:
-        self.send(node_alarm.command(request.light1, request.light2, request.alarm))
-        return model_pb2.CommandResponse(datetime=request.datetime, status="OK")
+        resp, duration = await self.query(node_alarm.command(request.light1, request.light2, request.alarm, request.alarm_mode, request.siren), timeout=1.0)
+        return model_pb2.CommandResponse(datetime=request.datetime, status="OK" if resp else "TIMEOUT")
 
     async def QueryAttribute(self, query: CaniotMessage, timeout: float):
         response, duration = await self.query(query, timeout)

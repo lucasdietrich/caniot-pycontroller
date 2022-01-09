@@ -177,16 +177,20 @@ class MsgId:
     def prepare_response(self) -> MsgId:
         if self.is_query():
             if self.frame_type == MsgId.FrameType.Command:
-                raise Exception(f"cannot build a response for a QueryCommand : {self}")
+                resp_type = MsgId.FrameType.Telemetry
+            elif self.frame_type == MsgId.FrameType.WriteAttribute:
+                resp_type = MsgId.FrameType.ReadAttribute
             else:
-                return MsgId(
-                    frame_type=self.frame_type,
-                    query_type=MsgId.QueryType.Response,
-                    endpoint=self.endpoint,
-                    device_id=self.device_id,
-                    id_type=self.id_type,
-                    extended_id=self.extended_id if self.id_type is MsgId.IdType.Extended else 0
-                )
+                resp_type = self.frame_type
+
+            return MsgId(
+                frame_type=resp_type,
+                query_type=MsgId.QueryType.Response,
+                endpoint=self.endpoint,
+                device_id=self.device_id,
+                id_type=self.id_type,
+                extended_id=self.extended_id if self.id_type is MsgId.IdType.Extended else 0
+            )
         else:
             raise Exception(f"{self} MsgID is not a query")
 

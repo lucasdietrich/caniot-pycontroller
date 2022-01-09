@@ -67,7 +67,20 @@ enum AlarmCommand {
   ALARM_CMD_NONE = 0;
   ALARM_CMD_ENABLE = 1;
   ALARM_CMD_DISABLE = 2;
-  ALARM_CMD_RESET = 3;
+  ALARM_CMD_RECOVER = 3;
+}
+
+enum AlarmModeCommand {
+  ALARM_MODE_CMD_NONE = 0;
+  ALARM_MODE_CMD_NORMAL = 1;
+  ALARM_MODE_CMD_SILENT = 2;
+}
+
+enum AlarmSirenCommand {
+  ALARM_SIREN_CMD_NONE = 0;
+  ALARM_SIREN_CMD_ON = 1;
+  ALARM_SIREN_CMD_OFF = 2;
+  ALARM_SIREN_CMD_TOGGLE = 3;
 }
 
 message AlarmControllerCommand {
@@ -77,6 +90,8 @@ message AlarmControllerCommand {
   LightCommand light2 = 3;
 
   AlarmCommand alarm = 4;
+  AlarmModeCommand alarm_mode = 5;
+  AlarmSirenCommand siren = 6;
 }
 
 /*____________________________________________________________________________________________________________________*/
@@ -171,13 +186,28 @@ message GarageDoorModel {
   bool gate = 4;
 }
 
+enum AlarmState {
+  ALARM_STATE_INACTIVE = 0;
+  ALARM_STATE_OBSERVING = 1;
+  ALARM_STATE_SOUDNING = 2;
+  ALARM_STATE_RECOVERING = 3;
+}
+
+enum AlarmMode {
+  ALARM_MODE_NORMAL = 0;
+  ALARM_MODE_SILENT = 1;
+}
+
 message AlarmControllerModel
 {
   CRTHPT_Model base = 1;
 
   bool light1 = 2;
   bool light2 = 3;
-  uint32 alarm = 4;
+  bool siren = 4;
+
+  AlarmState state = 6;
+  AlarmMode mode = 7;
 }
 
 message Devices {

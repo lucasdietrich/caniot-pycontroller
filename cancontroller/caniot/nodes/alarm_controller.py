@@ -17,7 +17,8 @@ class AlarmController(CRTHPT_Node):
     model = {**CRTHPT_Node.model, **{
         "light1": 0,
         "light2": 0,
-        "alarm": 0, # alarm state
+        "state": 0, # alarm state
+        "mode": 0, # alarm mode
     }}
 
     def interpret(self, msg: CaniotMessage) -> bool:
@@ -25,13 +26,15 @@ class AlarmController(CRTHPT_Node):
 
         self.model["light1"] = read_bit(msg.buffer[0], 0)
         self.model["light2"] = read_bit(msg.buffer[0], 1)
+        self.model["siren"] = read_bit(msg.buffer[0], 5)
 
-        self.model["alarm"] = (msg.buffer[0] >> 2) & 0x3
+        self.model["state"] = (msg.buffer[0] >> 2) & 0x3
+        self.model["mode"] = (msg.buffer[0] >> 4) & 0x1
 
         return True
 
-    def command(self, light1: int, light2: int, alarm: int) -> Command:
-        return Command(self.deviceid, [0, light1 | (light2 << 2) | (alarm << 4)], fit_buf=True)
+    def command(self, light1: int, light2: int, alarm: int, alarm_mode: int, siren: int) -> Command:
+        return Command(self.deviceid, [(siren << 6), light1 | (light2 << 2) | (alarm << 4) | (alarm_mode << 6)], fit_buf=True)
 
     def get_model(self) -> dict:
         return {

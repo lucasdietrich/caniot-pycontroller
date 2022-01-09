@@ -20,10 +20,19 @@ p
     margin-left: 40px;
 }
 
-h1, h2
+h1
 {
     font-size: 32px;
     border-bottom: solid 1px #222222;
+}
+
+h2
+{
+    font-size: 22px;
+    color: #565656;
+    /*display:inline-block;*/
+    padding: 0px;
+    margin: 10px 0px 0px 0px;
 }
 
 .date
@@ -41,4 +50,30 @@ h1, h2
 .temperature
 {
     font-style: italic;
+}
+
+div.indicator
+{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-color: white;
+    border: solid 1px black;
+    text-align: center;
+    font-size: 24px;
+}
+
+.greenbg, .on
+{
+    background-color: green !important;
+}
+
+.redbg, .off
+{
+    background-color: red !important;
+}
+
+.orangebg
+{
+    background-color: orange !important;
 }

@@ -61,30 +61,30 @@ class HTTPServer(web.Application):
             form = await request.post()
 
             light_cmd_list = ["", "on", "off", "toggle"]
-            alarm_cmd_list = ["", "enable", "disable", "reset"]
+            siren_cmd_list = light_cmd_list
+            alarm_cmd_list = ["", "enable", "disable", "recover"]
+            mode_cmd_list = ["", "normal", "silent"]
 
-            light1 = form.get("light1", "")
-            if light1 in light_cmd_list:
-                light1 = light_cmd_list.index(light1)
-            else:
-                light1 = model_pb2.LIGHT_CMD_NONE
+            def cmd_from_button(name, commands_list, default_value):
+                val = form.get(name, "")
+                if val in commands_list:
+                    return commands_list.index(val)
+                return default_value
 
-            light2 = form.get("light2", "")
-            if light2 in light_cmd_list:
-                light2 = light_cmd_list.index(light2)
+            both_lights = cmd_from_button("both", light_cmd_list, model_pb2.LIGHT_CMD_NONE)
+            if both_lights == model_pb2.LIGHT_CMD_NONE:
+                light1 = cmd_from_button("light1", light_cmd_list, model_pb2.LIGHT_CMD_NONE)
+                light2 = cmd_from_button("light2", light_cmd_list, model_pb2.LIGHT_CMD_NONE)
             else:
-                light2 = model_pb2.LIGHT_CMD_NONE
+                light1 = light2 = both_lights
 
-            alarm = form.get("alarm", "")
-            if alarm in alarm_cmd_list:
-                alarm = alarm_cmd_list.index(alarm)
-            else:
-                alarm = model_pb2.ALARM_CMD_NONE
+            alarm = cmd_from_button("alarm", alarm_cmd_list, model_pb2.ALARM_CMD_NONE)
+            alarm_mode = cmd_from_button("mode", mode_cmd_list, model_pb2.ALARM_MODE_CMD_NONE)
+            siren = cmd_from_button("siren", siren_cmd_list, model_pb2.ALARM_SIREN_CMD_NONE)
 
             command = model_pb2.AlarmControllerCommand(
-                light1=light1,
-                light2=light2,
-                alarm=alarm
+                light1=light1, light2=light2,
+                alarm=alarm, alarm_mode=alarm_mode, siren = siren
             )
 
             with grpc.insecure_channel(self.grpc_target) as channel:
@@ -95,8 +95,19 @@ class HTTPServer(web.Application):
                   f"AlarmCommand command={command} "
                   f"CommandResponse status={model_pb2._STATUS.values_by_number[response.status].name} : {response}")
 
+            if form.get("debug", "") == "RequestTelemetry":
+                self.api.RequestTelemetry(node_garage_door.deviceid)
+
+        alarm_status_messages = [("inactive", "désactivée"), ("observing", "activée"),
+                                 ("sounding", "en alerte"), ("recovering", "en récupération")]
+        siren_status_messages = [("inactive", "éteinte"), ("sounding", "activée")]
+
+        device_data = self.api.get_device_data(node_alarm.deviceid)
         return {
-            "device": self.api.get_device_data(node_alarm.deviceid),
+            "device": device_data,
+            "debug": bool(request.query.get("debug", "")),
+            "alarm_status_message": alarm_status_messages[device_data.alarm.state],
+            "siren_status_message": siren_status_messages[device_data.alarm.siren]
         }
 
     @aiohttp_jinja2.template("garagedoor.view.j2")

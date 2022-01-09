@@ -1,0 +1,44 @@
+.alarm_silent_mode > p
+{
+    background-color: orange;
+    padding: 20px;
+    margin: 0px;
+
+    display: block;
+}
+
+.alarm_state
+{
+    font-weight: bold;
+    padding: 20px;
+}
+
+.siren_state
+{
+    font-weight: bold;
+    padding: 20px;
+}
+
+.inactive
+{
+    color: black;
+    background-color: darkgray;
+}
+
+.observing
+{
+    color: white;
+    background-color: #4141e0;
+}
+
+.sounding
+{
+    background-color: red;
+    color:yellow;
+}
+
+.recovering
+{
+    background-color: orange;
+    color:black;
+}
