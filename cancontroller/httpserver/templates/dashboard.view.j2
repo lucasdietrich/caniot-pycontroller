@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+{% if error %}
+    <div class="error">
+        <p>
+            {{ error }}
+        </p>
+    </div>
+{% endif %}
+
+<div>
+    <form action="" method="post">
+
+        <h2>Time sync</h2>
+        <label>
+            For all devices :
+            <input type="submit" class="button" name="synctime" value="Synctime {{ now }}"/>
+        </label>
+
+        <h2>Device</h2>
+
+        <label>
+            DeviceID :
+            <select name="device" class="select">
+                {% for name, did, ver, data in devlist %}
+                    <option value="{{ name }}">[ {{ did.id }} ] {{ name }} version = {{ ver }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <br/>
+        <label>
+            Request telemetry
+            <input type="submit" class="button" name="telemetry" value="Request Telemetry"/>
+        </label>
+        <br/>
+        <label>
+            <input type="text" class="text" name="rkey" value="0x1000"/>
+            <input type="submit" class="button" name="read-attribute" value="Read attribute"/>
+        </label>
+        <br/>
+        <label>
+            <input type="text" class="text" name="wkey" value="0x1000"/>
+            <input type="text" class="text" name="wval" value=""/>
+            <input type="submit" class="button" name="write-attribute" value="Write attribute"/>
+        </label>
+        <br/>
+        <label>
+            Result <input type="text" disabled class="text" name="rval" value=""/>
+        </label>
+    </form>
+
+    <h1>Dashboard</h1>
+    {% for name, did, ver, data in devlist %}
+        <span class="devicename">{{ name }}, {{ did }} version = {{ ver }}</span>
+        <div>
+            <pre>{{ data }} </pre>
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

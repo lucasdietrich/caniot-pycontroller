@@ -6,8 +6,9 @@ Python `CANIOT` controller :
 - cli
 - can
 
-IHM to control garage doors :
+IHM to control garage doors and alarm controller :
 ![](./pics/app_garage.png)
+![](./pics/app_alarm.png)
 
 Related projects :
 - `caniot_common` implementation for AVR ATmega328p : https://github.com/Adecy/caniot-common

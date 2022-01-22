@@ -17,15 +17,22 @@ class Device:
     A device can only have one pending request
     """
 
-    last_seen: datetime.datetime = None
-    received = 0
-    sent = 0
-
-    telemetry_raw = []
-    model = {}
+    # last_seen: datetime.datetime = None
+    # received = 0
+    # sent = 0
+    #
+    # telemetry_raw = []
+    # model = {}
 
     def __init__(self, deviceid: DeviceId, name: str = None):
-        self.deviceid = deviceid
+        self.telemetry_raw = []
+        self.model = {}
+        self.last_seen: datetime.datetime = None
+
+        self.received = 0
+        self.sent = 0
+
+        self.deviceid: DeviceId = deviceid
         self.name = name
         self.version = 0
 
@@ -50,8 +57,12 @@ class Device:
     def set_time(self, utc: int) -> WriteAttributeQuery:
         return WriteAttributeQuery(self.deviceid, 0x1010, utc)
 
-    def interpret(self, msg: CaniotMessage) -> bool:
+    def interpret_telemetry(self, msg: CaniotMessage) -> bool:
+        if msg.msgid.frame_type != MsgId.FrameType.Telemetry:
+            raise Exception("Cannot interpret non-telemetry caniot message")
+
         self.telemetry_raw = msg.buffer
+
         return True
 
     def get_model(self) -> dict:

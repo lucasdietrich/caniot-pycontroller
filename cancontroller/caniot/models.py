@@ -195,8 +195,17 @@ class MsgId:
             raise Exception(f"{self} MsgID is not a query")
 
     def is_response_of(self, query: MsgId) -> bool:
+
         if self.is_valid():
-            return query.prepare_response() == self
+            expected_response = query.prepare_response()
+
+            # handle the case when a message is a response for a broadcast message
+            if query.is_broadcast_device():
+
+                # we expect a response to a broadcast query
+                expected_response.device_id = self.device_id
+
+            return expected_response == self
         else:
             raise Exception(f"{query} is not a valid Query")
 

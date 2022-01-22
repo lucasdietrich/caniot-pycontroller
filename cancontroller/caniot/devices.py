@@ -9,16 +9,17 @@ from typing import Dict, List, Union, Optional
 node_garage_door = GarageDoorController(DeviceId(DeviceId.Class.CRTHPT, 0x02), "GarageDoorControllerProdPCB")
 node_alarm = AlarmController(DeviceId(DeviceId.Class.CRTHPT, 0x03), "AlarmController")
 
+# TODO create an entity of broadcast device
+
 
 class Devices:
     """
     List all nodes on the current Bus
     """
-    def __init__(self):
-        self.devices = [
-            node_garage_door,
-            node_alarm
-        ]
+    devices = [
+        node_garage_door,
+        node_alarm
+    ]
 
     def get(self, name: str):
         for dev in self.devices:

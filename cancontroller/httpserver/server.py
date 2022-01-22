@@ -1,5 +1,7 @@
 from __future__ import print_function
 
+import datetime
+
 import jinja2
 import aiohttp_jinja2
 import grpc
@@ -9,13 +11,12 @@ from aiohttp import web
 
 from cancontroller import ROOT_DIR
 
-from cancontroller.ipc import model_pb2
-from cancontroller.ipc import model_pb2_grpc
+from cancontroller.ipc import model_pb2, model_pb2_grpc, API
 
 from cancontroller import configuration
-from cancontroller.controller.api import API
-from cancontroller.caniot.devices import node_garage_door, node_alarm
+from cancontroller.caniot.devices import node_garage_door, node_alarm, Devices
 
+from google.protobuf.json_format import MessageToJson
 
 # redirection
 #            location = request.app.router['index'].url_for()
@@ -37,6 +38,9 @@ class HTTPServer(web.Application):
                 web.get('/alarmcontroller', self.handle_alarm),
                 web.post('/alarmcontroller', self.handle_alarm),
 
+                web.get('/dashboard', self.handle_dashboard),
+                web.post('/dashboard', self.handle_dashboard),
+
                 web.static("/static/", "./static"),
 
                 web.get('/debug/{debug}', self.handle_debug),
@@ -51,9 +55,20 @@ class HTTPServer(web.Application):
 
     @aiohttp_jinja2.template("home.view.j2")
     async def handle_home(self, request: web.Request):
-        response = self.api.get_device_data(node_garage_door.deviceid)
+        response = self.api.GetDevice(node_garage_door.deviceid)
 
         return {"model": response}
+
+    @aiohttp_jinja2.template("dashboard.view.j2")
+    async def handle_dashboard(self, request: web.Request):
+        devlist = [
+            (dev.name, dev.deviceid, dev.version, MessageToJson(self.api.GetDevice(dev.deviceid))) for dev in Devices.devices
+        ]
+
+        return {
+            "devlist": devlist,
+            "now": datetime.datetime.now().strftime('%A %d/%m/%Y %H:%M:%S')
+        }
 
     @aiohttp_jinja2.template("alarm.view.j2")
     async def handle_alarm(self, request: web.Request):
@@ -102,7 +117,7 @@ class HTTPServer(web.Application):
                                  ("sounding", "en alerte"), ("recovering", "en récupération")]
         siren_status_messages = [("inactive", "éteinte"), ("sounding", "activée")]
 
-        device_data = self.api.get_device_data(node_alarm.deviceid)
+        device_data = self.api.GetDevice(node_alarm.deviceid)
         return {
             "device": device_data,
             "debug": bool(request.query.get("debug", "")),
@@ -133,7 +148,7 @@ class HTTPServer(web.Application):
                 self.api.RequestTelemetry(node_garage_door.deviceid)
 
         return {
-            "device": self.api.get_device_data(node_garage_door.deviceid),
+            "device": self.api.GetDevice(node_garage_door.deviceid),
             "command": command,
             "commands_list": commands_list,
             "debug": bool(request.query.get("debug", ""))

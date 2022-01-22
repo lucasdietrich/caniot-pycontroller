@@ -69,7 +69,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         device: Device = self.devices.select(msg.msgid.device_id)
         if device:
             device.sent += 1
-        else:
+        elif not msg.msgid.is_broadcast_device():
             can_logger.warning(f"Sending to an unknown device : {msg.msgid}")
 
         self.tx_count += 1
@@ -86,18 +86,22 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         else:
             can_logger.debug(log_msg)
 
-        # update device table
-        device: Device = self.devices.select(msg.msgid.device_id)
-        if device:
-            device.last_seen = datetime.datetime.now()
-            device.received += 1
-            device.interpret(msg)
-
-        for query in self.pending:
-            if query.eval(msg):
-                break
-
         self.rx_count += 1
+
+        if msg.msgid.is_response():
+            # update device table
+            device: Device = self.devices.select(msg.msgid.device_id)
+            if device:
+                device.last_seen = datetime.datetime.now()
+                device.received += 1
+
+                if msg.msgid.frame_type == MsgId.FrameType.Telemetry:
+                    device.interpret_telemetry(msg)
+
+            for query in self.pending:
+                if query.eval(msg):
+                    break
+
 
     async def query(self, msg: CaniotMessage, timeout: float) -> [CaniotMessage, float]:
         pending_query = PendingQuery(query=msg)
@@ -125,12 +129,25 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
     async def QueryAttribute(self, query: CaniotMessage, timeout: float):
         response, duration = await self.query(query, timeout)
-        attr_response: AttributeResponse = response[0]
-        return model_pb2.AttributeResponse(device=model_pb2.DeviceId(
-            type=attr_response.msgid.device_id.cls,
-            id=attr_response.msgid.device_id.sid
-        ), key=attr_response.get_key(), value=attr_response.get_value(), status="OK" if response else "TIMEOUT",
-            response_time=duration)
+
+        if len(response) > 1:
+            print("A broadcast query received a reponse from several devices !")
+
+        if len(response) > 0:
+            attr_response: AttributeResponse = response[0]
+
+            return model_pb2.AttributeResponse(device=model_pb2.DeviceId(
+                type=attr_response.msgid.device_id.cls,
+                id=attr_response.msgid.device_id.sid
+            ), key=attr_response.get_key(), value=attr_response.get_value(), status="OK",
+                response_time=duration)
+        else:
+            return model_pb2.AttributeResponse(device=model_pb2.DeviceId(
+                type=query.msgid.device_id.cls,
+                id=query.msgid.device_id.sid
+            ), status="TIMEOUT",
+                response_time=duration)
+
 
     async def ReadAttribute(self, request: model_pb2.AttributeRequest, context) -> model_pb2.AttributeResponse:
         query = Device(DeviceId(cls=request.device.type, sid=request.device.id)).read_attribute(request.key)

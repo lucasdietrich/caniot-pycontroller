@@ -1,7 +1,9 @@
+import copy
 import struct
 
 from cancontroller.caniot.device import Device
 from cancontroller.caniot.message import *
+from cancontroller.caniot.models import DeviceId
 
 import model_pb2
 
@@ -9,16 +11,19 @@ import model_pb2
 
 
 class CRTHPT_Node(Device):
-    model = {
-        "base": {
-            "contacts": 0,
-            "relays": 0,
-            "int_temp": 0.0,
-            "humidity": 0.0,
-            "pressure": 0.0,
-            "ext_temp": 0.0
+    def __init__(self, deviceid: DeviceId, name: str = None):
+        super(CRTHPT_Node, self).__init__(deviceid, name)
+
+        self.model = {
+            "base": {
+                "contacts": 0,
+                "relays": 0,
+                "int_temp": 0.0,
+                "humidity": 0.0,
+                "pressure": 0.0,
+                "ext_temp": 0.0
+            }
         }
-    }
 
     def IntHum2float(self, H: int) -> float:
         if H == 0:
@@ -40,8 +45,8 @@ class CRTHPT_Node(Device):
 
         return self.IntTemp2float(T)
 
-    def interpret(self, msg: CaniotMessage) -> bool:
-        super(CRTHPT_Node, self).interpret(msg)
+    def interpret_telemetry(self, msg: CaniotMessage) -> bool:
+        super(CRTHPT_Node, self).interpret_telemetry(msg)
 
         base = self.model["base"]
 

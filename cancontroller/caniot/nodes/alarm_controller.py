@@ -1,7 +1,9 @@
+import copy
 import struct
 
 from cancontroller.caniot.device import Device
 from cancontroller.caniot.message import *
+from cancontroller.caniot.models import DeviceId
 from cancontroller.caniot.nodetypes import CRTHPT_Node
 
 from enum import IntEnum, auto
@@ -14,15 +16,18 @@ import model_pb2
 
 
 class AlarmController(CRTHPT_Node):
-    model = {**CRTHPT_Node.model, **{
-        "light1": 0,
-        "light2": 0,
-        "state": 0, # alarm state
-        "mode": 0, # alarm mode
-    }}
+    def __init__(self, deviceid: DeviceId, name: str = None):
+        super().__init__(deviceid, name)
 
-    def interpret(self, msg: CaniotMessage) -> bool:
-        super(AlarmController, self).interpret(msg)
+        self.model.update({
+            "light1": 0,
+            "light2": 0,
+            "state": 0,  # alarm state
+            "mode": 0,  # alarm mode
+        })
+
+    def interpret_telemetry(self, msg: CaniotMessage) -> bool:
+        super(AlarmController, self).interpret_telemetry(msg)
 
         self.model["light1"] = read_bit(msg.buffer[0], 0)
         self.model["light2"] = read_bit(msg.buffer[0], 1)

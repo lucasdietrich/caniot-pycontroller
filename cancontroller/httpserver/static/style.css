@@ -77,3 +77,47 @@ div.indicator
 {
     background-color: orange !important;
 }
+
+input.text,
+input.button,
+select.select
+{
+    height: 50px;
+
+    font-size: 30px;
+
+    padding-left: 30px;
+    padding-right: 30px;
+
+    border: solid 1px #111111;
+    background-color: #eeeeee;
+}
+
+
+input.button
+{
+    font-weight: bold;
+
+    box-shadow: 3px 3px 4px black;
+}
+
+input.button:hover
+{
+    cursor: pointer;
+
+    background-color: #fefefe;
+}
+
+input.button:active
+{
+    box-shadow: 1px 1px 2px black;
+
+    text-decoration: underline;
+}
+
+.datetime
+{
+    font-style: italic;
+    font-weight: bold;
+    font-color: #222;
+}
