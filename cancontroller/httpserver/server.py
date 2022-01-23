@@ -18,6 +18,8 @@ from cancontroller.caniot.devices import node_garage_door, node_alarm, Devices
 
 from google.protobuf.json_format import MessageToJson
 
+import dashboard
+
 # redirection
 #            location = request.app.router['index'].url_for()
 #            raise web.HTTPFound(location=location)
@@ -38,8 +40,8 @@ class HTTPServer(web.Application):
                 web.get('/alarmcontroller', self.handle_alarm),
                 web.post('/alarmcontroller', self.handle_alarm),
 
-                web.get('/dashboard', self.handle_dashboard),
-                web.post('/dashboard', self.handle_dashboard),
+                web.get('/dashboard', dashboard.handle_get),
+                web.post('/dashboard', dashboard.handle_post),
 
                 web.static("/static/", "./static"),
 
@@ -58,17 +60,6 @@ class HTTPServer(web.Application):
         response = self.api.GetDevice(node_garage_door.deviceid)
 
         return {"model": response}
-
-    @aiohttp_jinja2.template("dashboard.view.j2")
-    async def handle_dashboard(self, request: web.Request):
-        devlist = [
-            (dev.name, dev.deviceid, dev.version, MessageToJson(self.api.GetDevice(dev.deviceid))) for dev in Devices.devices
-        ]
-
-        return {
-            "devlist": devlist,
-            "now": datetime.datetime.now().strftime('%A %d/%m/%Y %H:%M:%S')
-        }
 
     @aiohttp_jinja2.template("alarm.view.j2")
     async def handle_alarm(self, request: web.Request):

@@ -1,3 +1,5 @@
+import time
+
 from cancontroller.caniot.device import DeviceId
 from cancontroller.caniot.attributes import attributes
 
@@ -15,7 +17,7 @@ import grpc
 
 
 class API:
-    def __init__(self, grpc_target: str):
+    def __init__(self, grpc_target: str = '192.168.10.155:50051'):
         self.grpc_target = grpc_target
 
     def ReadAttribute(self, deviceid: DeviceId, key: int, timeout: float = 1.0) -> int:
@@ -45,6 +47,12 @@ class API:
                 timeout=timeout
             ))
             return response.value if response.status == model_pb2.OK  else None
+
+    def SyncTime(self, deviceid: DeviceId, synctime: int = 0):
+        if not synctime:
+            synctime = int(time.time())
+
+        return self.WriteAttribute(deviceid, attributes.get("time").key, synctime)
 
     def GetDevice(self, deviceid: DeviceId):
         with grpc.insecure_channel(self.grpc_target) as  channel:

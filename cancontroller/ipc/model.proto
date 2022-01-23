@@ -39,6 +39,11 @@ message CommandResponse {
   Status status = 4;
 }
 
+message Attribute {
+  uint32 key = 1;
+  uint32 value = 2;
+}
+
 /*____________________________________________________________________________________________________________________*/
 
 enum GarageDoorCommand {
@@ -148,6 +153,7 @@ message Device {
     uint32 sent = 3;
     bool online = 4;
   }
+
   Status status = 4;
 
   repeated int32 raw = 5 [packed=true];
@@ -156,6 +162,9 @@ message Device {
     GarageDoorModel garage = 6;
     AlarmControllerModel alarm = 7;
   }
+
+  /* list of all retrieved/updated attribute in th current session */
+  repeated Attribute attribute = 8 [packed = true];
 }
 
 message DeviceResponse {

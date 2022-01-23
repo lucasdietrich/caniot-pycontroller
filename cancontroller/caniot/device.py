@@ -57,6 +57,8 @@ class Device:
     def set_time(self, utc: int) -> WriteAttributeQuery:
         return WriteAttributeQuery(self.deviceid, 0x1010, utc)
 
+    # interpret, read attr or telemetry ..;
+
     def interpret_telemetry(self, msg: CaniotMessage) -> bool:
         if msg.msgid.frame_type != MsgId.FrameType.Telemetry:
             raise Exception("Cannot interpret non-telemetry caniot message")

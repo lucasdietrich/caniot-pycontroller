@@ -12,6 +12,13 @@ BufferType = Union[List[int], bytearray, bytes]
 class DeviceId:
     class Class(IntEnum):
         CRTHPT: int = 0
+        C1: int = 1
+        C2: int = 2
+        C3: int = 3
+        C4: int = 4
+        C5: int = 5
+        C6: int = 6
+        C7: int = 7
         # U: int = 0
         # CR: int = 1
         # CRA: int = 2
@@ -125,7 +132,7 @@ class MsgId:
         elif self.is_error():
             return f"[{hex(self)}] ERROR message from {self.device_id}"
         else:
-            raise NotImplementedError()
+            return f"INVALID CANIOT MESSAGE [{hex(self)}]"
 
     def __int__(self) -> int:
         return self.get()
