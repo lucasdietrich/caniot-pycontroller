@@ -6,6 +6,7 @@ from cancontroller.caniot.models import BufferType
 
 import struct
 
+
 class AttributeResponse(CaniotMessage):
     def get_key(self) -> int:
         return self.parse()[0]
@@ -19,6 +20,10 @@ class AttributeResponse(CaniotMessage):
 
         Returns: key, attribute value
         """
+
+        if len(self.buffer) != 6:
+            raise Exception("read-attribute reponse payload must be 6 bytes long")
+
         return struct.unpack("<HL", bytearray(self.buffer))
 
 

@@ -23,10 +23,24 @@ class Device:
     #
     # telemetry_raw = []
     # model = {}
+    class AttributesValues:
+        def __init__(self):
+            self.array = {}
+
+        def __setitem__(self, key, value):
+            self.array[key] = value
+
+        def __getitem__(self, item):
+            return self.array[item]
+
+        def items(self):
+            return self.array.items()
 
     def __init__(self, deviceid: DeviceId, name: str = None):
         self.telemetry_raw = []
         self.model = {}
+        self.attrs = Device.AttributesValues()
+
         self.last_seen: datetime.datetime = None
 
         self.received = 0
@@ -57,15 +71,16 @@ class Device:
     def set_time(self, utc: int) -> WriteAttributeQuery:
         return WriteAttributeQuery(self.deviceid, 0x1010, utc)
 
-    # interpret, read attr or telemetry ..;
+    def interpret(self, msg: CaniotMessage):
+        if isinstance(msg, AttributeResponse):
+            self.attrs[msg.get_key()] = msg.get_value()
+        elif isinstance(msg, TelemetryMessage):
+            self.interpret_telemetry(msg)
+        else:
+            raise Exception(f"Cannot interpret CANIOT response {msg}")
 
-    def interpret_telemetry(self, msg: CaniotMessage) -> bool:
-        if msg.msgid.frame_type != MsgId.FrameType.Telemetry:
-            raise Exception("Cannot interpret non-telemetry caniot message")
-
+    def interpret_telemetry(self, msg: CaniotMessage):
         self.telemetry_raw = msg.buffer
-
-        return True
 
     def get_model(self) -> dict:
         return {}

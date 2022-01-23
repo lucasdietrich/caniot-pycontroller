@@ -5,6 +5,7 @@
     <title>Porte de garage</title>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/garage.css">
+    <link rel="stylesheet" href="/static/style_darkmode.css">
     <meta http-equiv="refresh" content="10" >
 </head>
 <body>
@@ -47,9 +48,7 @@
 {% if debug %}
 <div id="debug">
     <h1>Debug</h1>
-    <p>
-        {{ device }}
-    </p>
+    <pre>{{ device }}</pre>
 
     <form action="" method="post">
         <input class="button" type="submit" name="debug" value="RequestTelemetry">

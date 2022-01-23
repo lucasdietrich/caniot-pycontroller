@@ -163,8 +163,8 @@ message Device {
     AlarmControllerModel alarm = 7;
   }
 
-  /* list of all retrieved/updated attribute in th current session */
-  repeated Attribute attribute = 8 [packed = true];
+  /* list of all retrieved/updated attribute in the current session */
+  repeated Attribute attribute = 8;
 }
 
 message DeviceResponse {

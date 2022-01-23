@@ -5,6 +5,7 @@ import aiohttp_jinja2
 from cancontroller.ipc import model_pb2, model_pb2_grpc, API
 from cancontroller import configuration
 from cancontroller.caniot.devices import node_garage_door, node_alarm, node_broadcast, devices
+from cancontroller.caniot.attributes import attributes
 
 from cancontroller.utils import parse_number, number_to_hexn
 
@@ -19,22 +20,22 @@ async def context(request: web.Request):
     form = await request.post()
 
     # retrieving and parsing
-    rkey = parse_number(form.get("rkey", "0x1010"))
-    wkey = parse_number(form.get("wkey", "0x1010"))
+    key = parse_number(form.get("key", "0x1010"))
+    part = parse_number(form.get("part", "0"))
     wval = parse_number(form.get("wval", "0"))
     rval = None
-    device_name = form.get("device", node_broadcast.name)
+    device_name = form.get("device", node_alarm.name)
 
     device = devices[device_name]
     if device is None:
         print(f"Device not found ! {device_name}")
     else:
         if form.get("telemetry"):
-            res = api.RequestTelemetry(device.deviceid)
+            api.RequestTelemetry(device.deviceid)
         elif form.get("read-attribute"):
-            rval = api.ReadAttribute(device.deviceid, rkey)
+            rval = api.ReadAttribute(device.deviceid, key + part)
         elif form.get("write-attribute"):
-            rval = api.WriteAttribute(device.deviceid, wkey, wval)
+            rval = api.WriteAttribute(device.deviceid, key + part, wval)
         elif form.get("synctime"):
             api.SyncTime(device.deviceid)
 
@@ -46,11 +47,14 @@ async def context(request: web.Request):
     return {
         "devlist": devlist,
         "now": datetime.datetime.now().strftime('%A %d/%m/%Y %H:%M:%S'),
-        "rkey": number_to_hexn(rkey, 4),
+        "key": number_to_hexn(key, 4),
+        "part": str(part),
         "rval": number_to_hexn(rval, 8) if rval is not None else "NONE",
-        "wkey": number_to_hexn(wkey, 4),
-        "wval": number_to_hexn(wval, 8),
-        "selected_device": device_name
+        "wval": number_to_hexn(wval, 8) if wval > 0 else "",
+        "irval": attributes.interpret(key + part, rval) if rval is not None else "",
+        "attr": attributes.get_by_key(key + part),
+        "selected_device": device_name,
+        "attr_list": attributes.list
     }
 
 @aiohttp_jinja2.template("dashboard.view.j2")

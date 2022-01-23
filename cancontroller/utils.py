@@ -1,7 +1,7 @@
 import re
 
-re_hex = re.compile(r"^0x(?P<hex>[0-9]*)$")
-re_dec = re.compile(r"^(?P<dec>[0-9]*)$")
+re_hex = re.compile(r"^0x(?P<hex>[0-9]+)$")
+re_dec = re.compile(r"^(?P<dec>[0-9]+)$")
 
 
 def parse_number(text: str):
@@ -19,3 +19,6 @@ def parse_number(text: str):
 def number_to_hexn(n: int, digits: int = 4):
     fmt = "0x{0:0" + str(int(digits)) + "X}"
     return fmt.format(n)
+
+def is_bit(n: int, bit: int = 0) -> bool:
+    return bool(n & (1 << bit))

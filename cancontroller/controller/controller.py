@@ -95,8 +95,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                 device.last_seen = datetime.datetime.now()
                 device.received += 1
 
-                if msg.msgid.frame_type == MsgId.FrameType.Telemetry:
-                    device.interpret_telemetry(msg)
+                device.interpret(msg)
 
             for query in self.pending:
                 if query.eval(msg):
@@ -189,6 +188,9 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                     sent=dev.sent,
                     online=bool(dev.last_seen)
                 ),
+                attribute=[
+                    model_pb2.Attribute(key=key, value=value) for key, value in dev.attrs.items()
+                ],
                 raw=dev.telemetry_raw,
                 **dev.get_model()
             )

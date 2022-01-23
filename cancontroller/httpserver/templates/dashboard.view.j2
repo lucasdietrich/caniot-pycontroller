@@ -5,6 +5,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="stylesheet" href="/static/style_darkmode.css">
 </head>
 <body>
 {% if error %}
@@ -41,18 +42,25 @@
         </label>
         <br/>
         <label>
-            <input type="text" class="text" name="rkey" value="{{ rkey }}"/>
+            <select name="key" class="select">
+                {% for a in attr_list %}
+                    <option {{ "selected" if a.name == attr.name }} value="{{ a.key }}">{{ a }}</option>
+                {% endfor %}
+            </select>
+{#            <input type="text" class="text" name="rkey" value="{{ rkey }}"/>#}
+            <input type="text" class="text attrpart" name="part" value="{{ part }}"/>
             <input type="submit" class="button" name="read-attribute" value="Read attribute"/>
         </label>
         <br/>
         <label>
-            <input type="text" class="text" name="wkey" value="{{ wkey }}"/>
+{#            <input type="text" class="text" name="wkey" value="{{ wkey }}"/>#}
             <input type="text" class="text" name="wval" value="{{ wval }}"/>
             <input type="submit" class="button" name="write-attribute" value="Write attribute"/>
         </label>
         <br/>
         <label>
             Result <input type="text" disabled class="text" name="rval" value="{{ rval }}"/>
+            <input type="text" disabled class="text irval" value="{{ irval }} ( {{ attr.name }} )"/>
         </label>
     </form>
 
