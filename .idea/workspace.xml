@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="915c5508-fbff-4ac8-ac3f-caf60ce8ef19" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cancontroller/httpserver/static/style_brightmode.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/httpserver/static/style_darkmode.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/caniot/attributes/attributes.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/attributes/attributes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/device.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/device.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/message/interpret.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/message/interpret.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/message/response.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/message/response.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/controller/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/dashboard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/static/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/static/dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/static/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/templates/alarm.view.j2" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/templates/alarm.view.j2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/templates/dashboard.view.j2" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/templates/dashboard.view.j2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/templates/garagedoor.view.j2" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/templates/garagedoor.view.j2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/templates/home.view.j2" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/templates/home.view.j2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model.proto" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model_pb2.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model_pb2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +75,7 @@
       <recent name="D:\Home\ProjetsRecherche\Embedded\CAN\raspberry-pi-2-py-can-controller\cancontroller\ipc" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.server">
+  <component name="RunManager" selected="Python.controller">
     <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="raspberry-pi-2-py-can-controller" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -178,6 +162,9 @@
       <module name="raspberry-pi-2-py-can-controller" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cancontroller" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -195,9 +182,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.controller" />
         <item itemvalue="Python.server" />
         <item itemvalue="Python.utils" />
-        <item itemvalue="Python.controller" />
         <item itemvalue="Python.timesync" />
         <item itemvalue="Python.timesync" />
       </list>
@@ -223,6 +210,7 @@
       <workItem from="1641845660495" duration="6000" />
       <workItem from="1642845315626" duration="21622000" />
       <workItem from="1642929727707" duration="16882000" />
+      <workItem from="1643049851293" duration="2010000" />
     </task>
     <servers />
   </component>
