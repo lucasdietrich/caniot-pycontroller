@@ -1,5 +1,7 @@
 import struct
 
+from pip._vendor.html5lib._trie import py
+
 from ..device import DeviceId
 import datetime
 import pytz

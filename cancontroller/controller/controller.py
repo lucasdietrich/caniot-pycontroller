@@ -119,12 +119,17 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         return responses, duration
 
     async def SendGarage(self, request: model_pb2.GarageCommand, context) -> model_pb2.CommandResponse:
-        resp, duration = await self.query(self.devices["GarageDoorControllerProdPCB"].open_door(request.command), timeout=1.0)
-        return model_pb2.CommandResponse(datetime=request.datetime, status="OK" if resp else "TIMEOUT")
+        resp, duration = await self.query(node_garage_door.open_door(request.command), timeout=1.0)
+        return model_pb2.CommandResponse(datetime=request.datetime, status=model_pb2.OK if resp else model_pb2.TIMEOUT)
 
     async def SendAlarm(self, request: model_pb2.AlarmControllerCommand, context) -> model_pb2.CommandResponse:
         resp, duration = await self.query(node_alarm.command(request.light1, request.light2, request.alarm, request.alarm_mode, request.siren), timeout=1.0)
-        return model_pb2.CommandResponse(datetime=request.datetime, status="OK" if resp else "TIMEOUT")
+        return model_pb2.CommandResponse(datetime=request.datetime, status=model_pb2.OK if resp else model_pb2.TIMEOUT)
+
+    async def Reset(self, request: model_pb2.DeviceId, context) -> model_pb2.CommandResponse:
+        query = Device(DeviceId(cls=request.type, sid=request.id)).reset()
+        resp, duration = await self.query(query, timeout=1.0)
+        return model_pb2.CommandResponse(status=model_pb2.OK if resp else model_pb2.TIMEOUT)
 
     async def QueryAttribute(self, query: CaniotMessage, timeout: float):
         response, duration = await self.query(query, timeout)
@@ -146,7 +151,6 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                 id=query.msgid.device_id.sid
             ), status="TIMEOUT",
                 response_time=duration)
-
 
     async def ReadAttribute(self, request: model_pb2.AttributeRequest, context) -> model_pb2.AttributeResponse:
         query = Device(DeviceId(cls=request.device.type, sid=request.device.id)).read_attribute(request.key)

@@ -14,6 +14,7 @@ service CanController {
   rpc ReadAttribute(AttributeRequest) returns (AttributeResponse) {}
   rpc WriteAttribute(AttributeRequest) returns (AttributeResponse) {}
 
+  rpc Reset(DeviceId) returns (CommandResponse) {}
 
   rpc GetDevices(Empty) returns (Devices) {}
   rpc GetDevice(DeviceId) returns (Device) {}

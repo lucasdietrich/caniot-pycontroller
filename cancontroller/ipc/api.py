@@ -76,8 +76,17 @@ class API:
                 id=deviceid.sid
             ))
 
+    def Reset(self, deviceid: DeviceId):
+        with grpc.insecure_channel(self.grpc_target) as  channel:
+            stub = model_pb2_grpc.CanControllerStub(channel)
+            return stub.Reset(model_pb2.DeviceId(
+                type=deviceid.cls,
+                id=deviceid.sid
+            ))
+
+
 if __name__ == "__main__":
-    client = API('192.168.10.155:50051')
+    api = API('192.168.10.155:50051')
     did = DeviceId(DeviceId.Class.CRTHPT, 0x03)
-    response_read_attr = client.ReadAttribute(did, 0x1010)
+    response_read_attr = api.ReadAttribute(did, 0x1010)
     print(response_read_attr)

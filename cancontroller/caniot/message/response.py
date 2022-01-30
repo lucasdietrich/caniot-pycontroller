@@ -28,8 +28,8 @@ class AttributeResponse(CaniotMessage):
 
 
 class TelemetryMessage(CaniotMessage):
-    def match(self, device) -> bool:
-        return len(self.buffer) == device.deviceid.data_type.get_size()
+    def match(self, device, ep: MsgId.Endpoint = 0) -> bool:
+        return len(self.buffer) == device.deviceid.cls.get_size(ep)
 
     # def explain(self, device: Device) -> dict:
     #     return device.explain_telemetry(self)

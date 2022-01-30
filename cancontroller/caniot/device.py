@@ -1,5 +1,6 @@
 import abc
 import datetime
+from enum import IntEnum
 
 from cancontroller.caniot.models import DeviceId, MsgId
 from cancontroller.caniot.message import *
@@ -16,6 +17,15 @@ class Device:
 
     A device can only have one pending request
     """
+
+    class ResetType(IntEnum):
+        HardwareReset = 1 << 0
+        SoftwareReset = 1 << 1
+        WatchdogReset = 1 << 2
+
+    # class WatchdogCommand
+    #     # WatchdogEnable = (1 << 3)
+    #     # WatchdogDisable = (2 << 3)
 
     # last_seen: datetime.datetime = None
     # received = 0
@@ -53,8 +63,8 @@ class Device:
     def __repr__(self):
         return f"Device {self.name} {self.deviceid}\n" + self.__dict__.__repr__()
 
-    # def address(self, from_controller: MsgId.Controller):
-    #     pass
+    def reset(self, rtype: ResetType = ResetType.HardwareReset) -> Command:
+        return Command(self.deviceid, [rtype], MsgId.Endpoint.ControlEndpoint, fit_buf=True)
 
     def query(self, buffer: list) -> QueryTelemetry:
         return QueryTelemetry(self.deviceid)

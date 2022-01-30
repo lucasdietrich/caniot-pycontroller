@@ -37,10 +37,11 @@ class WriteAttributeQuery(CaniotMessage):
 class Command(CaniotMessage):
     def __init__(self, deviceid: DeviceId, command: BufferType, endpoint: MsgId.Endpoint = MsgId.Endpoint.Default, fit_buf: bool = False):
         if fit_buf:
-            command = fit_buffer(command, deviceid.cls.get_size(), 0x00)
+            command = fit_buffer(command, deviceid.cls.get_size(endpoint), 0x00)
         else:
             command_len = len(command)
-            expected_command_len = deviceid.cls.get_size()
+            print(deviceid, deviceid.cls, type(deviceid.cls))
+            expected_command_len = deviceid.cls.get_size(endpoint)
 
             if command_len != expected_command_len:
                 raise Exception(f"invalid data size ({command_len}) for "

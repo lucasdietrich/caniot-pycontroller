@@ -37,7 +37,7 @@ async def context(request: web.Request):
         elif form.get("write-attribute"):
             rval = api.WriteAttribute(device.deviceid, key + part, wval)
         elif form.get("synctime"):
-            api.SyncTime(device.deviceid)
+            api.SyncTime(node_broadcast.deviceid)
 
     # do this in a single grpc request !
     devlist = [

@@ -29,7 +29,7 @@ class DeviceId:
         # _: int = 7
         CLSBROADCAST: int = 0b111 # shadow class name for broadcast
 
-        def get_size(self) -> int:
+        def get_size(self, ep: MsgId.Endpoint = 0) -> int:
             data_type_size = [
                 8,
                 # 1,
@@ -43,8 +43,20 @@ class DeviceId:
             assert 0 <= self < len(data_type_size)
             return data_type_size[self]
 
-    cls: Union[int, Class]
+    def __init__(self, cls: Union[int, Class], sid: int):
+        self.cls = cls
+        self.sid = sid
+
+    def set_cls(self, cls: Union[int, Class]):
+        self._cls = DeviceId.Class(cls)
+
+    def get_cls(self) -> Class:
+        return self._cls
+
+    _cls: Class
     sid: int
+
+    cls: Class = property(get_cls, set_cls)
 
     @classmethod
     def from_int(cls, deviceid: int) -> DeviceId:
@@ -103,9 +115,10 @@ class MsgId:
 
     class Endpoint(IntEnum):
         Default = 0
+        Endpoint0 = Default
         Endpoint1 = 1
         Endpoint2 = 2
-        AllEndpoints = 3
+        ControlEndpoint = 3
 
         def join(self, controller: MsgId.Endpoint):
             return self | controller
