@@ -85,8 +85,10 @@ class API:
             ))
 
 
+api = API('192.168.10.155:50051')
+
+
 if __name__ == "__main__":
-    api = API('192.168.10.155:50051')
     did = DeviceId(DeviceId.Class.CRTHPT, 0x03)
     response_read_attr = api.ReadAttribute(did, 0x1010)
     print(response_read_attr)

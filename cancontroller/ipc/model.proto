@@ -215,6 +215,7 @@ message AlarmControllerModel
   bool light1 = 2;
   bool light2 = 3;
   bool siren = 4;
+  bool inputs_state = 5;
 
   AlarmState state = 6;
   AlarmMode mode = 7;

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0bmodel.proto\x12\x11\x63\x61ncontroller.ipc\"$\n\x08\x44\x65viceId\x12\x0c\n\x04type\x18\x01 \x01(\r\x12\n\n\x02id\x18\x02 \x01(\r\"N\n\x0f\x43ommandResponse\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\"\'\n\tAttribute\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\r\n\x05value\x18\x02 \x01(\r\"X\n\rGarageCommand\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12\x35\n\x07\x63ommand\x18\x02 \x01(\x0e\x32$.cancontroller.ipc.GarageDoorCommand\"\xaa\x02\n\x16\x41larmControllerCommand\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12/\n\x06light1\x18\x02 \x01(\x0e\x32\x1f.cancontroller.ipc.LightCommand\x12/\n\x06light2\x18\x03 \x01(\x0e\x32\x1f.cancontroller.ipc.LightCommand\x12.\n\x05\x61larm\x18\x04 \x01(\x0e\x32\x1f.cancontroller.ipc.AlarmCommand\x12\x37\n\nalarm_mode\x18\x05 \x01(\x0e\x32#.cancontroller.ipc.AlarmModeCommand\x12\x33\n\x05siren\x18\x06 \x01(\x0e\x32$.cancontroller.ipc.AlarmSirenCommand\"l\n\x10\x41ttributeRequest\x12+\n\x06\x64\x65vice\x18\x02 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x03 \x01(\r\x12\r\n\x05value\x18\x04 \x01(\r\x12\x0f\n\x07timeout\x18\x05 \x01(\x02\"\x9e\x01\n\x11\x41ttributeResponse\x12+\n\x06\x64\x65vice\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x02 \x01(\r\x12\r\n\x05value\x18\x03 \x01(\r\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\x12\x15\n\rresponse_time\x18\x05 \x01(\x02\"\x07\n\x05\x45mpty\"\x82\x01\n\x08\x44\x61teTime\x12\x0c\n\x04year\x18\x01 \x01(\r\x12\r\n\x05month\x18\x02 \x01(\r\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\r\x12\x0c\n\x04hour\x18\x04 \x01(\r\x12\x0e\n\x06minute\x18\x05 \x01(\r\x12\x0e\n\x06second\x18\x06 \x01(\r\x12\x0b\n\x03iso\x18\x07 \x01(\t\x12\x11\n\tformatted\x18\t \x01(\t\"\xad\x03\n\x06\x44\x65vice\x12-\n\x08\x64\x65viceid\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\r\x12\x30\n\x06status\x18\x04 \x01(\x0b\x32 .cancontroller.ipc.Device.Status\x12\x0f\n\x03raw\x18\x05 \x03(\x05\x42\x02\x10\x01\x12\x34\n\x06garage\x18\x06 \x01(\x0b\x32\".cancontroller.ipc.GarageDoorModelH\x00\x12\x38\n\x05\x61larm\x18\x07 \x01(\x0b\x32\'.cancontroller.ipc.AlarmControllerModelH\x00\x12/\n\tattribute\x18\x08 \x03(\x0b\x32\x1c.cancontroller.ipc.Attribute\x1ah\n\x06Status\x12.\n\tlast_seen\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DateTime\x12\x10\n\x08received\x18\x02 \x01(\r\x12\x0c\n\x04sent\x18\x03 \x01(\r\x12\x0e\n\x06online\x18\x04 \x01(\x08\x42\x07\n\x05model\"o\n\x0e\x44\x65viceResponse\x12+\n\x06\x64\x65vice\x18\x01 \x01(\x0b\x32\x19.cancontroller.ipc.DeviceH\x00\x12)\n\x05\x65mpty\x18\x02 \x01(\x0b\x32\x18.cancontroller.ipc.EmptyH\x00\x42\x05\n\x03\x64\x65v\"x\n\x0c\x43RTHPT_Model\x12\x10\n\x08\x63ontacts\x18\x01 \x01(\r\x12\x0e\n\x06relays\x18\x02 \x01(\r\x12\x10\n\x08int_temp\x18\x03 \x01(\x02\x12\x10\n\x08humidity\x18\x04 \x01(\x02\x12\x10\n\x08pressure\x18\x05 \x01(\x02\x12\x10\n\x08\x65xt_temp\x18\x06 \x01(\x02\"k\n\x0fGarageDoorModel\x12-\n\x04\x62\x61se\x18\x01 \x01(\x0b\x32\x1f.cancontroller.ipc.CRTHPT_Model\x12\x0c\n\x04left\x18\x02 \x01(\x08\x12\r\n\x05right\x18\x03 \x01(\x08\x12\x0c\n\x04gate\x18\x04 \x01(\x08\"\xce\x01\n\x14\x41larmControllerModel\x12-\n\x04\x62\x61se\x18\x01 \x01(\x0b\x32\x1f.cancontroller.ipc.CRTHPT_Model\x12\x0e\n\x06light1\x18\x02 \x01(\x08\x12\x0e\n\x06light2\x18\x03 \x01(\x08\x12\r\n\x05siren\x18\x04 \x01(\x08\x12,\n\x05state\x18\x06 \x01(\x0e\x32\x1d.cancontroller.ipc.AlarmState\x12*\n\x04mode\x18\x07 \x01(\x0e\x32\x1c.cancontroller.ipc.AlarmMode\"4\n\x07\x44\x65vices\x12)\n\x06\x64\x65vice\x18\x01 \x03(\x0b\x32\x19.cancontroller.ipc.Device*&\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\x12\x0b\n\x07TIMEOUT\x10\x02*b\n\x11GarageDoorCommand\x12\x17\n\x13\x43OMMAND_UNSPECIFIED\x10\x00\x12\x10\n\x0c\x43OMMAND_LEFT\x10\x01\x12\x11\n\rCOMMAND_RIGHT\x10\x02\x12\x0f\n\x0b\x43OMMAND_ALL\x10\x03*]\n\x0cLightCommand\x12\x12\n\x0eLIGHT_CMD_NONE\x10\x00\x12\x10\n\x0cLIGHT_CMD_ON\x10\x01\x12\x11\n\rLIGHT_CMD_OFF\x10\x02\x12\x14\n\x10LIGHT_CMD_TOGGLE\x10\x03*f\n\x0c\x41larmCommand\x12\x12\n\x0e\x41LARM_CMD_NONE\x10\x00\x12\x14\n\x10\x41LARM_CMD_ENABLE\x10\x01\x12\x15\n\x11\x41LARM_CMD_DISABLE\x10\x02\x12\x15\n\x11\x41LARM_CMD_RECOVER\x10\x03*a\n\x10\x41larmModeCommand\x12\x17\n\x13\x41LARM_MODE_CMD_NONE\x10\x00\x12\x19\n\x15\x41LARM_MODE_CMD_NORMAL\x10\x01\x12\x19\n\x15\x41LARM_MODE_CMD_SILENT\x10\x02*z\n\x11\x41larmSirenCommand\x12\x18\n\x14\x41LARM_SIREN_CMD_NONE\x10\x00\x12\x16\n\x12\x41LARM_SIREN_CMD_ON\x10\x01\x12\x17\n\x13\x41LARM_SIREN_CMD_OFF\x10\x02\x12\x1a\n\x16\x41LARM_SIREN_CMD_TOGGLE\x10\x03*w\n\nAlarmState\x12\x18\n\x14\x41LARM_STATE_INACTIVE\x10\x00\x12\x19\n\x15\x41LARM_STATE_OBSERVING\x10\x01\x12\x18\n\x14\x41LARM_STATE_SOUDNING\x10\x02\x12\x1a\n\x16\x41LARM_STATE_RECOVERING\x10\x03*9\n\tAlarmMode\x12\x15\n\x11\x41LARM_MODE_NORMAL\x10\x00\x12\x15\n\x11\x41LARM_MODE_SILENT\x10\x01\x32\xa6\x05\n\rCanController\x12T\n\nSendGarage\x12 .cancontroller.ipc.GarageCommand\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12\\\n\tSendAlarm\x12).cancontroller.ipc.AlarmControllerCommand\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12K\n\x10RequestTelemetry\x12\x1b.cancontroller.ipc.DeviceId\x1a\x18.cancontroller.ipc.Empty\"\x00\x12\\\n\rReadAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12]\n\x0eWriteAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12J\n\x05Reset\x12\x1b.cancontroller.ipc.DeviceId\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12\x44\n\nGetDevices\x12\x18.cancontroller.ipc.Empty\x1a\x1a.cancontroller.ipc.Devices\"\x00\x12\x45\n\tGetDevice\x12\x1b.cancontroller.ipc.DeviceId\x1a\x19.cancontroller.ipc.Device\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x0bmodel.proto\x12\x11\x63\x61ncontroller.ipc\"$\n\x08\x44\x65viceId\x12\x0c\n\x04type\x18\x01 \x01(\r\x12\n\n\x02id\x18\x02 \x01(\r\"N\n\x0f\x43ommandResponse\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\"\'\n\tAttribute\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\r\n\x05value\x18\x02 \x01(\r\"X\n\rGarageCommand\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12\x35\n\x07\x63ommand\x18\x02 \x01(\x0e\x32$.cancontroller.ipc.GarageDoorCommand\"\xaa\x02\n\x16\x41larmControllerCommand\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12/\n\x06light1\x18\x02 \x01(\x0e\x32\x1f.cancontroller.ipc.LightCommand\x12/\n\x06light2\x18\x03 \x01(\x0e\x32\x1f.cancontroller.ipc.LightCommand\x12.\n\x05\x61larm\x18\x04 \x01(\x0e\x32\x1f.cancontroller.ipc.AlarmCommand\x12\x37\n\nalarm_mode\x18\x05 \x01(\x0e\x32#.cancontroller.ipc.AlarmModeCommand\x12\x33\n\x05siren\x18\x06 \x01(\x0e\x32$.cancontroller.ipc.AlarmSirenCommand\"l\n\x10\x41ttributeRequest\x12+\n\x06\x64\x65vice\x18\x02 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x03 \x01(\r\x12\r\n\x05value\x18\x04 \x01(\r\x12\x0f\n\x07timeout\x18\x05 \x01(\x02\"\x9e\x01\n\x11\x41ttributeResponse\x12+\n\x06\x64\x65vice\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x02 \x01(\r\x12\r\n\x05value\x18\x03 \x01(\r\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\x12\x15\n\rresponse_time\x18\x05 \x01(\x02\"\x07\n\x05\x45mpty\"\x82\x01\n\x08\x44\x61teTime\x12\x0c\n\x04year\x18\x01 \x01(\r\x12\r\n\x05month\x18\x02 \x01(\r\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\r\x12\x0c\n\x04hour\x18\x04 \x01(\r\x12\x0e\n\x06minute\x18\x05 \x01(\r\x12\x0e\n\x06second\x18\x06 \x01(\r\x12\x0b\n\x03iso\x18\x07 \x01(\t\x12\x11\n\tformatted\x18\t \x01(\t\"\xad\x03\n\x06\x44\x65vice\x12-\n\x08\x64\x65viceid\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\r\x12\x30\n\x06status\x18\x04 \x01(\x0b\x32 .cancontroller.ipc.Device.Status\x12\x0f\n\x03raw\x18\x05 \x03(\x05\x42\x02\x10\x01\x12\x34\n\x06garage\x18\x06 \x01(\x0b\x32\".cancontroller.ipc.GarageDoorModelH\x00\x12\x38\n\x05\x61larm\x18\x07 \x01(\x0b\x32\'.cancontroller.ipc.AlarmControllerModelH\x00\x12/\n\tattribute\x18\x08 \x03(\x0b\x32\x1c.cancontroller.ipc.Attribute\x1ah\n\x06Status\x12.\n\tlast_seen\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DateTime\x12\x10\n\x08received\x18\x02 \x01(\r\x12\x0c\n\x04sent\x18\x03 \x01(\r\x12\x0e\n\x06online\x18\x04 \x01(\x08\x42\x07\n\x05model\"o\n\x0e\x44\x65viceResponse\x12+\n\x06\x64\x65vice\x18\x01 \x01(\x0b\x32\x19.cancontroller.ipc.DeviceH\x00\x12)\n\x05\x65mpty\x18\x02 \x01(\x0b\x32\x18.cancontroller.ipc.EmptyH\x00\x42\x05\n\x03\x64\x65v\"x\n\x0c\x43RTHPT_Model\x12\x10\n\x08\x63ontacts\x18\x01 \x01(\r\x12\x0e\n\x06relays\x18\x02 \x01(\r\x12\x10\n\x08int_temp\x18\x03 \x01(\x02\x12\x10\n\x08humidity\x18\x04 \x01(\x02\x12\x10\n\x08pressure\x18\x05 \x01(\x02\x12\x10\n\x08\x65xt_temp\x18\x06 \x01(\x02\"k\n\x0fGarageDoorModel\x12-\n\x04\x62\x61se\x18\x01 \x01(\x0b\x32\x1f.cancontroller.ipc.CRTHPT_Model\x12\x0c\n\x04left\x18\x02 \x01(\x08\x12\r\n\x05right\x18\x03 \x01(\x08\x12\x0c\n\x04gate\x18\x04 \x01(\x08\"\xe4\x01\n\x14\x41larmControllerModel\x12-\n\x04\x62\x61se\x18\x01 \x01(\x0b\x32\x1f.cancontroller.ipc.CRTHPT_Model\x12\x0e\n\x06light1\x18\x02 \x01(\x08\x12\x0e\n\x06light2\x18\x03 \x01(\x08\x12\r\n\x05siren\x18\x04 \x01(\x08\x12\x14\n\x0cinputs_state\x18\x05 \x01(\x08\x12,\n\x05state\x18\x06 \x01(\x0e\x32\x1d.cancontroller.ipc.AlarmState\x12*\n\x04mode\x18\x07 \x01(\x0e\x32\x1c.cancontroller.ipc.AlarmMode\"4\n\x07\x44\x65vices\x12)\n\x06\x64\x65vice\x18\x01 \x03(\x0b\x32\x19.cancontroller.ipc.Device*&\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\x12\x0b\n\x07TIMEOUT\x10\x02*b\n\x11GarageDoorCommand\x12\x17\n\x13\x43OMMAND_UNSPECIFIED\x10\x00\x12\x10\n\x0c\x43OMMAND_LEFT\x10\x01\x12\x11\n\rCOMMAND_RIGHT\x10\x02\x12\x0f\n\x0b\x43OMMAND_ALL\x10\x03*]\n\x0cLightCommand\x12\x12\n\x0eLIGHT_CMD_NONE\x10\x00\x12\x10\n\x0cLIGHT_CMD_ON\x10\x01\x12\x11\n\rLIGHT_CMD_OFF\x10\x02\x12\x14\n\x10LIGHT_CMD_TOGGLE\x10\x03*f\n\x0c\x41larmCommand\x12\x12\n\x0e\x41LARM_CMD_NONE\x10\x00\x12\x14\n\x10\x41LARM_CMD_ENABLE\x10\x01\x12\x15\n\x11\x41LARM_CMD_DISABLE\x10\x02\x12\x15\n\x11\x41LARM_CMD_RECOVER\x10\x03*a\n\x10\x41larmModeCommand\x12\x17\n\x13\x41LARM_MODE_CMD_NONE\x10\x00\x12\x19\n\x15\x41LARM_MODE_CMD_NORMAL\x10\x01\x12\x19\n\x15\x41LARM_MODE_CMD_SILENT\x10\x02*z\n\x11\x41larmSirenCommand\x12\x18\n\x14\x41LARM_SIREN_CMD_NONE\x10\x00\x12\x16\n\x12\x41LARM_SIREN_CMD_ON\x10\x01\x12\x17\n\x13\x41LARM_SIREN_CMD_OFF\x10\x02\x12\x1a\n\x16\x41LARM_SIREN_CMD_TOGGLE\x10\x03*w\n\nAlarmState\x12\x18\n\x14\x41LARM_STATE_INACTIVE\x10\x00\x12\x19\n\x15\x41LARM_STATE_OBSERVING\x10\x01\x12\x18\n\x14\x41LARM_STATE_SOUDNING\x10\x02\x12\x1a\n\x16\x41LARM_STATE_RECOVERING\x10\x03*9\n\tAlarmMode\x12\x15\n\x11\x41LARM_MODE_NORMAL\x10\x00\x12\x15\n\x11\x41LARM_MODE_SILENT\x10\x01\x32\xa6\x05\n\rCanController\x12T\n\nSendGarage\x12 .cancontroller.ipc.GarageCommand\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12\\\n\tSendAlarm\x12).cancontroller.ipc.AlarmControllerCommand\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12K\n\x10RequestTelemetry\x12\x1b.cancontroller.ipc.DeviceId\x1a\x18.cancontroller.ipc.Empty\"\x00\x12\\\n\rReadAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12]\n\x0eWriteAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12J\n\x05Reset\x12\x1b.cancontroller.ipc.DeviceId\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12\x44\n\nGetDevices\x12\x18.cancontroller.ipc.Empty\x1a\x1a.cancontroller.ipc.Devices\"\x00\x12\x45\n\tGetDevice\x12\x1b.cancontroller.ipc.DeviceId\x1a\x19.cancontroller.ipc.Device\"\x00\x62\x06proto3'
 )
 
 _STATUS = _descriptor.EnumDescriptor(
@@ -48,8 +48,8 @@ _STATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2036,
-  serialized_end=2074,
+  serialized_start=2058,
+  serialized_end=2096,
 )
 _sym_db.RegisterEnumDescriptor(_STATUS)
 
@@ -84,8 +84,8 @@ _GARAGEDOORCOMMAND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2076,
-  serialized_end=2174,
+  serialized_start=2098,
+  serialized_end=2196,
 )
 _sym_db.RegisterEnumDescriptor(_GARAGEDOORCOMMAND)
 
@@ -120,8 +120,8 @@ _LIGHTCOMMAND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2176,
-  serialized_end=2269,
+  serialized_start=2198,
+  serialized_end=2291,
 )
 _sym_db.RegisterEnumDescriptor(_LIGHTCOMMAND)
 
@@ -156,8 +156,8 @@ _ALARMCOMMAND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2271,
-  serialized_end=2373,
+  serialized_start=2293,
+  serialized_end=2395,
 )
 _sym_db.RegisterEnumDescriptor(_ALARMCOMMAND)
 
@@ -187,8 +187,8 @@ _ALARMMODECOMMAND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2375,
-  serialized_end=2472,
+  serialized_start=2397,
+  serialized_end=2494,
 )
 _sym_db.RegisterEnumDescriptor(_ALARMMODECOMMAND)
 
@@ -223,8 +223,8 @@ _ALARMSIRENCOMMAND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2474,
-  serialized_end=2596,
+  serialized_start=2496,
+  serialized_end=2618,
 )
 _sym_db.RegisterEnumDescriptor(_ALARMSIRENCOMMAND)
 
@@ -259,8 +259,8 @@ _ALARMSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2598,
-  serialized_end=2717,
+  serialized_start=2620,
+  serialized_end=2739,
 )
 _sym_db.RegisterEnumDescriptor(_ALARMSTATE)
 
@@ -285,8 +285,8 @@ _ALARMMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2719,
-  serialized_end=2776,
+  serialized_start=2741,
+  serialized_end=2798,
 )
 _sym_db.RegisterEnumDescriptor(_ALARMMODE)
 
@@ -1103,14 +1103,21 @@ _ALARMCONTROLLERMODEL = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='state', full_name='cancontroller.ipc.AlarmControllerModel.state', index=4,
+      name='inputs_state', full_name='cancontroller.ipc.AlarmControllerModel.inputs_state', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='cancontroller.ipc.AlarmControllerModel.state', index=5,
       number=6, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='mode', full_name='cancontroller.ipc.AlarmControllerModel.mode', index=5,
+      name='mode', full_name='cancontroller.ipc.AlarmControllerModel.mode', index=6,
       number=7, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -1129,7 +1136,7 @@ _ALARMCONTROLLERMODEL = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1774,
-  serialized_end=1980,
+  serialized_end=2002,
 )
 
 
@@ -1160,8 +1167,8 @@ _DEVICES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1982,
-  serialized_end=2034,
+  serialized_start=2004,
+  serialized_end=2056,
 )
 
 _COMMANDRESPONSE.fields_by_name['status'].enum_type = _STATUS
@@ -1348,8 +1355,8 @@ _CANCONTROLLER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=2779,
-  serialized_end=3457,
+  serialized_start=2801,
+  serialized_end=3479,
   methods=[
   _descriptor.MethodDescriptor(
     name='SendGarage',

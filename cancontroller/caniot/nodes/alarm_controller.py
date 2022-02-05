@@ -22,6 +22,8 @@ class AlarmController(CRTHPT_Node):
         self.model.update({
             "light1": 0,
             "light2": 0,
+            "siren": 0,
+            "inputs_state": 0,  # alarm inputs state
             "state": 0,  # alarm state
             "mode": 0,  # alarm mode
         })
@@ -31,10 +33,10 @@ class AlarmController(CRTHPT_Node):
 
         self.model["light1"] = read_bit(msg.buffer[0], 0)
         self.model["light2"] = read_bit(msg.buffer[0], 1)
-        self.model["siren"] = read_bit(msg.buffer[0], 5)
-
         self.model["state"] = (msg.buffer[0] >> 2) & 0x3
-        self.model["mode"] = (msg.buffer[0] >> 4) & 0x1
+        self.model["mode"] = read_bit(msg.buffer[0], 4)
+        self.model["siren"] = read_bit(msg.buffer[0], 5)
+        self.model["inputs_state"] = read_bit(msg.buffer[0], 6)
 
         return True
 

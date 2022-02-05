@@ -42,3 +42,11 @@
     background-color: orange;
     color:black;
 }
+
+#alarm_inputs_status
+{
+    height: 15px;
+    display: block;
+    width: 100%;
+    background-color: #111111;
+}

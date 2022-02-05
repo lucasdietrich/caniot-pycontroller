@@ -121,6 +121,7 @@ list = [
     AttrName(0x0020, "name", size=32, readonly=True),
     Attribute(0x0030, "magic_number", size=4, readonly=True),
 
+    AttrSeconds(0x1000, "uptime_synced", readonly=True),
     AttrTimestamp(0x1010, "time"),
     AttrSeconds(0x1020, "uptime", readonly=True),
     AttrTimestamp(0x1030, "start_time", readonly=True),
