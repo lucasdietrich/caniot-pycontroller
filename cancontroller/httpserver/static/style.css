@@ -89,8 +89,9 @@ input.button,
 select.select
 {
     height: 100px;
+    min-width: 150px;
 
-    font-size: 30px;
+    font-size: 40px;
 
     padding-left: 30px;
     padding-right: 30px;
@@ -132,4 +133,10 @@ input.button:active
     font-style: italic;
     font-weight: bold;
     color: #EEE;
+}
+
+p.boldred
+{
+    color: red;
+    font-weight: bold;
 }

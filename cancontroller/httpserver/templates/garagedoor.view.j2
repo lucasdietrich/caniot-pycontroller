@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/garage.css">
     <link rel="stylesheet" href="/static/style_darkmode.css">
-    <meta http-equiv="refresh" content="10" >
+    <meta http-equiv="refresh" content="3.5" >
 </head>
 <body>
 {% if error %}
@@ -38,36 +38,18 @@
 </div>
 <div>
     <h1>Mesures</h1>
-    <p>Timestamp : <span class="date">{{ device.status.last_seen.formatted }}</span></p>
-    <p>Température : <span class="measurement temperature">{{ device.garage.base.int_temp | round(1) }} °C</span></p>
-    <p>Porte de garage gauche <span class="measurement">{{ "ouverte" if device.garage.left else "fermée" }}</span>.</p>
-    <p>Porte de garage droite <span class="measurement">{{ "ouverte" if device.garage.right else "fermée" }}</span>.</p>
-    <p>Portillon <span class="measurement">{{ "ouvert" if device.garage.gate else "fermé" }}</span>.</p>
-</div>
 
-{% if debug %}
-<div id="debug">
-    <h1>Debug</h1>
-    <pre>{{ device }}</pre>
-
-    <form action="" method="post">
-        <input class="button" type="submit" name="debug" value="RequestTelemetry">
-    </form>
-</div>
-{% else %}
-    <hr/>
-<div id="debug">
-    <p><a href="?debug=1">Activer le mode debug</a></p>
-</div>
-{% endif %}
-
-<div>
-    <h1>Index</h1>
-    <ul>
-        <li><a href="/garage">Garage</a></li>
-        <li><a href="/logs">Télécharger les logs</a></li>
-{#        <li><a href="/logs?clear=1">Supprimer les logs</a></li>#}
-    </ul>
+    {% if device.status.online %}
+        <p>En ligne il y a {{ device.status.last_seen.seconds | diffseconds }} :
+            <span class="date"> ({{ device.status.last_seen.seconds | fmttimestamp }})</span>
+        </p>
+        <p>Température : <span class="measurement temperature">{{ device.garage.base.int_temp | round(1) }} °C</span></p>
+        <p>Porte de garage gauche <span class="measurement">{{ "ouverte" if device.garage.left else "fermée" }}</span>.</p>
+        <p>Porte de garage droite <span class="measurement">{{ "ouverte" if device.garage.right else "fermée" }}</span>.</p>
+        <p>Portillon <span class="measurement">{{ "ouvert" if device.garage.gate else "fermé" }}</span>.</p>
+    {% else %}
+        <p class="boldred">Offline</p>
+    {% endif %}
 </div>
 
 </body>

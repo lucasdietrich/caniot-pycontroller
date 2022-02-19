@@ -179,18 +179,11 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                 version=dev.version,
                 status=model_pb2.Device.Status(
                     last_seen=model_pb2.DateTime(
-                        iso=dev.last_seen.isoformat(),
-                        formatted=dev.last_seen.strftime("%Y-%m-%d %H:%M:%S"),
-                        year=dev.last_seen.year,
-                        month=dev.last_seen.month,
-                        day=dev.last_seen.day,
-                        hour=dev.last_seen.hour,
-                        minute=dev.last_seen.minute,
-                        second=dev.last_seen.second
-                    ) if dev.last_seen else None,
+                        seconds=int(dev.last_seen.timestamp())
+                    ) if dev.last_seen is not None else None,
                     received=dev.received,
                     sent=dev.sent,
-                    online=bool(dev.last_seen)
+                    online=bool(dev.last_seen is not None)
                 ),
                 attribute=[
                     model_pb2.Attribute(key=key, value=value) for key, value in dev.attrs.items()

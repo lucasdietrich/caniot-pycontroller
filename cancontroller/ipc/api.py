@@ -55,7 +55,7 @@ class API:
         return self.WriteAttribute(deviceid, attributes.get("time").key, synctime)
 
     def GetDevice(self, deviceid: DeviceId):
-        with grpc.insecure_channel(self.grpc_target) as  channel:
+        with grpc.insecure_channel(self.grpc_target) as channel:
             stub = model_pb2_grpc.CanControllerStub(channel)
             return stub.GetDevice(model_pb2.DeviceId(
                 type=deviceid.cls,

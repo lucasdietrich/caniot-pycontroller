@@ -1,28 +1,27 @@
 from __future__ import print_function
 
 import datetime
+import os.path
+import time
 
-import jinja2
 import aiohttp_jinja2
 import grpc
-import os.path
-
+import jinja2
 from aiohttp import web
-
-from cancontroller import ROOT_DIR
-
-from cancontroller.ipc import model_pb2, model_pb2_grpc, API
-
-from cancontroller import configuration
-from cancontroller.caniot.devices import node_garage_door, node_alarm, Devices
-
 from google.protobuf.json_format import MessageToJson
 
 import dashboard
+from cancontroller import ROOT_DIR
+from cancontroller import configuration
+from cancontroller.caniot.devices import node_garage_door, node_alarm, Devices
+from cancontroller.ipc import model_pb2, model_pb2_grpc, API
+
+from cancontroller import utils
 
 # redirection
 #            location = request.app.router['index'].url_for()
 #            raise web.HTTPFound(location=location)
+
 
 class HTTPServer(web.Application):
     def __init__(self, grpc_target: str):
@@ -31,7 +30,15 @@ class HTTPServer(web.Application):
         self.api = API(grpc_target)
 
         super(HTTPServer, self).__init__()
-        aiohttp_jinja2.setup(self, loader=jinja2.FileSystemLoader('templates'))
+
+        # https://aiohttp-jinja2.readthedocs.io/en/stable/
+        aiohttp_jinja2.setup(self,
+                             loader=jinja2.FileSystemLoader('templates'),
+                             filters={
+                                 "diffseconds": utils.diffseconds,
+                                 "fmttimestamp": utils.fmttimestamp
+                             })
+
         self.add_routes(
             [
                 web.get('/garage', self.handle_garagedoors),
@@ -109,6 +116,7 @@ class HTTPServer(web.Application):
         siren_status_messages = [("inactive", "éteinte"), ("sounding", "activée")]
 
         device_data = self.api.GetDevice(node_alarm.deviceid)
+
         return {
             "device": device_data,
             "debug": bool(request.query.get("debug", "")),
@@ -135,14 +143,11 @@ class HTTPServer(web.Application):
                 print(f"CanController "
                       f"GarageCommand command={command} "
                       f"CommandResponse status={model_pb2._STATUS.values_by_number[response.status].name}")
-            if form.get("debug", "") == "RequestTelemetry":
-                self.api.RequestTelemetry(node_garage_door.deviceid)
 
         return {
             "device": self.api.GetDevice(node_garage_door.deviceid),
             "command": command,
-            "commands_list": commands_list,
-            "debug": bool(request.query.get("debug", ""))
+            "commands_list": commands_list
         }
 
     async def handle_debug(self, request: web.Request):

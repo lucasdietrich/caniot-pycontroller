@@ -1,15 +1,10 @@
-import struct
-
-from pip._vendor.html5lib._trie import py
-
-from ..device import DeviceId
 import datetime
-import pytz
+import struct
 import time
-
 from typing import Union
 
 from cancontroller.utils import is_bit
+from ..device import DeviceId
 
 
 class Key:
@@ -85,7 +80,15 @@ class AttrTimestamp(Attribute):
 
 class AttrSeconds(Attribute):
     def interpret(self, val: int, key: int = None):
-        return time.strftime('%H:%M:%S', time.gmtime(val))
+        days = val // 86400
+        hours = (val % 86400) // 3600
+        minutes = (val % 3600) // 60
+        seconds = val % 60
+
+        fmt = f"{hours}h {minutes}m {seconds}s"
+        if days > 0:
+            fmt = f"{days} days" + fmt
+        return fmt
 
 class AttrDelayS(Attribute):
     def interpret(self, val: int, key: int = None):

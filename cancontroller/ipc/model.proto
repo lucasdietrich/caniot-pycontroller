@@ -131,16 +131,7 @@ message Empty {
 
 message DateTime
 {
-  uint32 year = 1;
-  uint32 month = 2;
-  uint32 day = 3;
-
-  uint32 hour = 4;
-  uint32 minute = 5;
-  uint32 second = 6;
-
-  string iso = 7;
-  string formatted = 9;
+  uint32 seconds = 1;
 }
 
 message Device {
