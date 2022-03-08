@@ -12,6 +12,7 @@ from cancontroller.caniot.message.interpret import interpret_response
 from cancontroller.caniot.models import MsgId, DeviceId
 from cancontroller.caniot.device import Device
 from cancontroller.controller import initialize_can_if
+from cancontroller.caniot.message import QueryTelemetry
 
 from typing import List
 
@@ -167,7 +168,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
     # allow this method to be blocking until timeout
     async def RequestTelemetry(self, request: model_pb2.DeviceId, context):
-        self.send(Device(DeviceId(cls=request.type, sid=request.id)).query_telemetry())
+        self.send(QueryTelemetry(DeviceId(cls=request.type, sid=request.id)))
         return model_pb2.Empty()
 
     async def GetDevice(self, request: model_pb2.Devices, context):
