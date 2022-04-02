@@ -145,14 +145,14 @@ class CanController(model_pb2_grpc.CanControllerServicer):
             attr_response: AttributeResponse = response[0]
 
             return model_pb2.AttributeResponse(device=model_pb2.DeviceId(
-                type=attr_response.msgid.device_id.cls,
-                id=attr_response.msgid.device_id.sid
+                cls=attr_response.msgid.device_id.cls,
+                sid=attr_response.msgid.device_id.sid
             ), key=attr_response.get_key(), value=attr_response.get_value(), status="OK",
                 response_time=duration)
         else:
             return model_pb2.AttributeResponse(device=model_pb2.DeviceId(
-                type=query.msgid.device_id.cls,
-                id=query.msgid.device_id.sid
+                cls=query.msgid.device_id.cls,
+                sid=query.msgid.device_id.sid
             ), status="TIMEOUT",
                 response_time=duration)
 

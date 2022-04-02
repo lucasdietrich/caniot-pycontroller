@@ -57,7 +57,8 @@ class HTTPServer(web.Application):
                 web.get('/debug/{debug}', self.handle_debug),
                 web.get("/", self.handle_home),
                 web.get("/logs", self.handle_logs),
-                web.get("/caniot-temperatures", self.handle_temperatures)
+                web.get("/caniot-temperatures", self.handle_temperatures),
+                web.get("/metrics", self.handle_metrics)
             ]
         )
 
@@ -171,6 +172,39 @@ class HTTPServer(web.Application):
             to_object(garage.deviceid, garage.garage.base),
             to_object(alarm.deviceid, alarm.alarm.base)
         ])
+
+    async def handle_metrics(self, request: web.Request):
+        # TODO self.api.GetDevices()
+        garage = self.api.GetDevice(node_garage_door.deviceid)
+        alarm = self.api.GetDevice(node_alarm.deviceid)
+
+        def build_device_temperature_metric(did: DeviceId, device_name: str, temp: float, embedded: bool = True) -> str:
+            def build_tag(name: str, value: str) -> str:
+                return f"{name}=\"{value}\""
+
+            return "device_temperature{" + ",".join(
+                build_tag(tag, val) for tag, val in {
+                    "medium": "CAN",
+                    "mac": str(int(did)),
+                    "device": device_name,
+                    "sensor": "EMBEDDED" if embedded else "EXTERNAL",
+                    "room": "",
+                    "collector": "pycaniotcontroller"
+                }.items()
+            ) + "} " + f"{temp:.2f}\n"
+
+        metrics = ""
+
+        if garage.garage.base.active_int_temp:
+            metrics += build_device_temperature_metric(node_garage_door.deviceid, "GarageDoorController", garage.garage.base.int_temp, True)
+
+        if alarm.alarm.base.active_int_temp:
+            metrics += build_device_temperature_metric(node_alarm.deviceid, "AlarmController", alarm.alarm.base.int_temp, True)
+
+        if alarm.alarm.base.active_ext_temp:
+            metrics += build_device_temperature_metric(node_alarm.deviceid, "AlarmController", alarm.alarm.base.ext_temp, False)
+
+        return web.Response(body=metrics)
 
     async def handle_debug(self, request: web.Request):
         debug = request.match_info.get('debug', "")
