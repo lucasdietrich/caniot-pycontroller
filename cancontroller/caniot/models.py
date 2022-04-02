@@ -11,7 +11,7 @@ BufferType = Union[List[int], bytearray, bytes]
 @dataclass
 class DeviceId:
     class Class(IntEnum):
-        CRTHPT: int = 0
+        CUSTOMPCB: int = 0
         C1: int = 1
         C2: int = 2
         C3: int = 3
@@ -114,11 +114,16 @@ class MsgId:
     device_id: DeviceId
 
     class Endpoint(IntEnum):
-        Default = 0
-        Endpoint0 = Default
+
+        Endpoint0 = 0
         Endpoint1 = 1
         Endpoint2 = 2
-        ControlEndpoint = 3
+        Endpoint3 = 3
+
+        AppDefaultEndpoint = Endpoint0
+        BoardControlEndpoint = Endpoint3
+
+        Default = AppDefaultEndpoint
 
         def join(self, controller: MsgId.Endpoint):
             return self | controller
@@ -140,8 +145,8 @@ class MsgId:
             return f"[{hex(self)}] " \
                    f"{MsgId.QueryType(self.query_type).name} " \
                    f"{MsgId.FrameType(self.frame_type).name} " \
-                   f"endpoint {MsgId.Endpoint(self.endpoint).name} " \
-                   f"device {self.device_id}"
+                   f"{MsgId.Endpoint(self.endpoint).name} " \
+                   f"{self.device_id}"
         elif self.is_error():
             return f"[{hex(self)}] ERROR message from {self.device_id}"
         else:
@@ -243,7 +248,7 @@ if __name__ == "__main__":
         frame_type=MsgId.FrameType.Telemetry,
         query_type=MsgId.QueryType.Query,
         endpoint=MsgId.Endpoint.Default,
-        device_id=DeviceId(DeviceId.Class.CRTHPT, 1)
+        device_id=DeviceId(DeviceId.Class.CUSTOMPCB, 1)
     )
 
     print(msgid, ":", msgid.bin_repr())

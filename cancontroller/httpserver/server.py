@@ -4,6 +4,7 @@ import datetime
 import os.path
 import time
 
+import json
 import aiohttp_jinja2
 import grpc
 import jinja2
@@ -15,6 +16,7 @@ from cancontroller import ROOT_DIR
 from cancontroller import configuration
 from cancontroller.caniot.devices import node_garage_door, node_alarm, Devices
 from cancontroller.ipc import model_pb2, model_pb2_grpc, API
+from cancontroller.caniot.models import DeviceId
 
 from cancontroller import utils
 
@@ -54,7 +56,8 @@ class HTTPServer(web.Application):
 
                 web.get('/debug/{debug}', self.handle_debug),
                 web.get("/", self.handle_home),
-                web.get("/logs", self.handle_logs)
+                web.get("/logs", self.handle_logs),
+                web.get("/caniot-temperatures", self.handle_temperatures)
             ]
         )
 
@@ -149,6 +152,25 @@ class HTTPServer(web.Application):
             "command": command,
             "commands_list": commands_list
         }
+
+    async def handle_temperatures(self, request: web.Request):
+        # TODO self.api.GetDevices()
+        garage = self.api.GetDevice(node_garage_door.deviceid)
+        alarm = self.api.GetDevice(node_alarm.deviceid)
+
+        def to_object(did, base):
+            return {
+                "deviceid": int(DeviceId(cls=did.cls, sid=did.sid)),
+                "active_int_temp": bool(base.active_int_temp),
+                "int_temp": f"{base.int_temp:.2f}",
+                "active_ext_temp": bool(base.active_ext_temp),
+                "ext_temp": f"{base.ext_temp:.2f}",
+            }
+
+        return web.json_response([
+            to_object(garage.deviceid, garage.garage.base),
+            to_object(alarm.deviceid, alarm.alarm.base)
+        ])
 
     async def handle_debug(self, request: web.Request):
         debug = request.match_info.get('debug', "")

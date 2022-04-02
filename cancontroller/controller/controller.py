@@ -28,7 +28,7 @@ logging.getLogger("caniot.interfaces.socketcan.socketcan").setLevel(logging.DEBU
 can_logger = logging.getLogger("caniot")
 can_logger.setLevel(logging.DEBUG)
 fileHandler = logging.FileHandler(configuration.get_controller_log_file())
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('caniot: %(asctime)s - %(name)s - %(levelname)s - %(message)s')
 fileHandler.setFormatter(formatter)
 can_logger.addHandler(fileHandler)
 
@@ -81,11 +81,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         # interpret as caniot message
         msg = interpret_response(MsgId.from_int(can_msg.arbitration_id, False), can_msg.data)
 
-        log_msg = f"[{self.rx_count}] RX {msg.msgid} payload[{len(msg.buffer)}] : {msg.buffer}"
-        if msg.msgid.is_error():
-            can_logger.error(log_msg)
-        else:
-            can_logger.debug(log_msg)
+        log_msg = f"[{self.rx_count}] RX {msg.msgid} : {msg.buffer}"
 
         self.rx_count += 1
 
@@ -98,9 +94,16 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
                 device.interpret(msg)
 
+                log_msg += " " + str(device.model)
+
             for query in self.pending:
                 if query.eval(msg):
                     break
+
+        if msg.msgid.is_error():
+            can_logger.error(log_msg)
+        else:
+            can_logger.debug(log_msg)
 
 
     async def query(self, msg: CaniotMessage, timeout: float) -> [CaniotMessage, float]:
@@ -128,7 +131,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         return model_pb2.CommandResponse(datetime=request.datetime, status=model_pb2.OK if resp else model_pb2.TIMEOUT)
 
     async def Reset(self, request: model_pb2.DeviceId, context) -> model_pb2.CommandResponse:
-        query = Device(DeviceId(cls=request.type, sid=request.id)).reset()
+        query = Device(DeviceId(cls=request.cls, sid=request.sid)).reset()
         resp, duration = await self.query(query, timeout=1.0)
         return model_pb2.CommandResponse(status=model_pb2.OK if resp else model_pb2.TIMEOUT)
 
@@ -154,11 +157,11 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                 response_time=duration)
 
     async def ReadAttribute(self, request: model_pb2.AttributeRequest, context) -> model_pb2.AttributeResponse:
-        query = Device(DeviceId(cls=request.device.type, sid=request.device.id)).read_attribute(request.key)
+        query = Device(DeviceId(cls=request.device.cls, sid=request.device.sid)).read_attribute(request.key)
         return await self.QueryAttribute(query, request.timeout)
 
     async def WriteAttribute(self, request: model_pb2.AttributeRequest, context) -> model_pb2.AttributeResponse:
-        query = Device(DeviceId(cls=request.device.type, sid=request.device.id)).write_attribute(request.key, request.value)
+        query = Device(DeviceId(cls=request.device.cls, sid=request.device.sid)).write_attribute(request.key, request.value)
         return await self.QueryAttribute(query, request.timeout)
 
     async def GetDevices(self, request: model_pb2.Empty, context):
@@ -168,11 +171,11 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
     # allow this method to be blocking until timeout
     async def RequestTelemetry(self, request: model_pb2.DeviceId, context):
-        self.send(QueryTelemetry(DeviceId(cls=request.type, sid=request.id)))
+        self.send(QueryTelemetry(DeviceId(cls=request.cls, sid=request.sid)))
         return model_pb2.Empty()
 
     async def GetDevice(self, request: model_pb2.Devices, context):
-        dev: Device = self.devices.select(DeviceId(request.type, request.id))
+        dev: Device = self.devices.select(DeviceId(request.cls, request.sid))
         if dev:
             return model_pb2.Device(
                 deviceid=request,
@@ -189,7 +192,6 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                 attribute=[
                     model_pb2.Attribute(key=key, value=value) for key, value in dev.attrs.items()
                 ],
-                raw=dev.telemetry_raw,
                 **dev.get_model()
             )
         else:

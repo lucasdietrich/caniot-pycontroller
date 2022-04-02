@@ -6,8 +6,8 @@ from cancontroller.caniot.nodes.alarm_controller import AlarmController
 
 from typing import Dict, List, Union, Optional
 
-node_garage_door = GarageDoorController(DeviceId(DeviceId.Class.CRTHPT, 0x02), "GarageDoorControllerProdPCB")
-node_alarm = AlarmController(DeviceId(DeviceId.Class.CRTHPT, 0x03), "AlarmController")
+node_garage_door = GarageDoorController(DeviceId(DeviceId.Class.CUSTOMPCB, 0x02), "GarageDoorControllerProdPCB")
+node_alarm = AlarmController(DeviceId(DeviceId.Class.CUSTOMPCB, 0x03), "AlarmController")
 node_broadcast = Device(DeviceId.Broadcast(), "__broadcast__")
 
 # TODO create an entity of broadcast device

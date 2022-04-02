@@ -24,8 +24,8 @@ service CanController {
 
 message DeviceId
 {
-  uint32 type = 1;
-  uint32 id = 2;
+  uint32 cls = 1;
+  uint32 sid = 2;
 }
 
 enum Status {
@@ -168,19 +168,27 @@ message DeviceResponse {
 
 /*____________________________________________________________________________________________________________________*/
 
-message CRTHPT_Model
+message CustomPCBModel
 {
-  uint32 contacts = 1;
-  uint32 relays = 2;
+  uint32 r1 = 1;
+  uint32 r2 = 2;
 
-  float int_temp = 3;
-  float humidity = 4;
-  float pressure = 5;
-  float ext_temp = 6;
+  uint32 oc1 = 3;
+  uint32 oc2 = 4;
+
+  uint32 in1 = 5;
+  uint32 in2 = 6;
+  uint32 in3 = 7;
+  uint32 in4 = 8;
+
+  float int_temp = 9;
+  bool active_int_temp = 10;
+  float ext_temp = 11;
+  bool active_ext_temp = 12;
 }
 
 message GarageDoorModel {
-  CRTHPT_Model base = 1;
+  CustomPCBModel base = 1;
 
   bool left = 2;
   bool right = 3;
@@ -201,15 +209,14 @@ enum AlarmMode {
 
 message AlarmControllerModel
 {
-  CRTHPT_Model base = 1;
+  CustomPCBModel base = 1;
 
   bool light1 = 2;
   bool light2 = 3;
   bool siren = 4;
   bool inputs_state = 5;
-
-  AlarmState state = 6;
-  AlarmMode mode = 7;
+  AlarmState state = 7;
+  AlarmMode mode = 8;
 }
 
 message Devices {

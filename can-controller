@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /home/pi/Controller 
+source venv/bin/activate 
+cd cancontroller/controller 
+export PYTHONPATH="/home/pi/Controller:/home/pi/Controller/cancontroller/ipc" 
+exec python3 controller.py

@@ -1,8 +1,21 @@
+import math
 import re
 import datetime
+import struct
 
 re_hex = re.compile(r"^0x(?P<hex>[0-9]+)$")
 re_dec = re.compile(r"^(?P<dec>[0-9]+)$")
+
+def extract_bits_from_bytearray(raw: bytearray, bit_position: int = 0, size_bits: int = 10):
+    raw = bytearray(raw)
+
+    length = len(raw)
+    assert length <= 8
+
+    value, = struct.unpack("<Q", raw.ljust(8, b'\0'))
+
+    return (value >> bit_position) & (pow(2, size_bits) - 1)
+
 
 def parse_number(text: str):
     m = re_hex.match(text)
@@ -24,7 +37,6 @@ def number_to_hexn(n: int, digits: int = 4):
 
 def is_bit(n: int, bit: int = 0) -> bool:
     return bool(n & (1 << bit))
-
 
 def diffseconds(timestamp_seconds: int) -> str:
     diff = datetime.datetime.now() - datetime.datetime.fromtimestamp(timestamp_seconds)

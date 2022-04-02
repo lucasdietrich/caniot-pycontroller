@@ -1,1 +1,1 @@
-from .crthpt import CRTHPT_Node
+from .custompcb import CustomPcb_Node

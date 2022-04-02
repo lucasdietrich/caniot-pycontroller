@@ -23,29 +23,29 @@
             <div id="lights">
                 <div id="both-lights" class="light">
                     <h2>Tout</h2>
-                    <input type="submit" class="button" name="both" class="command" value="on">
-                    <input type="submit" class="button" name="both" class="command" value="off">
-                    <input type="submit" class="button" name="both" class="command" value="toggle">
+                    <input type="submit" class="button command" name="both" value="on">
+                    <input type="submit" class="button command" name="both" value="off">
+                    <input type="submit" class="button command" name="both" value="toggle">
                 </div>
                 <div id="light1" class="light">
                     <h2>Lumière 1</h2>
                     <div class="indicator {{ "on" if device.alarm.light1 else "off" }}"></div>
                     {% if device.alarm.light1 %}
-                        <input type="submit" class="button" name="light1" class="command" value="off">
+                        <input type="submit" class="button command" name="light1" value="off">
                     {% else %}
-                        <input type="submit" class="button" name="light1" class="command" value="on">
+                        <input type="submit" class="button command" name="light1" value="on">
                     {% endif %}
-                    <input type="submit" class="button" name="light1" class="command" value="toggle">
+                    <input type="submit" class="button command" name="light1" value="toggle">
                 </div>
                 <div id="light2" class="light">
                     <h2>Lumière 2</h2>
                     <div class="indicator {{ "on" if device.alarm.light2 else "off" }}"></div>
                     {% if device.alarm.light2 %}
-                        <input type="submit" class="button" name="light2" class="command" value="off">
+                        <input type="submit" class="button command" name="light2" value="off">
                     {% else %}
-                        <input type="submit" class="button" name="light2" class="command" value="on">
+                        <input type="submit" class="button command" name="light2" value="on">
                     {% endif %}
-                    <input type="submit" class="button" name="light2" class="command" value="toggle">
+                    <input type="submit" class="button command" name="light2" value="toggle">
                 </div>
             </div>
         </form>
@@ -55,11 +55,11 @@
             <div id="alarm" class="alarm">
                 {% if device.alarm.mode %}
                     <div class="alarm_silent_mode">
-                        <p>Alarm SILENT/TESTING mode <input type="submit" class="button" name="mode" class="command"
+                        <p>Alarm SILENT/TESTING mode <input type="submit" class="button command" name="mode"
                                                             value="normal"></p>
                     </div>
                 {% else %}
-                    <input type="submit" class="button" name="mode" class="command" value="silent">
+                    <input type="submit" class="button command" name="mode" value="silent">
                 {% endif %}
 
                 <div class="alarm_status">
@@ -71,14 +71,14 @@
                 </div>
 
                 {% if device.alarm.state == 0 %}
-                    <input type="submit" class="button" name="alarm" class="command" value="enable">
+                    <input type="submit" class="button command" name="alarm" value="enable">
                 {% elif device.alarm.state == 1 %}
-                    <input type="submit" class="button" name="alarm" class="command" value="disable">
+                    <input type="submit" class="button command" name="alarm" value="disable">
                 {% elif device.alarm.state == 2 %}
-                    <input type="submit" class="button" name="alarm" class="command" value="disable">
+                    <input type="submit" class="button command" name="alarm" value="disable">
                 {% elif device.alarm.state == 3 %}
-                    <input type="submit" class="button" name="alarm" class="command" value="disable">
-                    <input type="submit" class="button" name="alarm" class="command" value="recover">
+                    <input type="submit" class="button command" name="alarm" value="disable">
+                    <input type="submit" class="button command" name="alarm" value="recover">
                 {% endif %}
             </div>
         </form>
@@ -102,9 +102,9 @@
             <h1>Sirène</h1>
             <div id="siren">
                 <div id="siren" class="siren">
-                    <input type="submit" class="button" name="siren" class="command" value="on">
-                    <input type="submit" class="button" name="siren" class="command" value="toggle">
-                    <input type="submit" class="button" name="siren" class="command" value="off">
+                    <input type="submit" class="button command" name="siren" value="on">
+                    <input type="submit" class="button command" name="siren" value="toggle">
+                    <input type="submit" class="button command" name="siren" value="off">
                 </div>
             </div>
         </form>

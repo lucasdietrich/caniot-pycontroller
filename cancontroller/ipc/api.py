@@ -25,8 +25,8 @@ class API:
             stub = model_pb2_grpc.CanControllerStub(channel)
             response = stub.ReadAttribute(model_pb2.AttributeRequest(
                 device=model_pb2.DeviceId(
-                    type=deviceid.cls,
-                    id=deviceid.sid
+                    cls=deviceid.cls,
+                    sid=deviceid.sid
                 ),
                 key=key,
                 timeout=timeout
@@ -39,8 +39,8 @@ class API:
             stub = model_pb2_grpc.CanControllerStub(channel)
             response = stub.WriteAttribute(model_pb2.AttributeRequest(
                 device=model_pb2.DeviceId(
-                    type=deviceid.cls,
-                    id=deviceid.sid
+                    cls=deviceid.cls,
+                    sid=deviceid.sid
                 ),
                 key=key,
                 value=value,
@@ -58,8 +58,8 @@ class API:
         with grpc.insecure_channel(self.grpc_target) as channel:
             stub = model_pb2_grpc.CanControllerStub(channel)
             return stub.GetDevice(model_pb2.DeviceId(
-                type=deviceid.cls,
-                id=deviceid.sid
+                cls=deviceid.cls,
+                sid=deviceid.sid
             ))
 
     def GetDevices(self):
@@ -72,16 +72,16 @@ class API:
         with grpc.insecure_channel(self.grpc_target) as  channel:
             stub = model_pb2_grpc.CanControllerStub(channel)
             return stub.RequestTelemetry(model_pb2.DeviceId(
-                type=deviceid.cls,
-                id=deviceid.sid
+                cls=deviceid.cls,
+                sid=deviceid.sid
             ))
 
     def Reset(self, deviceid: DeviceId):
         with grpc.insecure_channel(self.grpc_target) as  channel:
             stub = model_pb2_grpc.CanControllerStub(channel)
             return stub.Reset(model_pb2.DeviceId(
-                type=deviceid.cls,
-                id=deviceid.sid
+                cls=deviceid.cls,
+                sid=deviceid.sid
             ))
 
 
@@ -89,6 +89,6 @@ api = API('192.168.10.155:50051')
 
 
 if __name__ == "__main__":
-    did = DeviceId(DeviceId.Class.CRTHPT, 0x03)
+    did = DeviceId(DeviceId.Class.CUSTOMPCB, 0x03)
     response_read_attr = api.ReadAttribute(did, 0x1010)
     print(response_read_attr)

@@ -4,7 +4,6 @@ from enum import IntEnum
 
 from cancontroller.caniot.models import DeviceId, MsgId
 from cancontroller.caniot.message import *
-from cancontroller.controller.pending import PendingQuery
 
 import json
 
@@ -31,7 +30,6 @@ class Device:
     # received = 0
     # sent = 0
     #
-    # telemetry_raw = []
     # model = {}
     class AttributesValues:
         def __init__(self):
@@ -48,7 +46,9 @@ class Device:
 
     def __init__(self, deviceid: DeviceId, name: str = None):
         self.telemetry_raw = []
-        self.model = {}
+        self.model = {
+            "base": {}
+        }
         self.attrs = Device.AttributesValues()
 
         self.last_seen: datetime.datetime = None
@@ -64,7 +64,7 @@ class Device:
         return f"Device {self.name} {self.deviceid}\n" + self.__dict__.__repr__()
 
     def reset(self, rtype: ResetType = ResetType.HardwareReset) -> Command:
-        return Command(self.deviceid, [rtype], MsgId.Endpoint.ControlEndpoint, fit_buf=True)
+        return Command(self.deviceid, [rtype], MsgId.Endpoint.BoardControlEndpoint, fit_buf=True)
 
     def query(self, buffer: list) -> QueryTelemetry:
         return QueryTelemetry(self.deviceid)
@@ -89,8 +89,20 @@ class Device:
         else:
             raise Exception(f"Cannot interpret CANIOT response {msg}")
 
+    @abc.abstractmethod
+    def interpret_board_control_telemetry(self, msg: CaniotMessage):
+        raise NotImplemented
+
+    @abc.abstractmethod
+    def interpret_application_telemetry(self, msg: CaniotMessage):
+        raise NotImplemented
+
     def interpret_telemetry(self, msg: CaniotMessage):
-        self.telemetry_raw = msg.buffer
+        if msg.msgid.endpoint == MsgId.Endpoint.BoardControlEndpoint:
+            assert len(msg.buffer) == 8
+            self.interpret_board_control_telemetry(msg)
+        else:
+            self.interpret_application_telemetry(msg)
 
     def get_model(self) -> dict:
         return {}
