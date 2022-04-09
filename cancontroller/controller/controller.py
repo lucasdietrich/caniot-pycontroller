@@ -18,7 +18,7 @@ from typing import List
 
 import model_pb2_grpc, model_pb2
 from pending import PendingQuery
-from cancontroller.caniot.devices import Devices, node_alarm, node_garage_door
+from cancontroller.caniot.devices import Devices, node_alarm, node_garage_door, devices
 import contextlib
 import time
 
@@ -81,7 +81,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         # interpret as caniot message
         msg = interpret_response(MsgId.from_int(can_msg.arbitration_id, False), can_msg.data)
 
-        log_msg = f"[{self.rx_count}] RX {msg.msgid} : {msg.buffer}"
+        log_msg = str(msg)
 
         self.rx_count += 1
 
@@ -124,11 +124,17 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
     async def SendGarage(self, request: model_pb2.GarageCommand, context) -> model_pb2.CommandResponse:
         resp, duration = await self.query(node_garage_door.open_door(request.command), timeout=1.0)
-        return model_pb2.CommandResponse(datetime=request.datetime, status=model_pb2.OK if resp else model_pb2.TIMEOUT)
+        return model_pb2.CommandResponse(status=model_pb2.OK if resp else model_pb2.TIMEOUT)
 
-    async def SendAlarm(self, request: model_pb2.AlarmControllerCommand, context) -> model_pb2.CommandResponse:
-        resp, duration = await self.query(node_alarm.command(request.light1, request.light2, request.alarm, request.alarm_mode, request.siren), timeout=1.0)
-        return model_pb2.CommandResponse(datetime=request.datetime, status=model_pb2.OK if resp else model_pb2.TIMEOUT)
+    async def CommandDevice(self, req: model_pb2.BoardLevelCommand, context) -> model_pb2.CommandResponse:
+        print(req)
+        device = devices.select(DeviceId(req.device.cls, req.device.sid))
+        if device is None:
+            raise Exception(f"Device doesn't exist {req.device}")
+
+        resp, duration = await self.query(device.command(req.coc1, req.coc2, req.crl1, req.crl2), timeout=1.0)
+
+        return model_pb2.CommandResponse(status=model_pb2.OK if resp else model_pb2.TIMEOUT)
 
     async def Reset(self, request: model_pb2.DeviceId, context) -> model_pb2.CommandResponse:
         query = Device(DeviceId(cls=request.cls, sid=request.sid)).reset()
@@ -171,7 +177,8 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
     # allow this method to be blocking until timeout
     async def RequestTelemetry(self, request: model_pb2.DeviceId, context):
-        self.send(QueryTelemetry(DeviceId(cls=request.cls, sid=request.sid)))
+        self.send(QueryTelemetry(DeviceId(cls=request.cls, sid=request.sid),
+                                 endpoint=MsgId.Endpoint.BoardControlEndpoint))
         return model_pb2.Empty()
 
     async def GetDevice(self, request: model_pb2.Devices, context):

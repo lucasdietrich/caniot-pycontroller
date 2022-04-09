@@ -45,10 +45,6 @@ class HTTPServer(web.Application):
             [
                 web.get('/garage', self.handle_garagedoors),
                 web.post('/garage', self.handle_garagedoors),
-
-                web.get('/alarmcontroller', self.handle_alarm),
-                web.post('/alarmcontroller', self.handle_alarm),
-
                 web.get('/dashboard', dashboard.handle_get),
                 web.post('/dashboard', dashboard.handle_post),
 
@@ -71,62 +67,6 @@ class HTTPServer(web.Application):
         response = self.api.GetDevice(node_garage_door.deviceid)
 
         return {"model": response}
-
-    @aiohttp_jinja2.template("alarm.view.j2")
-    async def handle_alarm(self, request: web.Request):
-        if request.method == 'POST':
-            form = await request.post()
-
-            if form.get("debug", "") == "RequestTelemetry":
-                self.api.RequestTelemetry(node_alarm.deviceid)
-            else:
-                light_cmd_list = ["", "on", "off", "toggle"]
-                siren_cmd_list = light_cmd_list
-                alarm_cmd_list = ["", "enable", "disable", "recover"]
-                mode_cmd_list = ["", "normal", "silent"]
-
-                def cmd_from_button(name, commands_list, default_value):
-                    val = form.get(name, "")
-                    if val in commands_list:
-                        return commands_list.index(val)
-                    return default_value
-
-                both_lights = cmd_from_button("both", light_cmd_list, model_pb2.LIGHT_CMD_NONE)
-                if both_lights == model_pb2.LIGHT_CMD_NONE:
-                    light1 = cmd_from_button("light1", light_cmd_list, model_pb2.LIGHT_CMD_NONE)
-                    light2 = cmd_from_button("light2", light_cmd_list, model_pb2.LIGHT_CMD_NONE)
-                else:
-                    light1 = light2 = both_lights
-
-                alarm = cmd_from_button("alarm", alarm_cmd_list, model_pb2.ALARM_CMD_NONE)
-                alarm_mode = cmd_from_button("mode", mode_cmd_list, model_pb2.ALARM_MODE_CMD_NONE)
-                siren = cmd_from_button("siren", siren_cmd_list, model_pb2.ALARM_SIREN_CMD_NONE)
-
-                command = model_pb2.AlarmControllerCommand(
-                    light1=light1, light2=light2,
-                    alarm=alarm, alarm_mode=alarm_mode, siren = siren
-                )
-
-                with grpc.insecure_channel(self.grpc_target) as channel:
-                    stub = model_pb2_grpc.CanControllerStub(channel)  # TODO stub initialized elsewhere
-                    response = stub.SendAlarm(command)
-
-                print(f"CanController "
-                      f"AlarmCommand command={command} "
-                      f"CommandResponse status={model_pb2._STATUS.values_by_number[response.status].name} : {response}")
-
-        alarm_status_messages = [("inactive", "désactivée"), ("observing", "activée"),
-                                 ("sounding", "en alerte"), ("recovering", "en récupération")]
-        siren_status_messages = [("inactive", "éteinte"), ("sounding", "activée")]
-
-        device_data = self.api.GetDevice(node_alarm.deviceid)
-
-        return {
-            "device": device_data,
-            "debug": bool(request.query.get("debug", "")),
-            "alarm_status_message": alarm_status_messages[device_data.alarm.state],
-            "siren_status_message": siren_status_messages[device_data.alarm.siren]
-        }
 
     @aiohttp_jinja2.template("garagedoor.view.j2")
     async def handle_garagedoors(self, request: web.Request):

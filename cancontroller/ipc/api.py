@@ -2,6 +2,7 @@ import time
 
 from cancontroller.caniot.device import DeviceId
 from cancontroller.caniot.attributes import attributes
+from cancontroller.caniot.datatypes import XPS
 
 from cancontroller.ipc import model_pb2
 from cancontroller.ipc import model_pb2_grpc
@@ -84,6 +85,17 @@ class API:
                 sid=deviceid.sid
             ))
 
+    def BoardLevelCommand(self, deviceid: DeviceId, coc1 = XPS.SET_NONE, coc2 = XPS.SET_NONE,
+                          crl1 = XPS.SET_NONE, crl2 =  XPS.SET_NONE):
+        with grpc.insecure_channel(self.grpc_target) as  channel:
+            stub = model_pb2_grpc.CanControllerStub(channel)
+            return stub.CommandDevice(model_pb2.BoardLevelCommand(
+                device = model_pb2.DeviceId(cls=deviceid.cls, sid=deviceid.sid),
+                coc1 = coc1,
+                coc2 = coc2,
+                crl1 = crl1,
+                crl2 = crl2
+            ))
 
 api = API('192.168.10.155:50051')
 

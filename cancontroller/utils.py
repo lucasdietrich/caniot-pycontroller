@@ -3,6 +3,9 @@ import re
 import datetime
 import struct
 
+from random import randint
+from typing import List
+
 re_hex = re.compile(r"^0x(?P<hex>[0-9]+)$")
 re_dec = re.compile(r"^(?P<dec>[0-9]+)$")
 
@@ -53,6 +56,11 @@ def diffseconds(timestamp_seconds: int) -> str:
             out = f"{hours}h " + out
     return out
 
+def generate_random_data(size: int) -> List[int]:
+    return [randint(0, 0xFF) for _ in range(size)]
+
+def read_bit(number: int, bit: int) -> bool:
+    return bool(number & (1 << bit))
 
 def fmttimestamp(timestamp_seconds: int) -> str:
     return datetime.datetime.fromtimestamp(timestamp_seconds).strftime("%Y-%m-%d %H:%M:%S")

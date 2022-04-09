@@ -4,13 +4,20 @@ import struct
 from cancontroller.caniot.device import Device
 from cancontroller.caniot.message import *
 from cancontroller.caniot.models import DeviceId
-from cancontroller.utils import extract_bits_from_bytearray
+from cancontroller.utils import extract_bits_from_bytearray, read_bit
 from cancontroller.caniot.datatypes import *
 
 import model_pb2
 
 class CustomPcb_Node(Device):
-    def interpret_board_control_telemetry(self, msg: CaniotMessage) -> dict:
+    def command(self, coc1: XPS = XPS.SET_NONE, coc2: XPS = XPS.SET_NONE,
+                crl1: XPS = XPS.SET_NONE, crl2: XPS = XPS.SET_NONE):
+        return BoardLevelCommand(self.deviceid, coc1, coc2, crl1, crl2)
+
+    def interpret_application_telemetry(self, msg: CaniotMessage):
+        pass
+
+    def interpret_board_control_telemetry(self, msg: CaniotMessage):
         b0 = msg.buffer[0]
         b1 = msg.buffer[1]
 
@@ -18,14 +25,18 @@ class CustomPcb_Node(Device):
         ext_temp = extract_bits_from_bytearray(msg.buffer[2:], 10, 10)
 
         self.model["base"].update({
-            "r1": bool(b0 & (1 << 0)),
-            "r2": bool(b0 & (1 << 2)),
-            "oc1": bool(b0 & (1 << 4)),
-            "oc2": bool(b0 & (1 << 6)),
-            "in1": bool(b1 & (1 << 0)),
-            "in2": bool(b1 & (1 << 2)),
-            "in3": bool(b1 & (1 << 4)),
-            "in4": bool(b1 & (1 << 6)),
+            "oc1": read_bit(b0, 0),
+            "oc2": read_bit(b0, 1),
+            "rl1": read_bit(b0, 2),
+            "rl2": read_bit(b0, 3),
+            "in1": read_bit(b0, 4),
+            "in2": read_bit(b0, 5),
+            "in3": read_bit(b0, 6),
+            "in4": read_bit(b0, 7),
+            "poc1": read_bit(b1, 0),
+            "poc2": read_bit(b1, 1),
+            "prl1": read_bit(b1, 2),
+            "prl2": read_bit(b1, 3),
             "active_int_temp": IsActiveT10(int_temp),
             "int_temp": IntTemp2float(int_temp),
             "active_ext_temp": IsActiveT10(ext_temp),
@@ -37,10 +48,10 @@ class CustomPcb_Node(Device):
 
         self.model.update({
             "base": {
-                "r1": 0,
-                "r2": 0,
                 "oc1": 0,
                 "oc2": 0,
+                "rl1": 0,
+                "rl2": 0,
                 "in1": 0,
                 "in2": 0,
                 "in3": 0,

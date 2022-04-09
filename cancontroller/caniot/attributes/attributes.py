@@ -151,7 +151,12 @@ list = [
     AttrCfgFlags(0x2040, "telemetry.flags", size=1),
     AttrTimezone(0x2050, "telemetry.timezone", size=4),
     AttrRegionCountry(0x2060, "region/country", size=4),
-
+    AttrDelayMS(0x2070, "custompcb.gpio.pulse_duration.oc1", size=4),
+    AttrDelayMS(0x2080, "custompcb.gpio.pulse_duration.oc2", size=4),
+    AttrDelayMS(0x2090, "custompcb.gpio.pulse_duration.rl1", size=4),
+    AttrDelayMS(0x20A0, "custompcb.gpio.pulse_duration.rl2", size=4),
+    Attribute(0x20B0, "custompcb.gpio.mask.outputs_default", size=4),
+    Attribute(0x20C0, "custompcb.gpio.mask.telemetry_on_change", size=4),
 ]
 
 def get_by_key(key: int) -> Attribute:

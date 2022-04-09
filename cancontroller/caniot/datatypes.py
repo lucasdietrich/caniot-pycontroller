@@ -1,6 +1,17 @@
 import struct
+from enum import IntEnum
 
 U10_MAX_VALUE = 0x3ff
+
+class XPS(IntEnum):
+    SET_NONE = 0
+    SET_ON = 1
+    SET_OFF = 2
+    TOGGLE = 3
+    RESET = 4
+    PULSE_ON = 5
+    PULSE_OFF = 6
+    PULSE_CANCEL = 7
 
 def IntHum2float(H: int) -> float:
     return (H & U10_MAX_VALUE) / 100.0

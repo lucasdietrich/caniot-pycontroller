@@ -40,6 +40,12 @@
             <br/>
 
             <label for="telemetry">Request telemetry</label>
+            <select name="endpoint" class="select">
+                <option value="ep-0">Endpoint Application</option>
+                <option value="ep-1">Endpoint 1</option>
+                <option value="ep-2">Endpoint 2</option>
+                <option value="ep-3">Board Level</option>
+            </select>
             <input type="submit" class="button" name="telemetry" value="Request Telemetry"/>
 
             <br/>
@@ -69,10 +75,14 @@
 
         <fieldset>
             <legend>Board Control (low level API)</legend>
-            <input type="submit" class="button" name="r1" value="R1"/>
-            <input type="submit" class="button" name="r2" value="R2"/>
             <input type="submit" class="button" name="oc1" value="OC1"/>
+            <input type="submit" class="button" name="poc1" value="Pulse OC1"/>
             <input type="submit" class="button" name="oc2" value="OC2"/>
+            <input type="submit" class="button" name="poc2" value="Pulse OC2"/>
+            <input type="submit" class="button" name="rl1" value="RL1"/>
+            <input type="submit" class="button" name="prl1" value="Pulse RL1"/>
+            <input type="submit" class="button" name="rl2" value="RL2"/>
+            <input type="submit" class="button" name="prl2" value="Pulse RL2"/>
             <input type="submit" disabled class="button" value="IN1"/>
             <input type="submit" disabled class="button" value="IN2"/>
             <input type="submit" disabled class="button" value="IN3"/>

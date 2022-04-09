@@ -10,7 +10,7 @@ from cancontroller.caniot.datatypes import *
 
 from enum import IntEnum, auto
 
-from cancontroller.caniot.misc import read_bit
+from cancontroller.utils import read_bit
 
 import model_pb2
 
@@ -18,12 +18,6 @@ import model_pb2
 
 
 class GarageDoorController(CustomPcb_Node):
-    class Door(IntEnum):
-        NONE = 0
-        LEFT = 1
-        RIGHT = 2
-        BOTH = 3
-
     def __init__(self, deviceid: DeviceId, name: str = None):
         super().__init__(deviceid, name)
 
@@ -33,24 +27,23 @@ class GarageDoorController(CustomPcb_Node):
             "gate": 1,
         })
 
-    def open_door(self, door: Door.BOTH) -> Command:
-        return Command(self.deviceid, [0, door], fit_buf=True)
+    def open_door(self, door) -> Command:
+        params = dict()
 
-    def interpret_application_telemetry(self, msg: CaniotMessage) -> bool:
-        self.model["left"] = read_bit(msg.buffer[0], 0)
-        self.model["right"] = read_bit(msg.buffer[0], 1)
-        self.model["gate"] = read_bit(msg.buffer[0], 2)
+        if door == model_pb2.COMMAND_LEFT or door == model_pb2.COMMAND_ALL:
+            params["crl1"] = XPS.PULSE_ON
 
-        int_temp = extract_bits_from_bytearray(msg.buffer[2:], 0, 10)
+        if door == model_pb2.COMMAND_RIGHT or door == model_pb2.COMMAND_ALL:
+            params["crl2"] = XPS.PULSE_ON
 
-        self.model["base"].update({
-            "active_ext_temp": False,
-            "ext_temp": U10_MAX_VALUE,
-            "active_int_temp": IsActiveT10(int_temp),
-            "int_temp": IntTemp2float(int_temp)
-        })
+        return self.command(**params)
 
-        return True
+    def interpret_board_control_telemetry(self, msg: CaniotMessage):
+        super(GarageDoorController, self).interpret_board_control_telemetry(msg)
+
+        self.model["left"] = self.model["base"]["in3"]
+        self.model["right"] = self.model["base"]["in4"]
+        self.model["gate"] = self.model["base"]["in2"]
 
     def get_model(self):
         return {

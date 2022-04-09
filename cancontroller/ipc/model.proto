@@ -8,9 +8,9 @@ package cancontroller.ipc;
 
 service CanController {
   rpc SendGarage(GarageCommand) returns (CommandResponse) {}
-  rpc SendAlarm(AlarmControllerCommand) returns (CommandResponse) {}
 
   rpc RequestTelemetry(DeviceId) returns (Empty) {}
+  rpc CommandDevice(BoardLevelCommand) returns (CommandResponse) {}
   rpc ReadAttribute(AttributeRequest) returns (AttributeResponse) {}
   rpc WriteAttribute(AttributeRequest) returns (AttributeResponse) {}
 
@@ -35,14 +35,41 @@ enum Status {
 }
 
 message CommandResponse {
-  string datetime = 1;
-
   Status status = 4;
 }
 
 message Attribute {
   uint32 key = 1;
   uint32 value = 2;
+}
+
+/*____________________________________________________________________________________________________________________*/
+
+enum LightCommand {
+  LIGHT_CMD_NONE = 0;
+  LIGHT_CMD_ON = 1;
+  LIGHT_CMD_OFF = 2;
+  LIGHT_CMD_TOGGLE = 3;
+}
+
+enum CaniotComplexDigitalCommand {
+  CANIOT_XPS_NONE = 0;
+  CANIOT_XPS_SET_ON = 1;
+  CANIOT_XPS_SET_OFF = 2;
+  CANIOT_XPS_TOGGLE = 3;
+  CANIOT_XPS_RESET = 4;
+  CANIOT_XPS_PULSE_ON = 5;
+  CANIOT_XPS_PULSE_OFF = 6;
+  CANIOT_XPS_PULSE_CANCEL = 7;
+}
+
+message BoardLevelCommand {
+  DeviceId device = 1;
+
+  CaniotComplexDigitalCommand coc1 = 2;
+  CaniotComplexDigitalCommand coc2 = 3;
+  CaniotComplexDigitalCommand crl1 = 4;
+  CaniotComplexDigitalCommand crl2 = 5;
 }
 
 /*____________________________________________________________________________________________________________________*/
@@ -55,53 +82,10 @@ enum GarageDoorCommand {
 }
 
 message GarageCommand {
-  string datetime = 1;
-
   GarageDoorCommand command = 2;
 }
 
 /*____________________________________________________________________________________________________________________*/
-
-enum LightCommand {
-  LIGHT_CMD_NONE = 0;
-  LIGHT_CMD_ON = 1;
-  LIGHT_CMD_OFF = 2;
-  LIGHT_CMD_TOGGLE = 3;
-}
-
-enum AlarmCommand {
-  ALARM_CMD_NONE = 0;
-  ALARM_CMD_ENABLE = 1;
-  ALARM_CMD_DISABLE = 2;
-  ALARM_CMD_RECOVER = 3;
-}
-
-enum AlarmModeCommand {
-  ALARM_MODE_CMD_NONE = 0;
-  ALARM_MODE_CMD_NORMAL = 1;
-  ALARM_MODE_CMD_SILENT = 2;
-}
-
-enum AlarmSirenCommand {
-  ALARM_SIREN_CMD_NONE = 0;
-  ALARM_SIREN_CMD_ON = 1;
-  ALARM_SIREN_CMD_OFF = 2;
-  ALARM_SIREN_CMD_TOGGLE = 3;
-}
-
-message AlarmControllerCommand {
-  string datetime = 1;
-
-  LightCommand light1 = 2;
-  LightCommand light2 = 3;
-
-  AlarmCommand alarm = 4;
-  AlarmModeCommand alarm_mode = 5;
-  AlarmSirenCommand siren = 6;
-}
-
-/*____________________________________________________________________________________________________________________*/
-
 
 message AttributeRequest {
   DeviceId device = 2;
@@ -148,7 +132,7 @@ message Device {
 
   Status status = 4;
 
-  repeated int32 raw = 5 [packed=true];
+  repeated int32 raw = 5 [packed = true];
 
   oneof model {
     GarageDoorModel garage = 6;
@@ -170,11 +154,11 @@ message DeviceResponse {
 
 message CustomPCBModel
 {
-  uint32 r1 = 1;
-  uint32 r2 = 2;
+  uint32 oc1 = 1;
+  uint32 oc2 = 2;
 
-  uint32 oc1 = 3;
-  uint32 oc2 = 4;
+  uint32 rl1 = 3;
+  uint32 rl2 = 4;
 
   uint32 in1 = 5;
   uint32 in2 = 6;
@@ -183,8 +167,17 @@ message CustomPCBModel
 
   float int_temp = 9;
   bool active_int_temp = 10;
+
   float ext_temp = 11;
   bool active_ext_temp = 12;
+
+  uint32 adc1 = 13;
+  uint32 adc2 = 14;
+
+  uint32 poc1 = 15;
+  uint32 poc2 = 16;
+  uint32 prl1 = 17;
+  uint32 prl2 = 18;
 }
 
 message GarageDoorModel {
@@ -195,28 +188,9 @@ message GarageDoorModel {
   bool gate = 4;
 }
 
-enum AlarmState {
-  ALARM_STATE_INACTIVE = 0;
-  ALARM_STATE_OBSERVING = 1;
-  ALARM_STATE_SOUDNING = 2;
-  ALARM_STATE_RECOVERING = 3;
-}
-
-enum AlarmMode {
-  ALARM_MODE_NORMAL = 0;
-  ALARM_MODE_SILENT = 1;
-}
-
 message AlarmControllerModel
 {
   CustomPCBModel base = 1;
-
-  bool light1 = 2;
-  bool light2 = 3;
-  bool siren = 4;
-  bool inputs_state = 5;
-  AlarmState state = 7;
-  AlarmMode mode = 8;
 }
 
 message Devices {

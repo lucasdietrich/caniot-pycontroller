@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0bmodel.proto\x12\x11\x63\x61ncontroller.ipc\"$\n\x08\x44\x65viceId\x12\x0b\n\x03\x63ls\x18\x01 \x01(\r\x12\x0b\n\x03sid\x18\x02 \x01(\r\"N\n\x0f\x43ommandResponse\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\"\'\n\tAttribute\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\r\n\x05value\x18\x02 \x01(\r\"X\n\rGarageCommand\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12\x35\n\x07\x63ommand\x18\x02 \x01(\x0e\x32$.cancontroller.ipc.GarageDoorCommand\"\xaa\x02\n\x16\x41larmControllerCommand\x12\x10\n\x08\x64\x61tetime\x18\x01 \x01(\t\x12/\n\x06light1\x18\x02 \x01(\x0e\x32\x1f.cancontroller.ipc.LightCommand\x12/\n\x06light2\x18\x03 \x01(\x0e\x32\x1f.cancontroller.ipc.LightCommand\x12.\n\x05\x61larm\x18\x04 \x01(\x0e\x32\x1f.cancontroller.ipc.AlarmCommand\x12\x37\n\nalarm_mode\x18\x05 \x01(\x0e\x32#.cancontroller.ipc.AlarmModeCommand\x12\x33\n\x05siren\x18\x06 \x01(\x0e\x32$.cancontroller.ipc.AlarmSirenCommand\"l\n\x10\x41ttributeRequest\x12+\n\x06\x64\x65vice\x18\x02 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x03 \x01(\r\x12\r\n\x05value\x18\x04 \x01(\r\x12\x0f\n\x07timeout\x18\x05 \x01(\x02\"\x9e\x01\n\x11\x41ttributeResponse\x12+\n\x06\x64\x65vice\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x02 \x01(\r\x12\r\n\x05value\x18\x03 \x01(\r\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\x12\x15\n\rresponse_time\x18\x05 \x01(\x02\"\x07\n\x05\x45mpty\"\x1b\n\x08\x44\x61teTime\x12\x0f\n\x07seconds\x18\x01 \x01(\r\"\xad\x03\n\x06\x44\x65vice\x12-\n\x08\x64\x65viceid\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\r\x12\x30\n\x06status\x18\x04 \x01(\x0b\x32 .cancontroller.ipc.Device.Status\x12\x0f\n\x03raw\x18\x05 \x03(\x05\x42\x02\x10\x01\x12\x34\n\x06garage\x18\x06 \x01(\x0b\x32\".cancontroller.ipc.GarageDoorModelH\x00\x12\x38\n\x05\x61larm\x18\x07 \x01(\x0b\x32\'.cancontroller.ipc.AlarmControllerModelH\x00\x12/\n\tattribute\x18\x08 \x03(\x0b\x32\x1c.cancontroller.ipc.Attribute\x1ah\n\x06Status\x12.\n\tlast_seen\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DateTime\x12\x10\n\x08received\x18\x02 \x01(\r\x12\x0c\n\x04sent\x18\x03 \x01(\r\x12\x0e\n\x06online\x18\x04 \x01(\x08\x42\x07\n\x05model\"o\n\x0e\x44\x65viceResponse\x12+\n\x06\x64\x65vice\x18\x01 \x01(\x0b\x32\x19.cancontroller.ipc.DeviceH\x00\x12)\n\x05\x65mpty\x18\x02 \x01(\x0b\x32\x18.cancontroller.ipc.EmptyH\x00\x42\x05\n\x03\x64\x65v\"\xcc\x01\n\x0e\x43ustomPCBModel\x12\n\n\x02r1\x18\x01 \x01(\r\x12\n\n\x02r2\x18\x02 \x01(\r\x12\x0b\n\x03oc1\x18\x03 \x01(\r\x12\x0b\n\x03oc2\x18\x04 \x01(\r\x12\x0b\n\x03in1\x18\x05 \x01(\r\x12\x0b\n\x03in2\x18\x06 \x01(\r\x12\x0b\n\x03in3\x18\x07 \x01(\r\x12\x0b\n\x03in4\x18\x08 \x01(\r\x12\x10\n\x08int_temp\x18\t \x01(\x02\x12\x17\n\x0f\x61\x63tive_int_temp\x18\n \x01(\x08\x12\x10\n\x08\x65xt_temp\x18\x0b \x01(\x02\x12\x17\n\x0f\x61\x63tive_ext_temp\x18\x0c \x01(\x08\"m\n\x0fGarageDoorModel\x12/\n\x04\x62\x61se\x18\x01 \x01(\x0b\x32!.cancontroller.ipc.CustomPCBModel\x12\x0c\n\x04left\x18\x02 \x01(\x08\x12\r\n\x05right\x18\x03 \x01(\x08\x12\x0c\n\x04gate\x18\x04 \x01(\x08\"\xe6\x01\n\x14\x41larmControllerModel\x12/\n\x04\x62\x61se\x18\x01 \x01(\x0b\x32!.cancontroller.ipc.CustomPCBModel\x12\x0e\n\x06light1\x18\x02 \x01(\x08\x12\x0e\n\x06light2\x18\x03 \x01(\x08\x12\r\n\x05siren\x18\x04 \x01(\x08\x12\x14\n\x0cinputs_state\x18\x05 \x01(\x08\x12,\n\x05state\x18\x07 \x01(\x0e\x32\x1d.cancontroller.ipc.AlarmState\x12*\n\x04mode\x18\x08 \x01(\x0e\x32\x1c.cancontroller.ipc.AlarmMode\"4\n\x07\x44\x65vices\x12)\n\x06\x64\x65vice\x18\x01 \x03(\x0b\x32\x19.cancontroller.ipc.Device*&\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\x12\x0b\n\x07TIMEOUT\x10\x02*b\n\x11GarageDoorCommand\x12\x17\n\x13\x43OMMAND_UNSPECIFIED\x10\x00\x12\x10\n\x0c\x43OMMAND_LEFT\x10\x01\x12\x11\n\rCOMMAND_RIGHT\x10\x02\x12\x0f\n\x0b\x43OMMAND_ALL\x10\x03*]\n\x0cLightCommand\x12\x12\n\x0eLIGHT_CMD_NONE\x10\x00\x12\x10\n\x0cLIGHT_CMD_ON\x10\x01\x12\x11\n\rLIGHT_CMD_OFF\x10\x02\x12\x14\n\x10LIGHT_CMD_TOGGLE\x10\x03*f\n\x0c\x41larmCommand\x12\x12\n\x0e\x41LARM_CMD_NONE\x10\x00\x12\x14\n\x10\x41LARM_CMD_ENABLE\x10\x01\x12\x15\n\x11\x41LARM_CMD_DISABLE\x10\x02\x12\x15\n\x11\x41LARM_CMD_RECOVER\x10\x03*a\n\x10\x41larmModeCommand\x12\x17\n\x13\x41LARM_MODE_CMD_NONE\x10\x00\x12\x19\n\x15\x41LARM_MODE_CMD_NORMAL\x10\x01\x12\x19\n\x15\x41LARM_MODE_CMD_SILENT\x10\x02*z\n\x11\x41larmSirenCommand\x12\x18\n\x14\x41LARM_SIREN_CMD_NONE\x10\x00\x12\x16\n\x12\x41LARM_SIREN_CMD_ON\x10\x01\x12\x17\n\x13\x41LARM_SIREN_CMD_OFF\x10\x02\x12\x1a\n\x16\x41LARM_SIREN_CMD_TOGGLE\x10\x03*w\n\nAlarmState\x12\x18\n\x14\x41LARM_STATE_INACTIVE\x10\x00\x12\x19\n\x15\x41LARM_STATE_OBSERVING\x10\x01\x12\x18\n\x14\x41LARM_STATE_SOUDNING\x10\x02\x12\x1a\n\x16\x41LARM_STATE_RECOVERING\x10\x03*9\n\tAlarmMode\x12\x15\n\x11\x41LARM_MODE_NORMAL\x10\x00\x12\x15\n\x11\x41LARM_MODE_SILENT\x10\x01\x32\xa6\x05\n\rCanController\x12T\n\nSendGarage\x12 .cancontroller.ipc.GarageCommand\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12\\\n\tSendAlarm\x12).cancontroller.ipc.AlarmControllerCommand\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12K\n\x10RequestTelemetry\x12\x1b.cancontroller.ipc.DeviceId\x1a\x18.cancontroller.ipc.Empty\"\x00\x12\\\n\rReadAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12]\n\x0eWriteAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12J\n\x05Reset\x12\x1b.cancontroller.ipc.DeviceId\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12\x44\n\nGetDevices\x12\x18.cancontroller.ipc.Empty\x1a\x1a.cancontroller.ipc.Devices\"\x00\x12\x45\n\tGetDevice\x12\x1b.cancontroller.ipc.DeviceId\x1a\x19.cancontroller.ipc.Device\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x0bmodel.proto\x12\x11\x63\x61ncontroller.ipc\"$\n\x08\x44\x65viceId\x12\x0b\n\x03\x63ls\x18\x01 \x01(\r\x12\x0b\n\x03sid\x18\x02 \x01(\r\"<\n\x0f\x43ommandResponse\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\"\'\n\tAttribute\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\r\n\x05value\x18\x02 \x01(\r\"\xb8\x02\n\x11\x42oardLevelCommand\x12+\n\x06\x64\x65vice\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12<\n\x04\x63oc1\x18\x02 \x01(\x0e\x32..cancontroller.ipc.CaniotComplexDigitalCommand\x12<\n\x04\x63oc2\x18\x03 \x01(\x0e\x32..cancontroller.ipc.CaniotComplexDigitalCommand\x12<\n\x04\x63rl1\x18\x04 \x01(\x0e\x32..cancontroller.ipc.CaniotComplexDigitalCommand\x12<\n\x04\x63rl2\x18\x05 \x01(\x0e\x32..cancontroller.ipc.CaniotComplexDigitalCommand\"F\n\rGarageCommand\x12\x35\n\x07\x63ommand\x18\x02 \x01(\x0e\x32$.cancontroller.ipc.GarageDoorCommand\"l\n\x10\x41ttributeRequest\x12+\n\x06\x64\x65vice\x18\x02 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x03 \x01(\r\x12\r\n\x05value\x18\x04 \x01(\r\x12\x0f\n\x07timeout\x18\x05 \x01(\x02\"\x9e\x01\n\x11\x41ttributeResponse\x12+\n\x06\x64\x65vice\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0b\n\x03key\x18\x02 \x01(\r\x12\r\n\x05value\x18\x03 \x01(\r\x12)\n\x06status\x18\x04 \x01(\x0e\x32\x19.cancontroller.ipc.Status\x12\x15\n\rresponse_time\x18\x05 \x01(\x02\"\x07\n\x05\x45mpty\"\x1b\n\x08\x44\x61teTime\x12\x0f\n\x07seconds\x18\x01 \x01(\r\"\xad\x03\n\x06\x44\x65vice\x12-\n\x08\x64\x65viceid\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DeviceId\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\r\x12\x30\n\x06status\x18\x04 \x01(\x0b\x32 .cancontroller.ipc.Device.Status\x12\x0f\n\x03raw\x18\x05 \x03(\x05\x42\x02\x10\x01\x12\x34\n\x06garage\x18\x06 \x01(\x0b\x32\".cancontroller.ipc.GarageDoorModelH\x00\x12\x38\n\x05\x61larm\x18\x07 \x01(\x0b\x32\'.cancontroller.ipc.AlarmControllerModelH\x00\x12/\n\tattribute\x18\x08 \x03(\x0b\x32\x1c.cancontroller.ipc.Attribute\x1ah\n\x06Status\x12.\n\tlast_seen\x18\x01 \x01(\x0b\x32\x1b.cancontroller.ipc.DateTime\x12\x10\n\x08received\x18\x02 \x01(\r\x12\x0c\n\x04sent\x18\x03 \x01(\r\x12\x0e\n\x06online\x18\x04 \x01(\x08\x42\x07\n\x05model\"o\n\x0e\x44\x65viceResponse\x12+\n\x06\x64\x65vice\x18\x01 \x01(\x0b\x32\x19.cancontroller.ipc.DeviceH\x00\x12)\n\x05\x65mpty\x18\x02 \x01(\x0b\x32\x18.cancontroller.ipc.EmptyH\x00\x42\x05\n\x03\x64\x65v\"\xa2\x02\n\x0e\x43ustomPCBModel\x12\x0b\n\x03oc1\x18\x01 \x01(\r\x12\x0b\n\x03oc2\x18\x02 \x01(\r\x12\x0b\n\x03rl1\x18\x03 \x01(\r\x12\x0b\n\x03rl2\x18\x04 \x01(\r\x12\x0b\n\x03in1\x18\x05 \x01(\r\x12\x0b\n\x03in2\x18\x06 \x01(\r\x12\x0b\n\x03in3\x18\x07 \x01(\r\x12\x0b\n\x03in4\x18\x08 \x01(\r\x12\x10\n\x08int_temp\x18\t \x01(\x02\x12\x17\n\x0f\x61\x63tive_int_temp\x18\n \x01(\x08\x12\x10\n\x08\x65xt_temp\x18\x0b \x01(\x02\x12\x17\n\x0f\x61\x63tive_ext_temp\x18\x0c \x01(\x08\x12\x0c\n\x04\x61\x64\x63\x31\x18\r \x01(\r\x12\x0c\n\x04\x61\x64\x63\x32\x18\x0e \x01(\r\x12\x0c\n\x04poc1\x18\x0f \x01(\r\x12\x0c\n\x04poc2\x18\x10 \x01(\r\x12\x0c\n\x04prl1\x18\x11 \x01(\r\x12\x0c\n\x04prl2\x18\x12 \x01(\r\"m\n\x0fGarageDoorModel\x12/\n\x04\x62\x61se\x18\x01 \x01(\x0b\x32!.cancontroller.ipc.CustomPCBModel\x12\x0c\n\x04left\x18\x02 \x01(\x08\x12\r\n\x05right\x18\x03 \x01(\x08\x12\x0c\n\x04gate\x18\x04 \x01(\x08\"G\n\x14\x41larmControllerModel\x12/\n\x04\x62\x61se\x18\x01 \x01(\x0b\x32!.cancontroller.ipc.CustomPCBModel\"4\n\x07\x44\x65vices\x12)\n\x06\x64\x65vice\x18\x01 \x03(\x0b\x32\x19.cancontroller.ipc.Device*&\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\x12\x0b\n\x07TIMEOUT\x10\x02*]\n\x0cLightCommand\x12\x12\n\x0eLIGHT_CMD_NONE\x10\x00\x12\x10\n\x0cLIGHT_CMD_ON\x10\x01\x12\x11\n\rLIGHT_CMD_OFF\x10\x02\x12\x14\n\x10LIGHT_CMD_TOGGLE\x10\x03*\xde\x01\n\x1b\x43\x61niotComplexDigitalCommand\x12\x13\n\x0f\x43\x41NIOT_XPS_NONE\x10\x00\x12\x15\n\x11\x43\x41NIOT_XPS_SET_ON\x10\x01\x12\x16\n\x12\x43\x41NIOT_XPS_SET_OFF\x10\x02\x12\x15\n\x11\x43\x41NIOT_XPS_TOGGLE\x10\x03\x12\x14\n\x10\x43\x41NIOT_XPS_RESET\x10\x04\x12\x17\n\x13\x43\x41NIOT_XPS_PULSE_ON\x10\x05\x12\x18\n\x14\x43\x41NIOT_XPS_PULSE_OFF\x10\x06\x12\x1b\n\x17\x43\x41NIOT_XPS_PULSE_CANCEL\x10\x07*b\n\x11GarageDoorCommand\x12\x17\n\x13\x43OMMAND_UNSPECIFIED\x10\x00\x12\x10\n\x0c\x43OMMAND_LEFT\x10\x01\x12\x11\n\rCOMMAND_RIGHT\x10\x02\x12\x0f\n\x0b\x43OMMAND_ALL\x10\x03\x32\xa5\x05\n\rCanController\x12T\n\nSendGarage\x12 .cancontroller.ipc.GarageCommand\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12K\n\x10RequestTelemetry\x12\x1b.cancontroller.ipc.DeviceId\x1a\x18.cancontroller.ipc.Empty\"\x00\x12[\n\rCommandDevice\x12$.cancontroller.ipc.BoardLevelCommand\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12\\\n\rReadAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12]\n\x0eWriteAttribute\x12#.cancontroller.ipc.AttributeRequest\x1a$.cancontroller.ipc.AttributeResponse\"\x00\x12J\n\x05Reset\x12\x1b.cancontroller.ipc.DeviceId\x1a\".cancontroller.ipc.CommandResponse\"\x00\x12\x44\n\nGetDevices\x12\x18.cancontroller.ipc.Empty\x1a\x1a.cancontroller.ipc.Devices\"\x00\x12\x45\n\tGetDevice\x12\x1b.cancontroller.ipc.DeviceId\x1a\x19.cancontroller.ipc.Device\"\x00\x62\x06proto3'
 )
 
 _STATUS = _descriptor.EnumDescriptor(
@@ -48,48 +48,12 @@ _STATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2043,
-  serialized_end=2081,
+  serialized_start=1947,
+  serialized_end=1985,
 )
 _sym_db.RegisterEnumDescriptor(_STATUS)
 
 Status = enum_type_wrapper.EnumTypeWrapper(_STATUS)
-_GARAGEDOORCOMMAND = _descriptor.EnumDescriptor(
-  name='GarageDoorCommand',
-  full_name='cancontroller.ipc.GarageDoorCommand',
-  filename=None,
-  file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
-  values=[
-    _descriptor.EnumValueDescriptor(
-      name='COMMAND_UNSPECIFIED', index=0, number=0,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='COMMAND_LEFT', index=1, number=1,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='COMMAND_RIGHT', index=2, number=2,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='COMMAND_ALL', index=3, number=3,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-  ],
-  containing_type=None,
-  serialized_options=None,
-  serialized_start=2083,
-  serialized_end=2181,
-)
-_sym_db.RegisterEnumDescriptor(_GARAGEDOORCOMMAND)
-
-GarageDoorCommand = enum_type_wrapper.EnumTypeWrapper(_GARAGEDOORCOMMAND)
 _LIGHTCOMMAND = _descriptor.EnumDescriptor(
   name='LightCommand',
   full_name='cancontroller.ipc.LightCommand',
@@ -120,205 +84,123 @@ _LIGHTCOMMAND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2183,
-  serialized_end=2276,
+  serialized_start=1987,
+  serialized_end=2080,
 )
 _sym_db.RegisterEnumDescriptor(_LIGHTCOMMAND)
 
 LightCommand = enum_type_wrapper.EnumTypeWrapper(_LIGHTCOMMAND)
-_ALARMCOMMAND = _descriptor.EnumDescriptor(
-  name='AlarmCommand',
-  full_name='cancontroller.ipc.AlarmCommand',
+_CANIOTCOMPLEXDIGITALCOMMAND = _descriptor.EnumDescriptor(
+  name='CaniotComplexDigitalCommand',
+  full_name='cancontroller.ipc.CaniotComplexDigitalCommand',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
   values=[
     _descriptor.EnumValueDescriptor(
-      name='ALARM_CMD_NONE', index=0, number=0,
+      name='CANIOT_XPS_NONE', index=0, number=0,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='ALARM_CMD_ENABLE', index=1, number=1,
+      name='CANIOT_XPS_SET_ON', index=1, number=1,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='ALARM_CMD_DISABLE', index=2, number=2,
+      name='CANIOT_XPS_SET_OFF', index=2, number=2,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='ALARM_CMD_RECOVER', index=3, number=3,
+      name='CANIOT_XPS_TOGGLE', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CANIOT_XPS_RESET', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CANIOT_XPS_PULSE_ON', index=5, number=5,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CANIOT_XPS_PULSE_OFF', index=6, number=6,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CANIOT_XPS_PULSE_CANCEL', index=7, number=7,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2278,
-  serialized_end=2380,
+  serialized_start=2083,
+  serialized_end=2305,
 )
-_sym_db.RegisterEnumDescriptor(_ALARMCOMMAND)
+_sym_db.RegisterEnumDescriptor(_CANIOTCOMPLEXDIGITALCOMMAND)
 
-AlarmCommand = enum_type_wrapper.EnumTypeWrapper(_ALARMCOMMAND)
-_ALARMMODECOMMAND = _descriptor.EnumDescriptor(
-  name='AlarmModeCommand',
-  full_name='cancontroller.ipc.AlarmModeCommand',
+CaniotComplexDigitalCommand = enum_type_wrapper.EnumTypeWrapper(_CANIOTCOMPLEXDIGITALCOMMAND)
+_GARAGEDOORCOMMAND = _descriptor.EnumDescriptor(
+  name='GarageDoorCommand',
+  full_name='cancontroller.ipc.GarageDoorCommand',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
   values=[
     _descriptor.EnumValueDescriptor(
-      name='ALARM_MODE_CMD_NONE', index=0, number=0,
+      name='COMMAND_UNSPECIFIED', index=0, number=0,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='ALARM_MODE_CMD_NORMAL', index=1, number=1,
+      name='COMMAND_LEFT', index=1, number=1,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='ALARM_MODE_CMD_SILENT', index=2, number=2,
+      name='COMMAND_RIGHT', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='COMMAND_ALL', index=3, number=3,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2382,
-  serialized_end=2479,
+  serialized_start=2307,
+  serialized_end=2405,
 )
-_sym_db.RegisterEnumDescriptor(_ALARMMODECOMMAND)
+_sym_db.RegisterEnumDescriptor(_GARAGEDOORCOMMAND)
 
-AlarmModeCommand = enum_type_wrapper.EnumTypeWrapper(_ALARMMODECOMMAND)
-_ALARMSIRENCOMMAND = _descriptor.EnumDescriptor(
-  name='AlarmSirenCommand',
-  full_name='cancontroller.ipc.AlarmSirenCommand',
-  filename=None,
-  file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
-  values=[
-    _descriptor.EnumValueDescriptor(
-      name='ALARM_SIREN_CMD_NONE', index=0, number=0,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='ALARM_SIREN_CMD_ON', index=1, number=1,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='ALARM_SIREN_CMD_OFF', index=2, number=2,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='ALARM_SIREN_CMD_TOGGLE', index=3, number=3,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-  ],
-  containing_type=None,
-  serialized_options=None,
-  serialized_start=2481,
-  serialized_end=2603,
-)
-_sym_db.RegisterEnumDescriptor(_ALARMSIRENCOMMAND)
-
-AlarmSirenCommand = enum_type_wrapper.EnumTypeWrapper(_ALARMSIRENCOMMAND)
-_ALARMSTATE = _descriptor.EnumDescriptor(
-  name='AlarmState',
-  full_name='cancontroller.ipc.AlarmState',
-  filename=None,
-  file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
-  values=[
-    _descriptor.EnumValueDescriptor(
-      name='ALARM_STATE_INACTIVE', index=0, number=0,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='ALARM_STATE_OBSERVING', index=1, number=1,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='ALARM_STATE_SOUDNING', index=2, number=2,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='ALARM_STATE_RECOVERING', index=3, number=3,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-  ],
-  containing_type=None,
-  serialized_options=None,
-  serialized_start=2605,
-  serialized_end=2724,
-)
-_sym_db.RegisterEnumDescriptor(_ALARMSTATE)
-
-AlarmState = enum_type_wrapper.EnumTypeWrapper(_ALARMSTATE)
-_ALARMMODE = _descriptor.EnumDescriptor(
-  name='AlarmMode',
-  full_name='cancontroller.ipc.AlarmMode',
-  filename=None,
-  file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
-  values=[
-    _descriptor.EnumValueDescriptor(
-      name='ALARM_MODE_NORMAL', index=0, number=0,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='ALARM_MODE_SILENT', index=1, number=1,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-  ],
-  containing_type=None,
-  serialized_options=None,
-  serialized_start=2726,
-  serialized_end=2783,
-)
-_sym_db.RegisterEnumDescriptor(_ALARMMODE)
-
-AlarmMode = enum_type_wrapper.EnumTypeWrapper(_ALARMMODE)
+GarageDoorCommand = enum_type_wrapper.EnumTypeWrapper(_GARAGEDOORCOMMAND)
 OK = 0
 NOK = 1
 TIMEOUT = 2
-COMMAND_UNSPECIFIED = 0
-COMMAND_LEFT = 1
-COMMAND_RIGHT = 2
-COMMAND_ALL = 3
 LIGHT_CMD_NONE = 0
 LIGHT_CMD_ON = 1
 LIGHT_CMD_OFF = 2
 LIGHT_CMD_TOGGLE = 3
-ALARM_CMD_NONE = 0
-ALARM_CMD_ENABLE = 1
-ALARM_CMD_DISABLE = 2
-ALARM_CMD_RECOVER = 3
-ALARM_MODE_CMD_NONE = 0
-ALARM_MODE_CMD_NORMAL = 1
-ALARM_MODE_CMD_SILENT = 2
-ALARM_SIREN_CMD_NONE = 0
-ALARM_SIREN_CMD_ON = 1
-ALARM_SIREN_CMD_OFF = 2
-ALARM_SIREN_CMD_TOGGLE = 3
-ALARM_STATE_INACTIVE = 0
-ALARM_STATE_OBSERVING = 1
-ALARM_STATE_SOUDNING = 2
-ALARM_STATE_RECOVERING = 3
-ALARM_MODE_NORMAL = 0
-ALARM_MODE_SILENT = 1
+CANIOT_XPS_NONE = 0
+CANIOT_XPS_SET_ON = 1
+CANIOT_XPS_SET_OFF = 2
+CANIOT_XPS_TOGGLE = 3
+CANIOT_XPS_RESET = 4
+CANIOT_XPS_PULSE_ON = 5
+CANIOT_XPS_PULSE_OFF = 6
+CANIOT_XPS_PULSE_CANCEL = 7
+COMMAND_UNSPECIFIED = 0
+COMMAND_LEFT = 1
+COMMAND_RIGHT = 2
+COMMAND_ALL = 3
 
 
 
@@ -370,14 +252,7 @@ _COMMANDRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='datetime', full_name='cancontroller.ipc.CommandResponse.datetime', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='status', full_name='cancontroller.ipc.CommandResponse.status', index=1,
+      name='status', full_name='cancontroller.ipc.CommandResponse.status', index=0,
       number=4, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -396,7 +271,7 @@ _COMMANDRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=72,
-  serialized_end=150,
+  serialized_end=132,
 )
 
 
@@ -434,8 +309,68 @@ _ATTRIBUTE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=152,
-  serialized_end=191,
+  serialized_start=134,
+  serialized_end=173,
+)
+
+
+_BOARDLEVELCOMMAND = _descriptor.Descriptor(
+  name='BoardLevelCommand',
+  full_name='cancontroller.ipc.BoardLevelCommand',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='device', full_name='cancontroller.ipc.BoardLevelCommand.device', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='coc1', full_name='cancontroller.ipc.BoardLevelCommand.coc1', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='coc2', full_name='cancontroller.ipc.BoardLevelCommand.coc2', index=2,
+      number=3, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='crl1', full_name='cancontroller.ipc.BoardLevelCommand.crl1', index=3,
+      number=4, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='crl2', full_name='cancontroller.ipc.BoardLevelCommand.crl2', index=4,
+      number=5, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=176,
+  serialized_end=488,
 )
 
 
@@ -448,14 +383,7 @@ _GARAGECOMMAND = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='datetime', full_name='cancontroller.ipc.GarageCommand.datetime', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='command', full_name='cancontroller.ipc.GarageCommand.command', index=1,
+      name='command', full_name='cancontroller.ipc.GarageCommand.command', index=0,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -473,75 +401,8 @@ _GARAGECOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=193,
-  serialized_end=281,
-)
-
-
-_ALARMCONTROLLERCOMMAND = _descriptor.Descriptor(
-  name='AlarmControllerCommand',
-  full_name='cancontroller.ipc.AlarmControllerCommand',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='datetime', full_name='cancontroller.ipc.AlarmControllerCommand.datetime', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='light1', full_name='cancontroller.ipc.AlarmControllerCommand.light1', index=1,
-      number=2, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='light2', full_name='cancontroller.ipc.AlarmControllerCommand.light2', index=2,
-      number=3, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='alarm', full_name='cancontroller.ipc.AlarmControllerCommand.alarm', index=3,
-      number=4, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='alarm_mode', full_name='cancontroller.ipc.AlarmControllerCommand.alarm_mode', index=4,
-      number=5, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='siren', full_name='cancontroller.ipc.AlarmControllerCommand.siren', index=5,
-      number=6, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=284,
-  serialized_end=582,
+  serialized_start=490,
+  serialized_end=560,
 )
 
 
@@ -593,8 +454,8 @@ _ATTRIBUTEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=584,
-  serialized_end=692,
+  serialized_start=562,
+  serialized_end=670,
 )
 
 
@@ -653,8 +514,8 @@ _ATTRIBUTERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=695,
-  serialized_end=853,
+  serialized_start=673,
+  serialized_end=831,
 )
 
 
@@ -678,8 +539,8 @@ _EMPTY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=855,
-  serialized_end=862,
+  serialized_start=833,
+  serialized_end=840,
 )
 
 
@@ -710,8 +571,8 @@ _DATETIME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=864,
-  serialized_end=891,
+  serialized_start=842,
+  serialized_end=869,
 )
 
 
@@ -763,8 +624,8 @@ _DEVICE_STATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1210,
-  serialized_end=1314,
+  serialized_start=1188,
+  serialized_end=1292,
 )
 
 _DEVICE = _descriptor.Descriptor(
@@ -848,8 +709,8 @@ _DEVICE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=894,
-  serialized_end=1323,
+  serialized_start=872,
+  serialized_end=1301,
 )
 
 
@@ -892,8 +753,8 @@ _DEVICERESPONSE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=1325,
-  serialized_end=1436,
+  serialized_start=1303,
+  serialized_end=1414,
 )
 
 
@@ -906,28 +767,28 @@ _CUSTOMPCBMODEL = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='r1', full_name='cancontroller.ipc.CustomPCBModel.r1', index=0,
+      name='oc1', full_name='cancontroller.ipc.CustomPCBModel.oc1', index=0,
       number=1, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='r2', full_name='cancontroller.ipc.CustomPCBModel.r2', index=1,
+      name='oc2', full_name='cancontroller.ipc.CustomPCBModel.oc2', index=1,
       number=2, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='oc1', full_name='cancontroller.ipc.CustomPCBModel.oc1', index=2,
+      name='rl1', full_name='cancontroller.ipc.CustomPCBModel.rl1', index=2,
       number=3, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='oc2', full_name='cancontroller.ipc.CustomPCBModel.oc2', index=3,
+      name='rl2', full_name='cancontroller.ipc.CustomPCBModel.rl2', index=3,
       number=4, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -989,6 +850,48 @@ _CUSTOMPCBMODEL = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='adc1', full_name='cancontroller.ipc.CustomPCBModel.adc1', index=12,
+      number=13, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='adc2', full_name='cancontroller.ipc.CustomPCBModel.adc2', index=13,
+      number=14, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='poc1', full_name='cancontroller.ipc.CustomPCBModel.poc1', index=14,
+      number=15, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='poc2', full_name='cancontroller.ipc.CustomPCBModel.poc2', index=15,
+      number=16, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='prl1', full_name='cancontroller.ipc.CustomPCBModel.prl1', index=16,
+      number=17, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='prl2', full_name='cancontroller.ipc.CustomPCBModel.prl2', index=17,
+      number=18, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1001,8 +904,8 @@ _CUSTOMPCBMODEL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1439,
-  serialized_end=1643,
+  serialized_start=1417,
+  serialized_end=1707,
 )
 
 
@@ -1054,8 +957,8 @@ _GARAGEDOORMODEL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1645,
-  serialized_end=1754,
+  serialized_start=1709,
+  serialized_end=1818,
 )
 
 
@@ -1074,48 +977,6 @@ _ALARMCONTROLLERMODEL = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='light1', full_name='cancontroller.ipc.AlarmControllerModel.light1', index=1,
-      number=2, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='light2', full_name='cancontroller.ipc.AlarmControllerModel.light2', index=2,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='siren', full_name='cancontroller.ipc.AlarmControllerModel.siren', index=3,
-      number=4, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='inputs_state', full_name='cancontroller.ipc.AlarmControllerModel.inputs_state', index=4,
-      number=5, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='state', full_name='cancontroller.ipc.AlarmControllerModel.state', index=5,
-      number=7, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='mode', full_name='cancontroller.ipc.AlarmControllerModel.mode', index=6,
-      number=8, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1128,8 +989,8 @@ _ALARMCONTROLLERMODEL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1757,
-  serialized_end=1987,
+  serialized_start=1820,
+  serialized_end=1891,
 )
 
 
@@ -1160,17 +1021,17 @@ _DEVICES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1989,
-  serialized_end=2041,
+  serialized_start=1893,
+  serialized_end=1945,
 )
 
 _COMMANDRESPONSE.fields_by_name['status'].enum_type = _STATUS
+_BOARDLEVELCOMMAND.fields_by_name['device'].message_type = _DEVICEID
+_BOARDLEVELCOMMAND.fields_by_name['coc1'].enum_type = _CANIOTCOMPLEXDIGITALCOMMAND
+_BOARDLEVELCOMMAND.fields_by_name['coc2'].enum_type = _CANIOTCOMPLEXDIGITALCOMMAND
+_BOARDLEVELCOMMAND.fields_by_name['crl1'].enum_type = _CANIOTCOMPLEXDIGITALCOMMAND
+_BOARDLEVELCOMMAND.fields_by_name['crl2'].enum_type = _CANIOTCOMPLEXDIGITALCOMMAND
 _GARAGECOMMAND.fields_by_name['command'].enum_type = _GARAGEDOORCOMMAND
-_ALARMCONTROLLERCOMMAND.fields_by_name['light1'].enum_type = _LIGHTCOMMAND
-_ALARMCONTROLLERCOMMAND.fields_by_name['light2'].enum_type = _LIGHTCOMMAND
-_ALARMCONTROLLERCOMMAND.fields_by_name['alarm'].enum_type = _ALARMCOMMAND
-_ALARMCONTROLLERCOMMAND.fields_by_name['alarm_mode'].enum_type = _ALARMMODECOMMAND
-_ALARMCONTROLLERCOMMAND.fields_by_name['siren'].enum_type = _ALARMSIRENCOMMAND
 _ATTRIBUTEREQUEST.fields_by_name['device'].message_type = _DEVICEID
 _ATTRIBUTERESPONSE.fields_by_name['device'].message_type = _DEVICEID
 _ATTRIBUTERESPONSE.fields_by_name['status'].enum_type = _STATUS
@@ -1197,14 +1058,12 @@ _DEVICERESPONSE.oneofs_by_name['dev'].fields.append(
 _DEVICERESPONSE.fields_by_name['empty'].containing_oneof = _DEVICERESPONSE.oneofs_by_name['dev']
 _GARAGEDOORMODEL.fields_by_name['base'].message_type = _CUSTOMPCBMODEL
 _ALARMCONTROLLERMODEL.fields_by_name['base'].message_type = _CUSTOMPCBMODEL
-_ALARMCONTROLLERMODEL.fields_by_name['state'].enum_type = _ALARMSTATE
-_ALARMCONTROLLERMODEL.fields_by_name['mode'].enum_type = _ALARMMODE
 _DEVICES.fields_by_name['device'].message_type = _DEVICE
 DESCRIPTOR.message_types_by_name['DeviceId'] = _DEVICEID
 DESCRIPTOR.message_types_by_name['CommandResponse'] = _COMMANDRESPONSE
 DESCRIPTOR.message_types_by_name['Attribute'] = _ATTRIBUTE
+DESCRIPTOR.message_types_by_name['BoardLevelCommand'] = _BOARDLEVELCOMMAND
 DESCRIPTOR.message_types_by_name['GarageCommand'] = _GARAGECOMMAND
-DESCRIPTOR.message_types_by_name['AlarmControllerCommand'] = _ALARMCONTROLLERCOMMAND
 DESCRIPTOR.message_types_by_name['AttributeRequest'] = _ATTRIBUTEREQUEST
 DESCRIPTOR.message_types_by_name['AttributeResponse'] = _ATTRIBUTERESPONSE
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
@@ -1216,13 +1075,9 @@ DESCRIPTOR.message_types_by_name['GarageDoorModel'] = _GARAGEDOORMODEL
 DESCRIPTOR.message_types_by_name['AlarmControllerModel'] = _ALARMCONTROLLERMODEL
 DESCRIPTOR.message_types_by_name['Devices'] = _DEVICES
 DESCRIPTOR.enum_types_by_name['Status'] = _STATUS
-DESCRIPTOR.enum_types_by_name['GarageDoorCommand'] = _GARAGEDOORCOMMAND
 DESCRIPTOR.enum_types_by_name['LightCommand'] = _LIGHTCOMMAND
-DESCRIPTOR.enum_types_by_name['AlarmCommand'] = _ALARMCOMMAND
-DESCRIPTOR.enum_types_by_name['AlarmModeCommand'] = _ALARMMODECOMMAND
-DESCRIPTOR.enum_types_by_name['AlarmSirenCommand'] = _ALARMSIRENCOMMAND
-DESCRIPTOR.enum_types_by_name['AlarmState'] = _ALARMSTATE
-DESCRIPTOR.enum_types_by_name['AlarmMode'] = _ALARMMODE
+DESCRIPTOR.enum_types_by_name['CaniotComplexDigitalCommand'] = _CANIOTCOMPLEXDIGITALCOMMAND
+DESCRIPTOR.enum_types_by_name['GarageDoorCommand'] = _GARAGEDOORCOMMAND
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 DeviceId = _reflection.GeneratedProtocolMessageType('DeviceId', (_message.Message,), {
@@ -1246,19 +1101,19 @@ Attribute = _reflection.GeneratedProtocolMessageType('Attribute', (_message.Mess
   })
 _sym_db.RegisterMessage(Attribute)
 
+BoardLevelCommand = _reflection.GeneratedProtocolMessageType('BoardLevelCommand', (_message.Message,), {
+  'DESCRIPTOR' : _BOARDLEVELCOMMAND,
+  '__module__' : 'model_pb2'
+  # @@protoc_insertion_point(class_scope:cancontroller.ipc.BoardLevelCommand)
+  })
+_sym_db.RegisterMessage(BoardLevelCommand)
+
 GarageCommand = _reflection.GeneratedProtocolMessageType('GarageCommand', (_message.Message,), {
   'DESCRIPTOR' : _GARAGECOMMAND,
   '__module__' : 'model_pb2'
   # @@protoc_insertion_point(class_scope:cancontroller.ipc.GarageCommand)
   })
 _sym_db.RegisterMessage(GarageCommand)
-
-AlarmControllerCommand = _reflection.GeneratedProtocolMessageType('AlarmControllerCommand', (_message.Message,), {
-  'DESCRIPTOR' : _ALARMCONTROLLERCOMMAND,
-  '__module__' : 'model_pb2'
-  # @@protoc_insertion_point(class_scope:cancontroller.ipc.AlarmControllerCommand)
-  })
-_sym_db.RegisterMessage(AlarmControllerCommand)
 
 AttributeRequest = _reflection.GeneratedProtocolMessageType('AttributeRequest', (_message.Message,), {
   'DESCRIPTOR' : _ATTRIBUTEREQUEST,
@@ -1348,8 +1203,8 @@ _CANCONTROLLER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=2786,
-  serialized_end=3464,
+  serialized_start=2408,
+  serialized_end=3085,
   methods=[
   _descriptor.MethodDescriptor(
     name='SendGarage',
@@ -1362,22 +1217,22 @@ _CANCONTROLLER = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='SendAlarm',
-    full_name='cancontroller.ipc.CanController.SendAlarm',
+    name='RequestTelemetry',
+    full_name='cancontroller.ipc.CanController.RequestTelemetry',
     index=1,
     containing_service=None,
-    input_type=_ALARMCONTROLLERCOMMAND,
-    output_type=_COMMANDRESPONSE,
+    input_type=_DEVICEID,
+    output_type=_EMPTY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='RequestTelemetry',
-    full_name='cancontroller.ipc.CanController.RequestTelemetry',
+    name='CommandDevice',
+    full_name='cancontroller.ipc.CanController.CommandDevice',
     index=2,
     containing_service=None,
-    input_type=_DEVICEID,
-    output_type=_EMPTY,
+    input_type=_BOARDLEVELCOMMAND,
+    output_type=_COMMANDRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

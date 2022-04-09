@@ -19,15 +19,15 @@ class CanControllerStub(object):
                 request_serializer=model__pb2.GarageCommand.SerializeToString,
                 response_deserializer=model__pb2.CommandResponse.FromString,
                 )
-        self.SendAlarm = channel.unary_unary(
-                '/cancontroller.ipc.CanController/SendAlarm',
-                request_serializer=model__pb2.AlarmControllerCommand.SerializeToString,
-                response_deserializer=model__pb2.CommandResponse.FromString,
-                )
         self.RequestTelemetry = channel.unary_unary(
                 '/cancontroller.ipc.CanController/RequestTelemetry',
                 request_serializer=model__pb2.DeviceId.SerializeToString,
                 response_deserializer=model__pb2.Empty.FromString,
+                )
+        self.CommandDevice = channel.unary_unary(
+                '/cancontroller.ipc.CanController/CommandDevice',
+                request_serializer=model__pb2.BoardLevelCommand.SerializeToString,
+                response_deserializer=model__pb2.CommandResponse.FromString,
                 )
         self.ReadAttribute = channel.unary_unary(
                 '/cancontroller.ipc.CanController/ReadAttribute',
@@ -65,13 +65,13 @@ class CanControllerServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def SendAlarm(self, request, context):
+    def RequestTelemetry(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def RequestTelemetry(self, request, context):
+    def CommandDevice(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -115,15 +115,15 @@ def add_CanControllerServicer_to_server(servicer, server):
                     request_deserializer=model__pb2.GarageCommand.FromString,
                     response_serializer=model__pb2.CommandResponse.SerializeToString,
             ),
-            'SendAlarm': grpc.unary_unary_rpc_method_handler(
-                    servicer.SendAlarm,
-                    request_deserializer=model__pb2.AlarmControllerCommand.FromString,
-                    response_serializer=model__pb2.CommandResponse.SerializeToString,
-            ),
             'RequestTelemetry': grpc.unary_unary_rpc_method_handler(
                     servicer.RequestTelemetry,
                     request_deserializer=model__pb2.DeviceId.FromString,
                     response_serializer=model__pb2.Empty.SerializeToString,
+            ),
+            'CommandDevice': grpc.unary_unary_rpc_method_handler(
+                    servicer.CommandDevice,
+                    request_deserializer=model__pb2.BoardLevelCommand.FromString,
+                    response_serializer=model__pb2.CommandResponse.SerializeToString,
             ),
             'ReadAttribute': grpc.unary_unary_rpc_method_handler(
                     servicer.ReadAttribute,
@@ -178,23 +178,6 @@ class CanController(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def SendAlarm(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/cancontroller.ipc.CanController/SendAlarm',
-            model__pb2.AlarmControllerCommand.SerializeToString,
-            model__pb2.CommandResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
     def RequestTelemetry(request,
             target,
             options=(),
@@ -208,6 +191,23 @@ class CanController(object):
         return grpc.experimental.unary_unary(request, target, '/cancontroller.ipc.CanController/RequestTelemetry',
             model__pb2.DeviceId.SerializeToString,
             model__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CommandDevice(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/cancontroller.ipc.CanController/CommandDevice',
+            model__pb2.BoardLevelCommand.SerializeToString,
+            model__pb2.CommandResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

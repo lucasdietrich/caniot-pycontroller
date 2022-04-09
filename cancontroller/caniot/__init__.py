@@ -1,4 +1,3 @@
-from .misc import generate_random_data
 from .device import Device, DeviceId, MsgId
 from .message import *
 from .attributes import attributes

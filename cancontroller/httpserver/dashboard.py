@@ -31,6 +31,10 @@ async def context(request: web.Request):
         print(f"Device not found ! {device_name}")
     else:
         if form.get("telemetry"):
+            ep_name = form.get("endpoint")
+            eps = ["ep-0", "ep-1", "ep-2", "ep-3"]
+            ep = eps.index(ep_name) if ep_name in eps else 0
+            print(ep)
             api.RequestTelemetry(device.deviceid)
         elif form.get("read-attribute"):
             rval = api.ReadAttribute(device.deviceid, key + part)
