@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import struct
+
 from cancontroller.caniot.models import MsgId, DeviceId, BufferType
 
 from abc import ABC
@@ -48,4 +50,13 @@ class CaniotMessage(ABC):
 
 
 class ErrorMessage(CaniotMessage):
-    pass
+    def get_error(self) -> int:
+        if len(self.buffer) < 4:
+            print("Invalid CANIOT ERROR FRAME")
+            return 0
+        else:
+            err, = struct.unpack("<i", bytearray(self.buffer[:4]))
+            return err
+
+    def __repr__(self):
+        return f"{self.msgid} : 0x{self.get_error():04X}"
