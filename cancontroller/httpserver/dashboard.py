@@ -6,6 +6,7 @@ from cancontroller.ipc import model_pb2, model_pb2_grpc, API
 from cancontroller import configuration
 from cancontroller.caniot.devices import node_garage_door, node_alarm, node_broadcast, devices
 from cancontroller.caniot.attributes import attributes
+from cancontroller.caniot.datatypes import XPS
 
 from cancontroller.utils import parse_number, number_to_hexn
 
@@ -42,6 +43,22 @@ async def context(request: web.Request):
             rval = api.WriteAttribute(device.deviceid, key + part, wval)
         elif form.get("synctime"):
             api.SyncTime(node_broadcast.deviceid)
+        elif form.get("oc1"):
+            api.BoardLevelCommand(device.deviceid, coc1=XPS.TOGGLE)
+        elif form.get("poc1"):
+            api.BoardLevelCommand(device.deviceid, coc1=XPS.PULSE_ON)
+        elif form.get("oc2"):
+            api.BoardLevelCommand(device.deviceid, coc2=XPS.TOGGLE)
+        elif form.get("poc2"):
+            api.BoardLevelCommand(device.deviceid, coc2=XPS.PULSE_ON)
+        elif form.get("rl1"):
+            api.BoardLevelCommand(device.deviceid, crl1=XPS.TOGGLE)
+        elif form.get("prl1"):
+            api.BoardLevelCommand(device.deviceid, crl1=XPS.PULSE_ON)
+        elif form.get("rl2"):
+            api.BoardLevelCommand(device.deviceid, crl2=XPS.TOGGLE)
+        elif form.get("prl2"):
+            api.BoardLevelCommand(device.deviceid, crl2=XPS.PULSE_ON)
 
     # do this in a single grpc request !
     devlist = [
