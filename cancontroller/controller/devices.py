@@ -1,10 +1,7 @@
-from cancontroller.caniot.models import MsgId, DeviceId
+from cancontroller.caniot.models import DeviceId
 from cancontroller.caniot.device import Device
 
-from cancontroller.caniot.nodes.garage_door_controller import GarageDoorController
-from cancontroller.caniot.nodes.alarm_controller import AlarmController
-
-from typing import Dict, List, Union, Optional
+from cancontroller.controller.nodes import GarageDoorController, AlarmController
 
 node_garage_door = GarageDoorController(DeviceId(DeviceId.Class.CUSTOMPCB, 0x02), "GarageDoorControllerProdPCB")
 node_alarm = AlarmController(DeviceId(DeviceId.Class.CUSTOMPCB, 0x03), "AlarmController")

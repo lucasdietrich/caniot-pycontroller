@@ -1,6 +1,6 @@
 from cancontroller.caniot import *
 from cancontroller.ipc.api import API
-from cancontroller.ipc import model_pb2
+import model_pb2
 
 import time
 import datetime

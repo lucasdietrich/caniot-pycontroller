@@ -88,6 +88,7 @@ class BoardLevelCommand(CaniotMessage):
             buffer=command
         )
 
+
 class QueryTelemetry(CaniotMessage):
     def __init__(self, deviceid: DeviceId, endpoint: MsgId.Endpoint = MsgId.Endpoint.AppDefaultEndpoint):
         super(QueryTelemetry, self).__init__(

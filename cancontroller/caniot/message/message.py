@@ -59,4 +59,4 @@ class ErrorMessage(CaniotMessage):
             return err
 
     def __repr__(self):
-        return f"{self.msgid} : 0x{self.get_error():04X}"
+        return f"{self.msgid} : {self.get_error():04X}"

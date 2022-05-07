@@ -9,13 +9,6 @@
     <meta http-equiv="refresh" content="10">
 </head>
 <body>
-{% if error %}
-    <div class="error">
-        <p>
-            {{ error }}
-        </p>
-    </div>
-{% endif %}
 <div>
     <div id="form" class="{{ "" if device.status.online else "disabled" }}">
         <form action="" method="post">
@@ -29,8 +22,8 @@
                 </div>
                 <div id="light1" class="light">
                     <h2>Lumière 1</h2>
-                    <div class="indicator {{ "on" if device.alarm.light1 else "off" }}"></div>
-                    {% if device.alarm.light1 %}
+                    <div class="indicator {{ "on" if device.alarm.base.oc1 else "off" }}"></div>
+                    {% if device.alarm.base.oc1 %}
                         <input type="submit" class="button command" name="light1" value="off">
                     {% else %}
                         <input type="submit" class="button command" name="light1" value="on">
@@ -39,8 +32,8 @@
                 </div>
                 <div id="light2" class="light">
                     <h2>Lumière 2</h2>
-                    <div class="indicator {{ "on" if device.alarm.light2 else "off" }}"></div>
-                    {% if device.alarm.light2 %}
+                    <div class="indicator {{ "on" if device.alarm.base.oc2 else "off" }}"></div>
+                    {% if device.alarm.base.oc2 %}
                         <input type="submit" class="button command" name="light2" value="off">
                     {% else %}
                         <input type="submit" class="button command" name="light2" value="on">
@@ -49,73 +42,20 @@
                 </div>
             </div>
         </form>
-        <form action="" method="post">
-            <h1>Alarme</h1>
-            <div id="alarm_inputs_status" class="{{ "greenbg" if device.alarm.inputs_state else "redbg" }}"></div>
-            <div id="alarm" class="alarm">
-                {% if device.alarm.mode %}
-                    <div class="alarm_silent_mode">
-                        <p>Alarm SILENT/TESTING mode <input type="submit" class="button command" name="mode"
-                                                            value="normal"></p>
-                    </div>
-                {% else %}
-                    <input type="submit" class="button command" name="mode" value="silent">
-                {% endif %}
-
-                <div class="alarm_status">
-                    <p>L'alarme est <span
-                            class="alarm_state {{ alarm_status_message[0] }}">{{ alarm_status_message[1] }}</span>,
-                        la sirène est <span
-                                class="siren_state {{ siren_status_message[0] }}">{{ siren_status_message[1] }}</span>
-                    </p>
-                </div>
-
-                {% if device.alarm.state == 0 %}
-                    <input type="submit" class="button command" name="alarm" value="enable">
-                {% elif device.alarm.state == 1 %}
-                    <input type="submit" class="button command" name="alarm" value="disable">
-                {% elif device.alarm.state == 2 %}
-                    <input type="submit" class="button command" name="alarm" value="disable">
-                {% elif device.alarm.state == 3 %}
-                    <input type="submit" class="button command" name="alarm" value="disable">
-                    <input type="submit" class="button command" name="alarm" value="recover">
-                {% endif %}
-            </div>
-        </form>
     </div>
 </div>
 <div>
     <h1>Mesures</h1>
-    <p>Timestamp : <span class="date">{{ device.status.last_seen.formatted }}</span></p>
+    <p>En ligne il y a {{ device.status.last_seen.seconds | diffseconds }} :
+        <span class="date"> ({{ device.status.last_seen.seconds | fmttimestamp }})</span>
+    </p>
     <p>Température carte : <span class="measurement temperature">{{ device.alarm.base.int_temp | round(1) }} °C</span>
     </p>
     <p>Température extérieure : <span
             class="measurement temperature">{{ device.alarm.base.ext_temp | round(1) }} °C</span></p>
 </div>
 
-{% if debug %}
-    <div id="debug">
-        <h1>Debug</h1>
-        <form action="" method="post">
-            <input class="button" type="submit" name="debug" value="RequestTelemetry">
-
-            <h1>Sirène</h1>
-            <div id="siren">
-                <div id="siren" class="siren">
-                    <input type="submit" class="button command" name="siren" value="on">
-                    <input type="submit" class="button command" name="siren" value="toggle">
-                    <input type="submit" class="button command" name="siren" value="off">
-                </div>
-            </div>
-        </form>
-        <pre>{{ device }}</pre>
-    </div>
-{% else %}
-    <hr/>
-    <div id="debug">
-        <p><a href="?debug=1">Activer le mode debug</a></p>
-    </div>
-{% endif %}
+<pre>{{ device }}</pre>
 
 </body>
 </html>

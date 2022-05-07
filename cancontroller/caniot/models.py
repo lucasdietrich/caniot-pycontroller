@@ -145,7 +145,7 @@ class MsgId:
         elif self.is_error():
             return f"[{hex(self)}] ERROR message from {self.device_id}"
         else:
-            return f"INVALID CANIOT MESSAGE [{hex(self)}]"
+            return f"INVALID CANIOT MESSAGE [0x{int(self):04X}]"
 
     def __int__(self) -> int:
         return self.get()

@@ -1,20 +1,5 @@
-import copy
-import struct
-
-from cancontroller.caniot.device import Device
-from cancontroller.caniot.message import *
-from cancontroller.caniot.nodetypes import CustomPcb_Node
-from cancontroller.caniot.models import DeviceId
-from cancontroller.utils import extract_bits_from_bytearray
-from cancontroller.caniot.datatypes import *
-
-from enum import IntEnum, auto
-
-from cancontroller.utils import read_bit
-
 import model_pb2
-
-# inherit grpc proto per Device type
+from cancontroller.caniot import *
 
 
 class GarageDoorController(CustomPcb_Node):
@@ -38,8 +23,8 @@ class GarageDoorController(CustomPcb_Node):
 
         return self.command(**params)
 
-    def interpret_board_control_telemetry(self, msg: CaniotMessage):
-        super(GarageDoorController, self).interpret_board_control_telemetry(msg)
+    def handle_board_control_telemetry(self, msg: CaniotMessage):
+        super(GarageDoorController, self).handle_board_control_telemetry(msg)
 
         self.model["left"] = self.model["base"]["in3"]
         self.model["right"] = self.model["base"]["in4"]

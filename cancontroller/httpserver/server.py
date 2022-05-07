@@ -1,21 +1,19 @@
 from __future__ import print_function
 
-import datetime
 import os.path
-import time
 
-import json
 import aiohttp_jinja2
 import grpc
 import jinja2
 from aiohttp import web
-from google.protobuf.json_format import MessageToJson
 
 import dashboard
+import alarmpage
 from cancontroller import ROOT_DIR
 from cancontroller import configuration
-from cancontroller.caniot.devices import node_garage_door, node_alarm, Devices
-from cancontroller.ipc import model_pb2, model_pb2_grpc, API
+from cancontroller.controller.devices import node_garage_door, node_alarm
+from cancontroller.ipc.api import api
+import model_pb2, model_pb2_grpc
 from cancontroller.caniot.models import DeviceId
 
 from cancontroller import utils
@@ -28,8 +26,6 @@ from cancontroller import utils
 class HTTPServer(web.Application):
     def __init__(self, grpc_target: str):
         self.grpc_target = grpc_target
-
-        self.api = API(grpc_target)
 
         super(HTTPServer, self).__init__()
 
@@ -45,8 +41,12 @@ class HTTPServer(web.Application):
             [
                 web.get('/garage', self.handle_garagedoors),
                 web.post('/garage', self.handle_garagedoors),
+
                 web.get('/dashboard', dashboard.handle_get),
                 web.post('/dashboard', dashboard.handle_post),
+
+                web.get('/alarmcontroller', alarmpage.handle_get),
+                web.post('/alarmcontroller', alarmpage.handle_post),
 
                 web.static("/static/", "./static"),
 
@@ -64,7 +64,7 @@ class HTTPServer(web.Application):
 
     @aiohttp_jinja2.template("home.view.j2")
     async def handle_home(self, request: web.Request):
-        response = self.api.GetDevice(node_garage_door.deviceid)
+        response = api.GetDevice(node_garage_door.deviceid)
 
         return {"model": response}
 
@@ -89,15 +89,15 @@ class HTTPServer(web.Application):
                       f"CommandResponse status={model_pb2._STATUS.values_by_number[response.status].name}")
 
         return {
-            "device": self.api.GetDevice(node_garage_door.deviceid),
+            "device": api.GetDevice(node_garage_door.deviceid),
             "command": command,
             "commands_list": commands_list
         }
 
     async def handle_temperatures(self, request: web.Request):
-        # TODO self.api.GetDevices()
-        garage = self.api.GetDevice(node_garage_door.deviceid)
-        alarm = self.api.GetDevice(node_alarm.deviceid)
+        # TODO api.GetDevices()
+        garage = api.GetDevice(node_garage_door.deviceid)
+        alarm = api.GetDevice(node_alarm.deviceid)
 
         def to_object(did, base):
             return {
@@ -114,9 +114,9 @@ class HTTPServer(web.Application):
         ])
 
     async def handle_metrics(self, request: web.Request):
-        # TODO self.api.GetDevices()
-        garage = self.api.GetDevice(node_garage_door.deviceid)
-        alarm = self.api.GetDevice(node_alarm.deviceid)
+        # TODO api.GetDevices()
+        garage = api.GetDevice(node_garage_door.deviceid)
+        alarm = api.GetDevice(node_alarm.deviceid)
 
         def build_device_temperature_metric(did: DeviceId, device_name: str, temp: float, embedded: bool = True) -> str:
             def build_tag(name: str, value: str) -> str:

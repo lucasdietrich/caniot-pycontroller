@@ -1,11 +1,5 @@
 import asyncio
-import contextlib
-import time
 from typing import List
-
-import can
-
-from cancontroller.caniot.models import MsgId
 
 from cancontroller.caniot.message.message import CaniotMessage
 

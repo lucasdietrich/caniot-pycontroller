@@ -9,7 +9,7 @@ package cancontroller.ipc;
 service CanController {
   rpc SendGarage(GarageCommand) returns (CommandResponse) {}
 
-  rpc RequestTelemetry(DeviceId) returns (Empty) {}
+  rpc RequestTelemetry(TelemetryTarget) returns (Empty) {}
   rpc CommandDevice(BoardLevelCommand) returns (CommandResponse) {}
   rpc ReadAttribute(AttributeRequest) returns (AttributeResponse) {}
   rpc WriteAttribute(AttributeRequest) returns (AttributeResponse) {}
@@ -50,6 +50,13 @@ enum LightCommand {
   LIGHT_CMD_ON = 1;
   LIGHT_CMD_OFF = 2;
   LIGHT_CMD_TOGGLE = 3;
+}
+
+enum TELEMETRY_ENDPOINT {
+  ENDPOINT_APPLICATION = 0;
+  ENDPOINT_1 = 1;
+  ENDPOINT_2 = 2;
+  ENDPOINT_BOARD_CONTROL = 3;
 }
 
 enum CaniotComplexDigitalCommand {
@@ -150,6 +157,12 @@ message DeviceResponse {
   }
 }
 
+message TelemetryTarget
+{
+  DeviceId deviceid = 1;
+  TELEMETRY_ENDPOINT endpoint = 2;
+}
+
 /*____________________________________________________________________________________________________________________*/
 
 message CustomPCBModel
@@ -191,6 +204,10 @@ message GarageDoorModel {
 message AlarmControllerModel
 {
   CustomPCBModel base = 1;
+
+  bool enabled = 2;
+  uint32 triggered_count = 3;
+  float last_signal = 4;
 }
 
 message Devices {

@@ -7,18 +7,16 @@ from grpc import aio
 import os.path
 
 from cancontroller import configuration, ROOT_DIR
-from cancontroller.caniot.message import CaniotMessage, AttributeResponse
 from cancontroller.caniot.message.interpret import interpret_response
-from cancontroller.caniot.models import MsgId, DeviceId
-from cancontroller.caniot.device import Device
 from cancontroller.controller import initialize_can_if
-from cancontroller.caniot.message import QueryTelemetry
+
+from cancontroller.caniot import *
 
 from typing import List
 
-import model_pb2_grpc, model_pb2
+import model_pb2, model_pb2_grpc
 from pending import PendingQuery
-from cancontroller.caniot.devices import Devices, node_alarm, node_garage_door, devices
+from cancontroller.controller.devices import Devices, node_garage_door, devices
 import contextlib
 import time
 
@@ -92,7 +90,9 @@ class CanController(model_pb2_grpc.CanControllerServicer):
                 device.last_seen = datetime.datetime.now()
                 device.received += 1
 
-                device.interpret(msg)
+                req = device.handle(msg)
+                if req is not None:
+                    self.send(req)
 
                 log_msg += " " + str(device.model)
 
@@ -104,7 +104,6 @@ class CanController(model_pb2_grpc.CanControllerServicer):
             can_logger.error(log_msg)
         else:
             can_logger.debug(log_msg)
-
 
     async def query(self, msg: CaniotMessage, timeout: float) -> [CaniotMessage, float]:
         pending_query = PendingQuery(query=msg)
@@ -167,7 +166,8 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         return await self.QueryAttribute(query, request.timeout)
 
     async def WriteAttribute(self, request: model_pb2.AttributeRequest, context) -> model_pb2.AttributeResponse:
-        query = Device(DeviceId(cls=request.device.cls, sid=request.device.sid)).write_attribute(request.key, request.value)
+        query = Device(DeviceId(cls=request.device.cls, sid=request.device.sid)).write_attribute(request.key,
+                                                                                                 request.value)
         return await self.QueryAttribute(query, request.timeout)
 
     async def GetDevices(self, request: model_pb2.Empty, context):
@@ -176,9 +176,9 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         ])
 
     # allow this method to be blocking until timeout
-    async def RequestTelemetry(self, request: model_pb2.DeviceId, context):
-        self.send(QueryTelemetry(DeviceId(cls=request.cls, sid=request.sid),
-                                 endpoint=MsgId.Endpoint.BoardControlEndpoint))
+    async def RequestTelemetry(self, request: model_pb2.TelemetryTarget, context):
+        self.send(QueryTelemetry(DeviceId(cls=request.deviceid.cls, sid=request.deviceid.sid),
+                                 endpoint=request.endpoint))
         return model_pb2.Empty()
 
     async def GetDevice(self, request: model_pb2.Devices, context):

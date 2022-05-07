@@ -21,7 +21,7 @@ class CanControllerStub(object):
                 )
         self.RequestTelemetry = channel.unary_unary(
                 '/cancontroller.ipc.CanController/RequestTelemetry',
-                request_serializer=model__pb2.DeviceId.SerializeToString,
+                request_serializer=model__pb2.TelemetryTarget.SerializeToString,
                 response_deserializer=model__pb2.Empty.FromString,
                 )
         self.CommandDevice = channel.unary_unary(
@@ -117,7 +117,7 @@ def add_CanControllerServicer_to_server(servicer, server):
             ),
             'RequestTelemetry': grpc.unary_unary_rpc_method_handler(
                     servicer.RequestTelemetry,
-                    request_deserializer=model__pb2.DeviceId.FromString,
+                    request_deserializer=model__pb2.TelemetryTarget.FromString,
                     response_serializer=model__pb2.Empty.SerializeToString,
             ),
             'CommandDevice': grpc.unary_unary_rpc_method_handler(
@@ -189,7 +189,7 @@ class CanController(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/cancontroller.ipc.CanController/RequestTelemetry',
-            model__pb2.DeviceId.SerializeToString,
+            model__pb2.TelemetryTarget.SerializeToString,
             model__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

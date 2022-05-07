@@ -1,10 +1,8 @@
 from aiohttp import web
-import jinja2
 import aiohttp_jinja2
 
-from cancontroller.ipc import model_pb2, model_pb2_grpc, API
-from cancontroller import configuration
-from cancontroller.caniot.devices import node_garage_door, node_alarm, node_broadcast, devices
+from cancontroller.ipc.api import api
+from cancontroller.controller.devices import node_alarm, node_broadcast, devices
 from cancontroller.caniot.attributes import attributes
 from cancontroller.caniot.datatypes import XPS
 
@@ -13,8 +11,6 @@ from cancontroller.utils import parse_number, number_to_hexn
 from google.protobuf.json_format import MessageToJson
 
 import datetime
-
-api = API()
 
 
 async def context(request: web.Request):
@@ -35,8 +31,7 @@ async def context(request: web.Request):
             ep_name = form.get("endpoint")
             eps = ["ep-0", "ep-1", "ep-2", "ep-3"]
             ep = eps.index(ep_name) if ep_name in eps else 0
-            print(ep)
-            api.RequestTelemetry(device.deviceid)
+            api.RequestTelemetry(device.deviceid, ep)
         elif form.get("read-attribute"):
             rval = api.ReadAttribute(device.deviceid, key + part)
         elif form.get("write-attribute"):

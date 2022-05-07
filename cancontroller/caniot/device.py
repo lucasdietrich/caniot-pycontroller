@@ -5,6 +5,8 @@ from enum import IntEnum
 from cancontroller.caniot.models import DeviceId, MsgId
 from cancontroller.caniot.message import *
 
+from typing import Optional
+
 import json
 
 
@@ -66,7 +68,7 @@ class Device:
     def reset(self, rtype: ResetType = ResetType.HardwareReset) -> Command:
         return Command(self.deviceid, [rtype], MsgId.Endpoint.BoardControlEndpoint, fit_buf=True)
 
-    def query(self, buffer: list) -> QueryTelemetry:
+    def query(self) -> QueryTelemetry:
         return QueryTelemetry(self.deviceid)
 
     def read_attribute(self, key: int) -> ReadAttributeQuery:
@@ -81,28 +83,28 @@ class Device:
     def set_time(self, utc: int) -> WriteAttributeQuery:
         return WriteAttributeQuery(self.deviceid, 0x1010, utc)
 
-    def interpret(self, msg: CaniotMessage):
+    def handle(self, msg: CaniotMessage) -> Optional[CaniotMessage]:
         if isinstance(msg, AttributeResponse):
             self.attrs[msg.get_key()] = msg.get_value()
         elif isinstance(msg, TelemetryMessage):
-            self.interpret_telemetry(msg)
+            return self.handle_telemetry(msg)
         else:
             raise Exception(f"Cannot interpret CANIOT response {msg}")
 
     @abc.abstractmethod
-    def interpret_board_control_telemetry(self, msg: CaniotMessage):
+    def handle_board_control_telemetry(self, msg: CaniotMessage) -> Optional[CaniotMessage]:
         raise NotImplemented
 
     @abc.abstractmethod
-    def interpret_application_telemetry(self, msg: CaniotMessage):
+    def handle_application_telemetry(self, msg: CaniotMessage) -> Optional[CaniotMessage]:
         raise NotImplemented
 
-    def interpret_telemetry(self, msg: CaniotMessage):
+    def handle_telemetry(self, msg: CaniotMessage):
         if msg.msgid.endpoint == MsgId.Endpoint.BoardControlEndpoint:
             assert len(msg.buffer) == 8
-            self.interpret_board_control_telemetry(msg)
+            return self.handle_board_control_telemetry(msg)
         else:
-            self.interpret_application_telemetry(msg)
+            return self.handle_application_telemetry(msg)
 
     def get_model(self) -> dict:
         return {}
