@@ -4,7 +4,11 @@
     <list default="true" id="915c5508-fbff-4ac8-ac3f-caf60ce8ef19" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/controller/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/controller/nodes/alarm_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/nodes/alarm_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/alarmcontroller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/alarmpage.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/alarmpage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model_pb2.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model_pb2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model_pb2_grpc.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model_pb2_grpc.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +43,9 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/PyCharm2021.3/remote_sources/-952099167/-317405381/model_pb2_grpc.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

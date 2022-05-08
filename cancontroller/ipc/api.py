@@ -85,6 +85,7 @@ class API:
 
     def BoardLevelCommand(self, deviceid: DeviceId, coc1=XPS.SET_NONE, coc2=XPS.SET_NONE,
                           crl1=XPS.SET_NONE, crl2=XPS.SET_NONE):
+
         with grpc.insecure_channel(self.grpc_target) as channel:
             stub = model_pb2_grpc.CanControllerStub(channel)
             return stub.CommandDevice(model_pb2.BoardLevelCommand(

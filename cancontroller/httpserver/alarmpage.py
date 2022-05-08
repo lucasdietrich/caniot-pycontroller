@@ -33,7 +33,8 @@ async def handle_post(request: web.Request):
     if light2 in map:
         light2_cmd = map[light2]
 
-    api.BoardLevelCommand(node_alarm.deviceid, coc1=light1_cmd, coc2=light2_cmd)
+    if light1_cmd != XPS.SET_NONE or light2_cmd != XPS.SET_NONE:
+        api.BoardLevelCommand(node_alarm.deviceid, coc1=light1_cmd, coc2=light2_cmd)
 
     return {
         "device": api.GetDevice(node_alarm.deviceid)

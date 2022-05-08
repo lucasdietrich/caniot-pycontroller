@@ -60,7 +60,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         self.rx_count = 0
         self.tx_count = 0
 
-    def send(self, msg: CaniotMessage) -> Device:
+    async def send(self, msg: CaniotMessage) -> Device:
         can_logger.debug(f"[{self.tx_count}] TX {msg.msgid} payload[{len(msg.buffer)}] : {msg.buffer}")
 
         self.can0.send(msg.can(), timeout=None)  # define global timeout
@@ -75,7 +75,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
         return device
 
-    def recv(self, can_msg: can.Message):
+    async def recv(self, can_msg: can.Message):
         # interpret as caniot message
         msg = interpret_response(MsgId.from_int(can_msg.arbitration_id, False), can_msg.data)
 
@@ -92,7 +92,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
                 req = device.handle(msg)
                 if req is not None:
-                    self.send(req)
+                   self.query(req)
 
                 log_msg += " " + str(device.model)
 
@@ -105,11 +105,11 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         else:
             can_logger.debug(log_msg)
 
-    async def query(self, msg: CaniotMessage, timeout: float) -> [CaniotMessage, float]:
+    async def query(self, msg: CaniotMessage, timeout: float = 0.0) -> [CaniotMessage, float]:
         pending_query = PendingQuery(query=msg)
         self.pending.append(pending_query)
 
-        self.send(msg)
+        await self.send(msg)
 
         start = time.time()
         with contextlib.suppress(asyncio.TimeoutError):
@@ -176,8 +176,8 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
     # allow this method to be blocking until timeout
     async def RequestTelemetry(self, request: model_pb2.TelemetryTarget, context):
-        self.send(QueryTelemetry(DeviceId(cls=request.deviceid.cls, sid=request.deviceid.sid),
-                                 endpoint=request.endpoint))
+        await self.query(QueryTelemetry(DeviceId(cls=request.deviceid.cls, sid=request.deviceid.sid),
+                                 endpoint=request.endpoint), timeout=0.0)
         return model_pb2.Empty()
 
     async def GetDevice(self, request: model_pb2.Devices, context):
