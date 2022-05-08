@@ -2,35 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="915c5508-fbff-4ac8-ac3f-caf60ce8ef19" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cancontroller/caniot/custompcb.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/controller/nodes/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/controller/nodes/alarm_controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/httpserver/alarmcontroller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cancontroller/httpserver/alarmpage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/device.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/device.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/devices.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/message/message.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/message/message.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/message/query.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/message/query.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/nodes/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/nodes/alarm_controller.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/nodes/garage_door_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/nodes/garage_door_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/caniot/nodetypes/custompcb.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/caniot/nodetypes/custompcb.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cancontroller/controller/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/controller/pending.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/pending.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/dashboard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/templates/alarm.view.j2" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/templates/alarm.view.j2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/templates/dashboard.view.j2" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/templates/dashboard.view.j2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/httpserver/templates/home.view.j2" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/httpserver/templates/home.view.j2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model.proto" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model_pb2.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model_pb2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cancontroller/ipc/model_pb2_grpc.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/ipc/model_pb2_grpc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playground.py" beforeDir="false" afterPath="$PROJECT_DIR$/playground.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timesync.py" beforeDir="false" afterPath="$PROJECT_DIR$/timesync.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancontroller/controller/nodes/alarm_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/cancontroller/controller/nodes/alarm_controller.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +83,7 @@
       <recent name="D:\Home\ProjetsRecherche\Embedded\CAN\raspberry-pi-2-py-can-controller\cancontroller\ipc" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.server">
+  <component name="RunManager" selected="Python.controller">
     <list>
       <item itemvalue="Python.controller" />
       <item itemvalue="Python.server" />
@@ -169,7 +143,8 @@
       <workItem from="1650298673000" duration="676000" />
       <workItem from="1650920371835" duration="269000" />
       <workItem from="1651941077444" duration="13078000" />
-      <workItem from="1651962104691" duration="1100000" />
+      <workItem from="1651962104691" duration="1693000" />
+      <workItem from="1652005223922" duration="2168000" />
     </task>
     <servers />
   </component>
@@ -191,6 +166,17 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/syntaxhighlighter" />
     </ignored-roots>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/cancontroller/controller/nodes/alarm_controller.py</url>
+          <line>3</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/raspberry_pi_2_py_can_controller$server.coverage" NAME="server Coverage Results" MODIFIED="1650182203796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cancontroller/httpserver" />

@@ -34,7 +34,7 @@ class AlarmController(CustomPcb_Node):
                 self.model['last_signal'] = now
 
                 if self.model['enabled']:
-                    api.BoardLevelCommand(self.deviceid, coc1=XPS.SET_ON,
-                                          coc2=XPS.SET_ON, crl1=XPS.SET_NONE)
+                    api.BoardLevelCommand(self.deviceid, coc1=XPS.PULSE_ON,
+                                          coc2=XPS.PULSE_ON, crl1=XPS.SET_NONE)
 
         return cmd

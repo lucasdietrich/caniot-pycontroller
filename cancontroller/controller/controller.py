@@ -126,7 +126,6 @@ class CanController(model_pb2_grpc.CanControllerServicer):
         return model_pb2.CommandResponse(status=model_pb2.OK if resp else model_pb2.TIMEOUT)
 
     async def CommandDevice(self, req: model_pb2.BoardLevelCommand, context) -> model_pb2.CommandResponse:
-        print(req)
         device = devices.select(DeviceId(req.device.cls, req.device.sid))
         if device is None:
             raise Exception(f"Device doesn't exist {req.device}")
