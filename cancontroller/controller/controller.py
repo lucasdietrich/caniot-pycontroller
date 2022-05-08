@@ -92,7 +92,7 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
                 req = device.handle(msg)
                 if req is not None:
-                   self.query(req)
+                   await self.query(req)
 
                 log_msg += " " + str(device.model)
 

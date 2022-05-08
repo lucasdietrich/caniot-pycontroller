@@ -16,6 +16,8 @@ async def handle_get(request: web.Request):
 async def handle_post(request: web.Request):
     form = await request.post()
 
+    print(form)
+
     map = {
         "none": XPS.SET_NONE,
         "on": XPS.SET_ON,
@@ -32,6 +34,11 @@ async def handle_post(request: web.Request):
     light2 = form.get("light2", "none")
     if light2 in map:
         light2_cmd = map[light2]
+
+    both = form.get("both", "")
+    if both in map:
+        light1_cmd = map[both]
+        light2_cmd = map[both]
 
     if light1_cmd != XPS.SET_NONE or light2_cmd != XPS.SET_NONE:
         api.BoardLevelCommand(node_alarm.deviceid, coc1=light1_cmd, coc2=light2_cmd)
