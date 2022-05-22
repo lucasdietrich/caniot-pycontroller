@@ -4,6 +4,7 @@ import aiohttp_jinja2
 from cancontroller.ipc.api import api
 from cancontroller.controller.devices import node_alarm
 from cancontroller.caniot.datatypes import XPS
+from model_pb2 import COMMAND_ALARM_NONE, COMMAND_ALARM_ENABLE, COMMAND_ALARM_DISABLE
 
 @aiohttp_jinja2.template("alarm.view.j2")
 async def handle_get(request: web.Request):
@@ -40,8 +41,15 @@ async def handle_post(request: web.Request):
         light1_cmd = map[both]
         light2_cmd = map[both]
 
-    if light1_cmd != XPS.SET_NONE or light2_cmd != XPS.SET_NONE:
-        api.BoardLevelCommand(node_alarm.deviceid, coc1=light1_cmd, coc2=light2_cmd)
+    alarm_command = COMMAND_ALARM_NONE
+    if form.get("enable-alarm", "") != "":
+        alarm_command = COMMAND_ALARM_ENABLE
+    elif form.get("disable-alarm", "") != "":
+        alarm_command = COMMAND_ALARM_DISABLE
+
+    if alarm_command or light1_cmd != XPS.SET_NONE or light2_cmd != XPS.SET_NONE:
+        # api.BoardLevelCommand(node_alarm.deviceid, coc1=light1_cmd, coc2=light2_cmd)
+        api.AlarmCommand(alarm_command, light1_cmd, light2_cmd)
 
     return {
         "device": api.GetDevice(node_alarm.deviceid)

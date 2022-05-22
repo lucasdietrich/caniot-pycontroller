@@ -12,6 +12,16 @@
 <div>
     <div id="form" class="{{ "" if device.status.online else "disabled" }}">
         <form action="" method="post">
+            <h1>Alarm</h1>
+            <div id="alarm">
+                Status
+                <div class="indicator {{ "on" if device.alarm.enabled else "off" }}"></div>
+                {% if device.alarm.enabled %}
+                    <input type="submit" class="button command" name="disable-alarm" value="Désactiver">
+                {% else %}
+                    <input type="submit" class="button command" name="enable-alarm" value="Activer">
+                {% endif %}
+            </div>
             <h1>Eclairage</h1>
             <div id="lights">
                 <div id="both-lights" class="light">

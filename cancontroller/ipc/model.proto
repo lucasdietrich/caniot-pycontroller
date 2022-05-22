@@ -9,6 +9,9 @@ package cancontroller.ipc;
 service CanController {
   rpc SendGarage(GarageCommand) returns (CommandResponse) {}
 
+  rpc GetAlarm(AlarmCommand) returns (CommandResponse) {}
+  rpc SendAlarm(AlarmCommand) returns (CommandResponse) {}
+
   rpc RequestTelemetry(TelemetryTarget) returns (Empty) {}
   rpc CommandDevice(BoardLevelCommand) returns (CommandResponse) {}
   rpc ReadAttribute(AttributeRequest) returns (AttributeResponse) {}
@@ -90,6 +93,21 @@ enum GarageDoorCommand {
 
 message GarageCommand {
   GarageDoorCommand command = 2;
+}
+
+/*____________________________________________________________________________________________________________________*/
+
+enum AlarmStateCommand {
+  COMMAND_ALARM_NONE = 0;
+  COMMAND_ALARM_ENABLE = 1;
+  COMMAND_ALARM_DISABLE = 2;
+}
+
+message AlarmCommand {
+  AlarmStateCommand alarm_state = 1;
+
+  CaniotComplexDigitalCommand light1 = 2;
+  CaniotComplexDigitalCommand light2 = 3;
 }
 
 /*____________________________________________________________________________________________________________________*/
@@ -208,6 +226,9 @@ message AlarmControllerModel
   bool enabled = 2;
   uint32 triggered_count = 3;
   float last_signal = 4;
+  uint32 siren_count = 5;
+  float last_siren = 6;
+  float last_command = 7;
 }
 
 message Devices {

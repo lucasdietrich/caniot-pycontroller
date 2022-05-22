@@ -16,7 +16,7 @@ from typing import List
 
 import model_pb2, model_pb2_grpc
 from pending import PendingQuery
-from cancontroller.controller.devices import Devices, node_garage_door, devices
+from cancontroller.controller.devices import Devices, node_garage_door, devices, node_alarm
 import contextlib
 import time
 
@@ -132,6 +132,10 @@ class CanController(model_pb2_grpc.CanControllerServicer):
 
         resp, duration = await self.query(device.command(req.coc1, req.coc2, req.crl1, req.crl2), timeout=1.0)
 
+        return model_pb2.CommandResponse(status=model_pb2.OK if resp else model_pb2.TIMEOUT)
+
+    async def SendAlarm(self, req: model_pb2.AlarmCommand, context) -> model_pb2.CommandResponse:
+        resp, duration = await self.query(node_alarm.handle_user_command(req), timeout=1.0)
         return model_pb2.CommandResponse(status=model_pb2.OK if resp else model_pb2.TIMEOUT)
 
     async def Reset(self, request: model_pb2.DeviceId, context) -> model_pb2.CommandResponse:
