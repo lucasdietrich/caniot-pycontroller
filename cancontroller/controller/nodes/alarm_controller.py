@@ -46,7 +46,7 @@ class AlarmController(CustomPcb_Node):
 
         cmd = None
 
-        MIN_DELAY_BETWEEN_SIREN = 150 # 2min 30
+        MIN_DELAY_BETWEEN_SIREN = 60 # 2min 30
         MIN_DELAY_BETWEEN_LIGHTS_COMMANDS = 5
 
         now = time.time()
@@ -67,6 +67,8 @@ class AlarmController(CustomPcb_Node):
                     coc2 = XPS.PULSE_ON
 
             if self.model['enabled'] and now - self.model['last_siren'] > MIN_DELAY_BETWEEN_SIREN:
+                coc1 = XPS.PULSE_ON
+                coc2 = XPS.PULSE_ON
                 crl1 = XPS.PULSE_ON
                 self.model['last_siren'] = now
                 self.model['siren_count'] += 1
